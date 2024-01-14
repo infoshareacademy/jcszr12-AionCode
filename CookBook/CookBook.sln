@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookBook.BuisnesLogic", "CookBook.BuisnesLogic\CookBook.BuisnesLogic.csproj", "{D0EA34C0-86AA-4505-9414-996C01402BF0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0EA34C0-86AA-4505-9414-996C01402BF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0EA34C0-86AA-4505-9414-996C01402BF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0EA34C0-86AA-4505-9414-996C01402BF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0EA34C0-86AA-4505-9414-996C01402BF0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE5146B5-C7DA-476B-882B-83C0627139A3}
+	EndGlobalSection
+EndGlobal
