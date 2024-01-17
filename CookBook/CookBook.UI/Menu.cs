@@ -64,6 +64,7 @@ namespace CookBook.UI
             do
             {
                 Console.CursorVisible = false;
+               
                 ConsoleKeyInfo key = Console.ReadKey();
                 if (key.Key == ConsoleKey.UpArrow)
                 {
