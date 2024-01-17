@@ -9,34 +9,39 @@ namespace CookBook.UI
     public class Menu
     {
         public int CurrentMenuPosition { get; set; }
-        private string _title { get; set; }
-        private List<string> MenuNameList = new List<string>();
-        private List<string> MenuActionList = new List<string>();
+        private string Title { get; }
+        private List<string> _menuNameList = new List<string>();
+        private List<string> _menuActionID = new List<string>();
 
-        public Menu()
+        public List<string> MenuNameList
+        {
+            get { return _menuNameList; }
+        }
+        public List<string> MenuActionID
+        {
+            get { return _menuActionID; }
+        }
+        public Menu(string title)
         {
             CurrentMenuPosition = 0;
+            Title = title;
         }
-        private enum Actions
-        {
-            login,
-            logout,
-            guestmenu,
-            usermenu,
-            receipeshow
-        }
+        //        private enum Actions
+        //        {
+        //            login,
+        //            logout,
+        //            guestmenu,
+        //            usermenu,
+        //            receipeshow
+        //        }
 
-        public void Title(string title)
+        public void AddPosition(string positionName, string actionID)
         {
-            _title = title;
-        }
-        public void AddPosition(string positionName, string action)
-        {
-            if (Enum.IsDefined(typeof(Actions), action))
-            {
+ //           if (Enum.IsDefined(typeof(Actions), actionID))
+ //           {
                 MenuNameList.Add(positionName);
-                MenuActionList.Add(action);
-            }
+                MenuActionID.Add(actionID);
+ //           }
         }
 
         public void ShowMenu()
@@ -44,7 +49,7 @@ namespace CookBook.UI
             var x = 0;
 
             Console.Clear();
-            Console.WriteLine(_title);
+            Console.WriteLine(Title);
             Console.BackgroundColor = ConsoleColor.Black;
             for (var i=0; i < MenuNameList.Count; i++)
             {
@@ -58,6 +63,7 @@ namespace CookBook.UI
         {
             do
             {
+                Console.CursorVisible = false;
                 ConsoleKeyInfo key = Console.ReadKey();
                 if (key.Key == ConsoleKey.UpArrow)
                 {
