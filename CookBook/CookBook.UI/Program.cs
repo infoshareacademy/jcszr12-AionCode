@@ -4,17 +4,11 @@
     {
         static void Main(string[] args)
         {
-            Menu loginMenu = new Menu("Menu logowania:");
-            loginMenu.AddPosition("Login", "login");
-            loginMenu.AddPosition("Zaloguj się jako gość", "guestmenu");
-            loginMenu.AddPosition("Zakończ", "logout");
+            MainMenu.Display();
 
-            loginMenu.ShowMenu();
-            loginMenu.OptionSelect();
+ //           Console.WriteLine($"\nWybrano opcję: {mainMenu.MenuActionID[mainMenu.CurrentMenuPosition]}");
 
-            Console.WriteLine($"\nWybrano opcję: {loginMenu.MenuActionID[loginMenu.CurrentMenuPosition]}");
-
-
+            
         }
     }
 }
