@@ -8,18 +8,18 @@ namespace CookBook.UI
 {
     public static class MainMenu
     {
-        public static void Display()
+        public static string Display()
         {
             Console.Clear();
             Menu MainMenu = new Menu("Menu logowania:");
-            MainMenu.AddPosition("Login", "login");
+            MainMenu.AddPosition("Zaloguj się", "loginmenu");
             MainMenu.AddPosition("Zaloguj się jako gość", "guestmenu");
-            MainMenu.AddPosition("Zakończ", "logout");
+            MainMenu.AddPosition("Zakończ", "exit");
 
             MainMenu.ShowMenu();
             MainMenu.OptionSelect();
 
-            Console.WriteLine($"\nWybrano opcję: {MainMenu.MenuActionID[MainMenu.CurrentMenuPosition]}");
+            return MainMenu.MenuActionID[MainMenu.CurrentMenuPosition];
         }
     }
 }
