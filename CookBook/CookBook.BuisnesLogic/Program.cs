@@ -10,12 +10,15 @@ namespace CookBook.BuisnesLogic
         {
             var NewUser = new UserCookBook()
             {
-                Email = FormsAddUser.GetEmail(),
                 Id = 0,
                 Name = FormsAddUser.GetName(),
+                Email = FormsAddUser.GetEmail(),
                 Password = FormsAddUser.GetPassword()
             };
-            UserRegister.AddUser(NewUser);
+            if(!UserRegister.AddUser(NewUser)) Console.WriteLine("\nJest już taki użytkownik!");
+
+            FormsAddUser.ShowAllUsers(UserRegister.GetUsersCookBook());
+            
         }
     }
 }

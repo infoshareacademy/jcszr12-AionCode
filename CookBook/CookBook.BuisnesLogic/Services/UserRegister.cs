@@ -24,17 +24,24 @@ namespace CookBook.BuisnesLogic.Services
                 {
                     users = new List<UserCookBook>();
                 }
-                    return users;
+                return users;
             }
-            public static void AddUser(UserCookBook newUser)
+            public static bool AddUser(UserCookBook newUser)
             {
-                
+                bool status = false;
                 var users = GetUsersCookBook();
+
+                if (!users.Any(i => i.Name == newUser.Name || i.Name == newUser.Email))
+                {
                 newUser.Id = users.Count() + 1;
                 users.Add(newUser);
+                status = true;
+
+                }
 
                 var json = JsonConvert.SerializeObject(users);
-                File.WriteAllText(path, json);
+                File.WriteAllText(path, json);  
+                return status;
         }
         private static void CreateDataFile()
         {
