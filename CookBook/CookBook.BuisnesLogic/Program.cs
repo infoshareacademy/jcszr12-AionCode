@@ -25,7 +25,7 @@ namespace CookBook.BuisnesLogic
             string _password="";
             do
             { 
-             _password.Append<>(Console.ReadLine());
+             _password = _password + Console.ReadLine();
             Console.Write("*");
             } while (Console.ReadKey().Key != ConsoleKey.Enter);
 
