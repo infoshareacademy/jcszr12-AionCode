@@ -1,6 +1,6 @@
-﻿using System.Runtime.CompilerServices;
-using CookBook.BuisnesLogic.Models;
+﻿using CookBook.BuisnesLogic.Models;
 using CookBook.BuisnesLogic.Services;
+using CookBook.UI.TempTest;
 
 namespace CookBook.BuisnesLogic
 {
@@ -8,28 +8,14 @@ namespace CookBook.BuisnesLogic
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Witamy nowego użytkownika \n");
-            var NewUser = new UserCookBook()
+             var NewUser = new UserCookBook()
             {
-                Email = "",
+                Email = FormsAddUser.GetEmail() ,
                 Id = 0,
-                Name = Console.ReadLine(),
-                Password = GetPassword()
-
+                Name = FormsAddUser.GetName(),
+                Password = FormsAddUser.GetPassword()
             };
-            //UserRegister userCookBook = new UserRegister();
-        }
-
-        private static string GetPassword()
-        {
-            string _password="";
-            do
-            { 
-             _password = _password + Console.ReadLine();
-            Console.Write("*");
-            } while (Console.ReadKey().Key != ConsoleKey.Enter);
-
-            return _password;
+            UserRegister.AddUser(NewUser);
         }
     }
 }

@@ -20,7 +20,11 @@ namespace CookBook.BuisnesLogic.Services
                 CreateDataFile();
                 var userAllSerialise = File.ReadAllText(path);
                 var users = JsonConvert.DeserializeObject<List<UserCookBook>>(userAllSerialise);
-                return users;
+                if (users == null)
+                {
+                    users = new List<UserCookBook>();
+                }
+                    return users;
             }
             public static void AddUser(UserCookBook newUser)
             {
