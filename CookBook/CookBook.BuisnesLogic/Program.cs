@@ -8,9 +8,9 @@ namespace CookBook.BuisnesLogic
     {
         static void Main(string[] args)
         {
-             var NewUser = new UserCookBook()
+            var NewUser = new UserCookBook()
             {
-                Email = FormsAddUser.GetEmail() ,
+                Email = FormsAddUser.GetEmail(),
                 Id = 0,
                 Name = FormsAddUser.GetName(),
                 Password = FormsAddUser.GetPassword()
