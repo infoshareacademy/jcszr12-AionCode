@@ -47,12 +47,12 @@ namespace CookBook.UI
             return password;
 
         }
-        public static (bool, bool) isCorrectLoginData(string login, string password)
+        public static (bool, string) isCorrectLoginData(string login, string password)
         {
             bool isCorrect = true;
-            bool userType = false;
+            string userType = "stduser";
 
-            if (login == "Marek") userType = true;
+            if (login == "Marek") userType = "admin";
 
             return (isCorrect, userType);    
         }

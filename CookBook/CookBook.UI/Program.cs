@@ -14,10 +14,10 @@ namespace CookBook.UI
                     case "loginmenu":
                         string login, password;
                         LoginMenu.GetLoginData(out login, out password);
-                        (bool loginOK, bool usertype) = LoginMenu.isCorrectLoginData(login, password);
-                        if (loginOK)
+                        (bool accessGranted, string userType) = LoginMenu.isCorrectLoginData(login, password);
+                        if (accessGranted)
                         {
-                            if (usertype == false) action = UserMenu.Display();
+                            if (userType == "stduser") action = UserMenu.Display();
                             else action = AdminMenu.Display();
                         }
                         else
