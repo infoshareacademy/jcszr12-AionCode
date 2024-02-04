@@ -12,7 +12,6 @@ namespace CookBook.UI
         public static void GetLoginData(out string login, out string password)
         {
             Console.Clear();
-
             do
             {
                 Console.Write("Podaj login: ");
