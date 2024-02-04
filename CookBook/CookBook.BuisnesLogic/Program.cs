@@ -13,7 +13,8 @@ namespace CookBook.BuisnesLogic
                 Id = 0,
                 Name = FormsAddUser.GetName(),
                 Email = FormsAddUser.GetEmail(),
-                Password = FormsAddUser.GetPassword()
+                Password = FormsAddUser.GetPassword(),
+                Role = Roles.Admin
             };
             if(!UserRegister.AddUser(NewUser)) Console.WriteLine("\nJest już taki użytkownik!");
 
