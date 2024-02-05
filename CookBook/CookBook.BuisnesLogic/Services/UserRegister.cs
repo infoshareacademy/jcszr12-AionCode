@@ -42,7 +42,7 @@ namespace CookBook.BuisnesLogic.Services
                 var json = JsonConvert.SerializeObject(users);
                 File.WriteAllText(path, json);  
                 return status;
-        }
+    }
         private static void CreateDataFile()
         {
             if (!File.Exists(path))

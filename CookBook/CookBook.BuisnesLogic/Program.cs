@@ -1,25 +1,41 @@
 ﻿using CookBook.BuisnesLogic.Models;
 using CookBook.BuisnesLogic.Services;
+using CookBook.BuisnesLogic.TempTestUI;
 using CookBook.UI.TempTest;
 
 namespace CookBook.BuisnesLogic
 {
     internal class Program
     {
+        //static void Main(string[] args)
+        //{
+        //    var NewUser = new UserCookBook()
+        //    {
+        //        Id = 0,
+        //        Name = FormsAddUser.GetName(),
+        //        Email = FormsAddUser.GetEmail(),
+        //        Password = FormsAddUser.GetPassword(),
+        //        Role = Roles.Admin
+        //    };
+        //    if(!UserRegister.AddUser(NewUser)) Console.WriteLine("\nJest już taki użytkownik!");
+
+        //    FormsAddUser.ShowAllUsers(UserRegister.GetUsersCookBook());
+            
+        //}
         static void Main(string[] args)
         {
-            var NewUser = new UserCookBook()
+            var NewRecipe = new Recipe()
             {
                 Id = 0,
-                Name = FormsAddUser.GetName(),
-                Email = FormsAddUser.GetEmail(),
-                Password = FormsAddUser.GetPassword(),
-                Role = Roles.Admin
+                Name = AddedRecipeTest.GetName(),
+                Category = AddedRecipeTest.GetCategory(),
+                Description = AddedRecipeTest.GetDescription()
+              
             };
-            if(!UserRegister.AddUser(NewUser)) Console.WriteLine("\nJest już taki użytkownik!");
+            if (!AddRecipe.RecipeAdd(NewRecipe)) Console.WriteLine("\nJest już taki użytkownik!");
 
-            FormsAddUser.ShowAllUsers(UserRegister.GetUsersCookBook());
-            
+            AddedRecipeTest.ShowAllRecipe(AddRecipe.GetRecipe());
+
         }
     }
 }
