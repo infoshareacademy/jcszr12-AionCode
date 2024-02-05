@@ -12,7 +12,7 @@ namespace CookBook.UI
         {
             Console.Clear();
             Menu GuestMenu = new Menu("Menu gościa:");
-            GuestMenu.AddPosition("Lista przepisów", "receipelist");
+            GuestMenu.AddPosition("Lista przepisów", "recipelist");
             GuestMenu.AddPosition("Wniosek o utworzenie konta", "registermenu");
             GuestMenu.AddPosition("Cofnij", "mainmenu");
 

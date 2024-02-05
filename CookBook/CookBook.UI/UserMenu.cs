@@ -12,8 +12,8 @@ namespace CookBook.UI
         {
             Console.Clear();
             Menu UserMenu = new Menu("Menu użytkownika:");
-            UserMenu.AddPosition("Lista przepisów", "receipelist");
-            UserMenu.AddPosition("Dodaj nowy przepis", "receipeadd");
+            UserMenu.AddPosition("Lista przepisów", "recipelist");
+            UserMenu.AddPosition("Dodaj nowy przepis", "recipeadd");
             UserMenu.AddPosition("Wyloguj", "mainmenu");
 
             UserMenu.ShowMenu();

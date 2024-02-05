@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CookBook.BuisnesLogic.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -9,16 +10,37 @@ namespace CookBook.UI
 {
     internal static class LoginMenu
     {
+        public static (string,Roles) Login()
+        {
+            string action = "";
+            string login, password;
+            Roles role = new();
+
+            GetLoginData(out login, out password);
+            (bool accessGranted, string userType) = isCorrectLoginData(login, password); // zamienić na serwis
+            
+            if (accessGranted)
+            {
+                if (userType == "stduser") { action = "stdusermenu"; role = Roles.StdUser; }
+                else { action = "adminmenu"; role= Roles.Admin; }
+            }
+            else action = "mainmenu";
+
+            return (action, role);
+        }
         public static void GetLoginData(out string login, out string password)
         {
             Console.Clear();
-            do
+
+            Console.Write("Podaj login: ");
+            login = Console.ReadLine();
+            Console.Write("Podaj hasło: ");
+            password = GetPassword();
+
+            if (login == "" || password == "")
             {
-                Console.Write("Podaj login: ");
-                login = Console.ReadLine();
-                Console.Write("Podaj hasło: ");
-                password = GetPassword();
-            } while (login == "" || password == "");
+                Console.WriteLine("Podaj poprawne dane logowania");
+            }
             
         }
 

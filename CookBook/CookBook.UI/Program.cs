@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CookBook.BuisnesLogic.Models;
+using System;
 
 namespace CookBook.UI
 {
@@ -6,10 +7,11 @@ namespace CookBook.UI
     {
         static void Main(string[] args)
         {
+            Roles role = new Roles();
             string action = MainMenu.Display();
             do
             {
-              uiActions.ActionRun(ref action);
+              UiActions.ActionRun(ref action, ref role);
             } while (action != "exit");           
          }
     }
