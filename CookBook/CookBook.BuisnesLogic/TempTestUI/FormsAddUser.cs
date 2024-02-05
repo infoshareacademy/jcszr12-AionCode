@@ -69,7 +69,7 @@ namespace CookBook.UI.TempTest
             Console.WriteLine("\n\n");
             foreach (var user in users)
             {
-                Console.WriteLine(@"{0} | użytkownik: {1} | email: {2}",user.Id,user.Name,user.Email);
+                Console.WriteLine(@"{0} | użytkownik: {1} | email: {2} | rola: {3}",user.Id,user.Name,user.Email, user.Role);
             }
           
         }
