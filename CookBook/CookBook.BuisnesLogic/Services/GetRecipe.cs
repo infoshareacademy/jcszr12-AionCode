@@ -18,17 +18,12 @@ namespace CookBook.BuisnesLogic.Services
         public static Recipe GetRandomRecipe()
         {
             var recipes = GetRecipeList.ReadRecipesFromFile();
-            if (recipes.Count == 0)
-            {
-                // to do:
-                // throw new Exception() ArgumentOutOfRangeException ??
-            }
             return recipes[random.Next(recipes.Count)];
         }
 
 
         //Zwraca przepis nr: 
-        public static Recipe GetRecipeNumber(int number)
+        public static Recipe GetRecipeNumber(int ID)
         {
             var recipes = GetRecipeList.ReadRecipesFromFile();
             if (recipes.Count == 0)
@@ -36,15 +31,12 @@ namespace CookBook.BuisnesLogic.Services
                 // to do:
                 // throw new Exception() ArgumentOutOfRangeException ??
             }
+            var recipe = recipes.FirstOrDefault(x => x.Id == ID);
+            if (recipe == null) throw new Exception();
 
-            if (number > recipes.Count - 1)
-            {
-                // to do:
-                // throw new Exception() ArgumentOutOfRangeException ??
-            }
-            return recipes[number];
+
+            return recipe;
         }
-    }
 
     }
 }
