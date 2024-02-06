@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CookBook.BuisnesLogic.Services
 {
-    public class RemoveUser 
+    public static class RemoveUser 
     {
+        
     }
 }
