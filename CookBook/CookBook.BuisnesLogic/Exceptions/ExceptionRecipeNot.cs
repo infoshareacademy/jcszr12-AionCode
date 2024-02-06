@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CookBook.BuisnesLogic.Exceptions
 {
-    public class ExceptionAddRecipe : Exception
+    public class ExceptionRecipeNot : Exception
     {
-        public ExceptionAddRecipe() : base("Jest już taki przepis w bazie!")
+        public ExceptionRecipeNot() : base("Brak takiego ID!")
         { }
-        
+
     }
 }
