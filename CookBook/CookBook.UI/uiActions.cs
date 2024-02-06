@@ -3,58 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CookBook.BuisnesLogic.Models;
 using static System.Collections.Specialized.BitVector32;
 
 namespace CookBook.UI
 {
-    internal class uiActions
+    internal class UiActions
     {
-        public static void ActionRun(ref string action)
+        public static void ActionRun(ref string action, ref Roles role)
         {
             switch (action)
             {
                 case "loginmenu":
-                    string login, password;
-                    LoginMenu.GetLoginData(out login, out password);
-                    (bool accessGranted, string userType) = LoginMenu.isCorrectLoginData(login, password);
-                    if (accessGranted)
-                    {
-                        if (userType == "stduser") action = UserMenu.Display();
-                        else action = AdminMenu.Display();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Niepoprawne dane logowania");
-                        Thread.Sleep(3000);
-                        action = MainMenu.Display();
-                    }
+                    (action, role) = LoginMenu.Login();
+                    break;
+                case "stdusermenu":
+                    action = StdUserMenu.Display();
+                    break;
+                case "adminmenu":
+                    action = AdminMenu.Display();
                     break;
                 case "guestmenu":
+                    role = Roles.Guest;
                     action = GuestMenu.Display();
                     break;
                 case "mainmenu":
                     action = MainMenu.Display();
                     break;
-                case "adminmenu":
-                    action = AdminMenu.Display();
+                case "recipelist":
+                    RecipeMenu.ShowRecipeList();
+                    if (role == Roles.Guest) action = "guestmenu"; else action = "stdusermenu";
                     break;
-                case "receipelist":
-//                       action = Receipe.GetList();
-                    break;
-                case "receipeadd":
-//                       action = Receipe.Add();
-                    break;
-                case "receipeshow":
-//                       action = Receipe.Show();
+                case "recipeadd":
+                    RecipeMenu.AddRecipe();
+                    if (role == Roles.Guest) action = "guestmenu"; else action = "stdusermenu";
                     break;
                 case "userlist":
-//                       action = 
+                    LoginMenu.ShowUsersList();
+                    action = "adminmenu";
                     break;
                 case "userPending":
 //                       action = 
                     break;
                 case "registermenu":
-//                       action = 
+                    LoginMenu.NewUserRegister();
+                    action = "stdusermenu";
                     break;
             }
         }
