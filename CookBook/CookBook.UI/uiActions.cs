@@ -18,7 +18,7 @@ namespace CookBook.UI
                     (action, role) = LoginMenu.Login();
                     break;
                 case "stdusermenu":
-                    action = UserMenu.Display();
+                    action = StdUserMenu.Display();
                     break;
                 case "adminmenu":
                     action = AdminMenu.Display();
@@ -39,13 +39,15 @@ namespace CookBook.UI
                     if (role == Roles.Guest) action = "guestmenu"; else action = "stdusermenu";
                     break;
                 case "userlist":
-//                       action = 
+                    LoginMenu.ShowUsersList();
+                    action = "adminmenu";
                     break;
                 case "userPending":
 //                       action = 
                     break;
                 case "registermenu":
-//                       action = 
+                    LoginMenu.NewUserRegister();
+                    action = "stdusermenu";
                     break;
             }
         }

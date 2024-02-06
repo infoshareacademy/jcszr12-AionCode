@@ -1,8 +1,11 @@
 ﻿using CookBook.BuisnesLogic.Models;
+using CookBook.BuisnesLogic.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -65,6 +68,7 @@ namespace CookBook.UI
             }
             while (key.Key != ConsoleKey.Enter);
 
+            password = password.Remove(password.Length-1);
             return password;
 
         }
@@ -76,6 +80,51 @@ namespace CookBook.UI
             if (login == "Marek") userType = "admin";
 
             return (isCorrect, userType);    
+        }
+
+        public static string NewUserRegister()
+        {
+            UserCookBook newUser = new UserCookBook();
+            string action = "";
+
+            Console.WriteLine("Rejestracja nowego użytkownika\n");
+            Console.Write("Nazwa użytkownika: "); newUser.Name = Console.ReadLine();
+            Console.Write("E-mail: "); newUser.Email = Console.ReadLine();
+            Console.Write("Hasło: "); newUser.Password = GetPassword(); Console.WriteLine();
+            newUser.Role = Roles.StdUser;
+
+            if (UserRegister.AddUser(newUser))
+            {
+                Console.WriteLine("SUKCES! Witamy w gronie użytkowników CookBook AionCode");
+                action = "stdusermenu";
+            }
+            else
+            {
+                Console.WriteLine("Utworzenie użytkownika nie powiodło się. Zweryfikuj poprawność wprowadzonych danych i spróbuj ponownie.");
+                action = "mainmenu";
+            }
+            Console.WriteLine("\nWciśniej dowolny klawisz, aby kontynuować.");
+            Console.ReadKey();
+            return action;
+        }
+
+        public static void ShowUsersList()
+        {
+            List<UserCookBook> users = new();
+
+            users = UserRegister.GetUsersCookBook();
+
+            Console.Clear();
+            Console.WriteLine("Lista użytkowników systemu CookBook AionCode:\n");
+
+            foreach (var user in users)
+            {
+                Console.WriteLine($"ID: {user.Id} Nazwa: {user.Name} Email: {user.Email} Rola: {user.Role}");
+            }
+
+            Console.WriteLine("\nWciśnij dowolny klawisz, aby kontynuować");
+            Console.ReadKey();
+
         }
     }
 }

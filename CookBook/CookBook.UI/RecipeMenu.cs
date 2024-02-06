@@ -69,7 +69,7 @@ namespace CookBook.UI
             Console.ReadKey();
         }
 
-        public static List<Recipe> GetList()
+        public static List<Recipe> GetList() // temporary method replace with service
         {
             List<Recipe> recipes = new();
 
@@ -90,7 +90,7 @@ namespace CookBook.UI
             return recipes;
         }
 
-        public static Recipe GetRecipeTemp()
+        public static Recipe GetRecipeTemp() // temporary method replace with service
         {
             Recipe recipe = new();
             

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CookBook.UI
 {
-    public static class UserMenu
+    public static class StdUserMenu
     {
         public static string Display()
         {
