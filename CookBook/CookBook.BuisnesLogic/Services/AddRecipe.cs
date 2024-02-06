@@ -5,9 +5,11 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using CookBook.BuisnesLogic.Exceptions;
 using CookBook.BuisnesLogic.Models;
 using Newtonsoft.Json;
 using static System.Net.Mime.MediaTypeNames;
+
 
 namespace CookBook.BuisnesLogic.Services
 {
@@ -37,6 +39,10 @@ namespace CookBook.BuisnesLogic.Services
                 recipes.Add(newRecipe);
                 statusRecipe = true;
 
+            }
+            else 
+            {
+                throw new ExceptionAddRecipe();
             }
 
             var json = JsonConvert.SerializeObject(recipes);

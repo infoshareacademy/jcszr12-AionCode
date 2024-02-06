@@ -7,35 +7,55 @@ namespace CookBook.BuisnesLogic
 {
     internal class Program
     {
-        //static void Main(string[] args)
-        //{
-        //    var NewUser = new UserCookBook()
-        //    {
-        //        Id = 0,
-        //        Name = FormsAddUser.GetName(),
-        //        Email = FormsAddUser.GetEmail(),
-        //        Password = FormsAddUser.GetPassword(),
-        //        Role = Roles.Admin
-        //    };
-        //    if(!UserRegister.AddUser(NewUser)) Console.WriteLine("\nJest już taki użytkownik!");
-
-        //    FormsAddUser.ShowAllUsers(UserRegister.GetUsersCookBook());
-            
-        //}
         static void Main(string[] args)
         {
-            var NewRecipe = new Recipe()
+            var NewUser = new UserCookBook()
             {
                 Id = 0,
-                Name = AddedRecipeTest.GetName(),
-                Category = AddedRecipeTest.GetCategory(),
-                Description = AddedRecipeTest.GetDescription()
-              
+                Name = FormsAddUser.GetName(),
+                Email = FormsAddUser.GetEmail(),
+                Password = FormsAddUser.GetPassword(),
+                Role = Roles.Admin
             };
-            if (!AddRecipe.RecipeAdd(NewRecipe)) Console.WriteLine("\nJest już taki użytkownik!");
+            if (!UserRegister.AddUser(NewUser)) Console.WriteLine("\nJest już taki użytkownik!");
 
-            AddedRecipeTest.ShowAllRecipe(AddRecipe.GetRecipe());
+            FormsAddUser.ShowAllUsers(UserRegister.GetUsersCookBook());
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*TEST FOR ADDING RECIPE*/
+
+        //static void Main(string[] args)
+        //{
+        //    var NewRecipe = new Recipe()
+        //    {
+        //        Id = 0,
+        //        Name = AddedRecipeTest.GetName(),
+        //        Category = AddedRecipeTest.GetCategory(),
+        //        Description = AddedRecipeTest.GetDescription(),
+        //        IngredientList = AddedRecipeTest.GetIngredientList()
+
+        //    };
+        //    if (!AddRecipe.RecipeAdd(NewRecipe)) Console.WriteLine("\nJest już taki przepis");
+
+        //    AddedRecipeTest.ShowAllRecipe(AddRecipe.GetRecipe());
+
+        //}
     }
 }
