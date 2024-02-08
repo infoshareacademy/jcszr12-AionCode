@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CookBook.BuisnesLogic.TempTestUI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,8 @@ namespace CookBook.UI
             Console.Clear();
             Menu AdminMenu = new Menu("Menu administratora:");
             AdminMenu.AddPosition("Lista użytkowników", "userlist");
-            AdminMenu.AddPosition("Użytkownicy oczekujacy na zatwierdzenie", "userpending");
+            AdminMenu.AddPosition("Usuń uzytkownika", "userremove");
+            AdminMenu.AddPosition("Usuń przepis", "reciperemove");
             AdminMenu.AddPosition("Wyloguj się", "mainmenu");
 
             AdminMenu.ShowMenu();

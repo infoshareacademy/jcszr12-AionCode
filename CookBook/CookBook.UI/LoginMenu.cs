@@ -17,19 +17,27 @@ namespace CookBook.UI
         {
             string action = "";
             string login, password;
-            Roles role = new();
+            UserCookBook user = new UserCookBook();
 
             GetLoginData(out login, out password);
-            (bool accessGranted, string userType) = isCorrectLoginData(login, password); // zamienić na serwis
-            
-            if (accessGranted)
-            {
-                if (userType == "stduser") { action = "stdusermenu"; role = Roles.StdUser; }
-                else { action = "adminmenu"; role= Roles.Admin; }
-            }
-            else action = "mainmenu";
 
-            return (action, role);
+            try
+            {
+                // user = UserLogin.LoginUser(login, password); // w metodzie UserLogin jest błąd, musi zwracać obiekt z jednym użytkownikiem, po korekcie odremować
+                user.Role = Roles.StdUser; // wyremować po korekcie powyższego
+
+                if (user.Role == Roles.Admin) action = "adminmenu";
+                else if (user.Role == Roles.StdUser) action = "stdusermenu";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\n{ex.Message}");
+                action = "mainmenu";
+                user.Role = Roles.Guest;
+            }
+//            (bool accessGranted, string userType) = isCorrectLoginData(login, password); // temporary, don't use it
+
+            return (action, user.Role);
         }
         public static void GetLoginData(out string login, out string password)
         {
@@ -39,12 +47,6 @@ namespace CookBook.UI
             login = Console.ReadLine();
             Console.Write("Podaj hasło: ");
             password = GetPassword();
-
-            if (login == "" || password == "")
-            {
-                Console.WriteLine("Podaj poprawne dane logowania");
-            }
-            
         }
 
         internal static string GetPassword()
@@ -72,16 +74,7 @@ namespace CookBook.UI
             return password;
 
         }
-        public static (bool, string) isCorrectLoginData(string login, string password)
-        {
-            bool isCorrect = true;
-            string userType = "stduser";
-
-            if (login == "Marek") userType = "admin";
-
-            return (isCorrect, userType);    
-        }
-
+ 
         public static string NewUserRegister()
         {
             UserCookBook newUser = new UserCookBook();
@@ -93,13 +86,15 @@ namespace CookBook.UI
             Console.Write("Hasło: "); newUser.Password = GetPassword(); Console.WriteLine();
             newUser.Role = Roles.StdUser;
 
-            if (UserRegister.AddUser(newUser))
+            try
             {
-                Console.WriteLine("SUKCES! Witamy w gronie użytkowników CookBook AionCode");
+                UserRegister.AddUser(newUser);
+                Console.WriteLine("\nSUKCES! Witamy w gronie użytkowników CookBook AionCode");
                 action = "stdusermenu";
             }
-            else
+            catch  (Exception ex)
             {
+                Console.WriteLine($"\n{ex.Message}");
                 Console.WriteLine("Utworzenie użytkownika nie powiodło się. Zweryfikuj poprawność wprowadzonych danych i spróbuj ponownie.");
                 action = "mainmenu";
             }
@@ -124,7 +119,13 @@ namespace CookBook.UI
 
             Console.WriteLine("\nWciśnij dowolny klawisz, aby kontynuować");
             Console.ReadKey();
+        }
 
+        public static void UserRemove()
+        {
+            Console.WriteLine("\nBrak obsługi zdarzenia.");
+            Console.WriteLine("\nWciśniej dowolny klawisz, aby kontynuować.");
+            Console.ReadKey();
         }
     }
 }
