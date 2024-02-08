@@ -31,23 +31,27 @@ namespace CookBook.UI
                     action = MainMenu.Display();
                     break;
                 case "recipelist":
-                    RecipeMenu.ShowRecipeList();
+                    RecipeMenu.ShowRecipe();
                     if (role == Roles.Guest) action = "guestmenu"; else action = "stdusermenu";
                     break;
                 case "recipeadd":
-                    RecipeMenu.AddRecipe();
+                    RecipeMenu.RecipeAdd();
                     if (role == Roles.Guest) action = "guestmenu"; else action = "stdusermenu";
                     break;
                 case "userlist":
                     LoginMenu.ShowUsersList();
                     action = "adminmenu";
                     break;
-                case "userPending":
-//                       action = 
-                    break;
                 case "registermenu":
-                    LoginMenu.NewUserRegister();
-                    action = "stdusermenu";
+                    action = LoginMenu.NewUserRegister();
+                    break;
+                case "userremove":
+                    LoginMenu.UserRemove();
+                    action = "adminmenu";
+                    break;
+                case "reciperemove":
+                    RecipeMenu.RecipeRemove();
+                    if (role == Roles.Guest) action = "guestmenu"; else action = "stdusermenu";
                     break;
             }
         }

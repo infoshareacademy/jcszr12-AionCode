@@ -11,10 +11,10 @@ namespace CookBook.UI
 {
     public static class RecipeMenu
     {
-        public static void ShowRecipeList()
+        public static Recipe ChooseRecipeFromList()
         {
             List<Recipe> recipes = new();
-            recipes = GetList(); // zamienić na serwis
+            recipes = GetRecipeList.ReadRecipesFromFile();
 
             Console.Clear();
             Menu RecipeMenu = new Menu("Lista przepisów - wskaż wybrany aby zobaczyć szczegóły:");
@@ -25,13 +25,13 @@ namespace CookBook.UI
             }
             RecipeMenu.ShowMenu();
             RecipeMenu.OptionSelect();
-            ShowRecipe(recipes[RecipeMenu.CurrentMenuPosition].Id);
+            return recipes[RecipeMenu.CurrentMenuPosition];
         }
 
-        public static void ShowRecipe(int receipeId)
+        public static void ShowRecipe()
         {
-            Recipe recipe = new();
-            recipe = GetRecipeTemp(); // zamienić na serwis
+            Recipe recipe = ChooseRecipeFromList();
+            recipe = GetRecipe.GetRecipeNumber(recipe.Id);
 
             Console.Clear();
             Console.WriteLine($"Przepis na {recipe.Name}\n");
@@ -48,7 +48,7 @@ namespace CookBook.UI
             Console.ReadKey();
         }
 
-        public static void AddRecipe()
+        public static void RecipeAdd()
         {
             Recipe recipe = new();
             int i = 0;
@@ -62,45 +62,36 @@ namespace CookBook.UI
             for (int ii = 0; ii < ingredients.Length; ii++) ingredients[ii] = ingredients[ii].Trim(); recipe.IngredientList = new List<string>(ingredients);
             Console.Write("Opis potrawy: "); recipe.Description = Console.ReadLine();
 
-            //            PutRecipe(); // zamienić na serwis
+            try
+            {
+                AddRecipe.RecipeAdd(recipe);
+                Console.WriteLine("\nDodano Twój przepis do Listy Przepisów AionCode!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\n{ex.Message}");
+            }
+          
 
             Console.WriteLine("\nWciśnij dowolny klawisz, aby wrócić do menu.");
 
             Console.ReadKey();
         }
 
-        public static List<Recipe> GetList() // temporary method replace with service
+        public static void RecipeRemove()
         {
-            List<Recipe> recipes = new();
+            Recipe recipe = ChooseRecipeFromList();
+            recipe = GetRecipe.GetRecipeNumber(recipe.Id);
 
-            recipes.Add(new Recipe { 
-                Id = 1,
-                Name = "Przepis1",
-                Category = "dania obiadowe",
-                Description = "1. W garnku gotuj wod� i gotuj spaghetti wed�ug wskaz�wek na opakowaniu.\n2. W drugim garnku podsma� cebul� i czosnek na",
-                IngredientList = new List<string> { "1. Cebula", "2. Pietruszka" }});
+            try
+            {
+                DeleteRecipe.RecipeDelete(recipe.Id);
+            }
+            catch (Exception ex) { Console.WriteLine($"\n{ex.ToString()}"); }
 
-            recipes.Add(new Recipe {
-                Id = 2,
-                Name = "Przepis2",
-                Category = "dania obiadowe",
-                Description = "1. W drugim garnku podsma� cebul� i czosnek na",
-                IngredientList = new List<string> { "1. Czosnek", "2. Cebula", "3. papryka" }});
+            Console.WriteLine("\nWciśnij dowolny klawisz, aby wrócić do menu.");
 
-            return recipes;
-        }
-
-        public static Recipe GetRecipeTemp() // temporary method replace with service
-        {
-            Recipe recipe = new();
-            
-            recipe.Id = 2;
-            recipe.Name = "Przepis1";
-            recipe.Category = "dania obiadowe";
-            recipe.Description = "1. W garnku gotuj wod� i gotuj spaghetti wed�ug wskaz�wek na opakowaniu.\n2. W drugim garnku podsma� cebul� i czosnek na";
-            recipe.IngredientList = new List<string> { "1. Cebula", "2. Pietruszka" };
-
-            return recipe;
+            Console.ReadKey();
         }
     }
 }
