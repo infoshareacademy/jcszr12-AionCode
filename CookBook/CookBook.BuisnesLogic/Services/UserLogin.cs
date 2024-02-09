@@ -18,20 +18,20 @@ namespace CookBook.BuisnesLogic.Services
             
         
         private static string path = DirectoryPathProvider.GetSolutionDirectoryInfo();
-        public static List<UserCookBook> LoginUser(string Name, string Password)
+        public static (int, string, Roles) LoginUser(string Name, string Password)
         {
             _login = Name;
             _password = Password;
             var userAllSerialise = File.ReadAllText(path);
             var users = JsonConvert.DeserializeObject<List<UserCookBook>>(userAllSerialise);
-            var user = users.Where(u => u.Name == _login && u.Password == _password);
+            var user = users.Where(u => u.Name == _login && u.Password == _password)
+                .Select(p => new { id = p.Id, name = p.Email, role = p.Role }).FirstOrDefault();
             
             if (user == null)
             {
                 throw new ExceptionLogin("Błąd:");
             }
-
-            return user.ToList();
+            return (user.id, user.name, user.role);
         }
     }
 }
