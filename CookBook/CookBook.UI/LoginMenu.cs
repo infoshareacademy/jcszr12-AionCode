@@ -23,19 +23,24 @@ namespace CookBook.UI
 
             try
             {
-                // user = UserLogin.LoginUser(login, password); // w metodzie UserLogin jest błąd, musi zwracać obiekt z jednym użytkownikiem, po korekcie odremować
-                user.Role = Roles.StdUser; // wyremować po korekcie powyższego
+                user = UserLogin.LoginUser(login, password);
+                // user.Role = Roles.Admin;
 
                 if (user.Role == Roles.Admin) action = "adminmenu";
                 else if (user.Role == Roles.StdUser) action = "stdusermenu";
+
+                Console.WriteLine($"\n\nZalogowałeś się jako {user.Name} / {user.Email} / {user.Role}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"\n{ex.Message}");
+                Console.WriteLine($"\n\n{ex.Message}");
                 action = "mainmenu";
                 user.Role = Roles.Guest;
             }
-//            (bool accessGranted, string userType) = isCorrectLoginData(login, password); // temporary, don't use it
+            //            (bool accessGranted, string userType) = isCorrectLoginData(login, password); // temporary, don't use it
+
+            Console.WriteLine("\nWciśniej dowolny klawisz, aby kontynuować.");
+            Console.ReadKey();
 
             return (action, user.Role);
         }
@@ -123,7 +128,23 @@ namespace CookBook.UI
 
         public static void UserRemove()
         {
-            Console.WriteLine("\nBrak obsługi zdarzenia.");
+            List<UserCookBook> users = new();
+            int i = 0;
+            users = UserRegister.GetUsersCookBook();
+
+            Console.Clear();
+            Menu UserListMenu = new Menu("Lista użytkowników:");
+
+            foreach (var user in users)
+            {
+                UserListMenu.AddPosition(user.Name, user.Id.ToString() );
+            }
+            UserListMenu.ShowMenu();
+            UserListMenu.OptionSelect();
+
+            RemoveUser.UserDelete(int.Parse(UserListMenu.MenuActionID[UserListMenu.CurrentMenuPosition]));
+
+            Console.WriteLine("\nWskazany uzytkownik został usunięty.");
             Console.WriteLine("\nWciśniej dowolny klawisz, aby kontynuować.");
             Console.ReadKey();
         }

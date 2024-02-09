@@ -10,6 +10,7 @@ namespace CookBook.BuisnesLogic
     {
         static void Main(string[] args)
         {
+            /*
             var NewUser = new UserCookBook()
             {
                 Id = 0,
@@ -48,6 +49,7 @@ namespace CookBook.BuisnesLogic
                 Console.WriteLine(e);
             }
             FormsAddUser.ShowAllUsers(UserRegister.GetUsersCookBook());
+            */
         }
     }
 }
