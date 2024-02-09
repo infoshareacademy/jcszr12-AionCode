@@ -25,7 +25,7 @@ namespace CookBook.BuisnesLogic.Services
             var userAllSerialise = File.ReadAllText(path);
             var users = JsonConvert.DeserializeObject<List<UserCookBook>>(userAllSerialise);
             var user = users.Where(u => u.Name == _login && u.Password == _password)
-                .Select(p => new { id = p.Id, name = p.Email, role = p.Role }).FirstOrDefault();
+                .Select(p => new { id = p.Id, name = p.Name, role = p.Role }).FirstOrDefault();
             
             if (user == null)
             {
