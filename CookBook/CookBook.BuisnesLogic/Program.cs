@@ -27,10 +27,7 @@ namespace CookBook.BuisnesLogic
             try
             {
                 var result = UserLogin.LoginUser(Name: Console.ReadLine(), Password: Console.ReadLine());
-
-               
-                    Console.WriteLine(@"Witaj : {1} |Id: {0} |email: {2} |rola: {3} ", result.Item2, result.Item1,  result.Item3);
-               
+                Console.WriteLine($"Witaj: {result.Item2}, Twój Id to: {result.Item1}, masz prawa: {result.Item3}");
             }
             catch (ExceptionLogin ex)
             {
