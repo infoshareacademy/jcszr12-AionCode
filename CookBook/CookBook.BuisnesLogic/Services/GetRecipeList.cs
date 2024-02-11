@@ -11,8 +11,7 @@ namespace CookBook.BuisnesLogic.Services
 {
     public class GetRecipeList //Mariusz
     {
-
-        private static string path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "przepisy.json");
+        private static string path = PathProviderRecipe.GetRecipeFile();
 
         public static List<Recipe> ReadRecipesFromFile()
         {
