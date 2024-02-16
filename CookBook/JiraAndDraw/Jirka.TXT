@@ -1,0 +1,16 @@
+1. Utworzenie asp.net MVC ze strukturą katalogów i klasami (controllers) oraz plikami cshtml -> Mariusz
+2. Strona: index.cshtml (strona startowa). -> Andrzej
+3. Strona: _Layout.cshtml (strona wspólna dla wszystkich). -> Andrzej
+4. Implementacja HomeContoller + serwisy.
+4a. Register/Contact/Privacy/TipsAndTricks/Articles .cshtml
+5. Implementacja Login Controller + serwisy.
+5a. Error/Moderator/StandardUser/Admin .cshtml
+6. Implementacja ManagerController + serwisy
+7.Implementacja RecipesController + serwisy
+7a. Strona: RecipesAll.cshtml
+8. Implementacja SearchRecipeController + serwisy
+9. Implementacja ShowRecipeController + serwisy
+9a. Strona: Recipes.cshtml
+10. Implementacja ModifyRecipeController
+
+
