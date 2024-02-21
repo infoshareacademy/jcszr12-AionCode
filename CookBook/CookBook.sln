@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookBook.BuisnesLogic", "CookBook.BuisnesLogic\CookBook.BuisnesLogic.csproj", "{D0EA34C0-86AA-4505-9414-996C01402BF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookBook.UI", "CookBook.UI\CookBook.UI.csproj", "{2E05A63C-18B8-44E3-B53C-702245789FC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookBook.UI", "CookBook.UI\CookBook.UI.csproj", "{2E05A63C-18B8-44E3-B53C-702245789FC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AionCodeMVC", "AionCodeMVC\AionCodeMVC.csproj", "{AE8C96B7-E1FB-4CD5-B938-686C37545677}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2E05A63C-18B8-44E3-B53C-702245789FC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E05A63C-18B8-44E3-B53C-702245789FC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E05A63C-18B8-44E3-B53C-702245789FC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE8C96B7-E1FB-4CD5-B938-686C37545677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE8C96B7-E1FB-4CD5-B938-686C37545677}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE8C96B7-E1FB-4CD5-B938-686C37545677}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE8C96B7-E1FB-4CD5-B938-686C37545677}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
