@@ -10,6 +10,7 @@ namespace CookBook.BuisnesLogic
     {
         static void Main(string[] args)
         {
+            /*
             var NewUser = new UserCookBook()
             {
                 Id = 0,
@@ -21,7 +22,6 @@ namespace CookBook.BuisnesLogic
             if (!UserRegister.AddUser(NewUser)) Console.WriteLine("\nJest już taki użytkownik!");
 
             FormsAddUser.ShowAllUsers(UserRegister.GetUsersCookBook());
-
             Console.WriteLine();
             Console.WriteLine("Podaj login i hasło: ");
 
@@ -38,7 +38,18 @@ namespace CookBook.BuisnesLogic
             {
                 Console.WriteLine("Niestety, " + ex.Message);
             }
-
+            Console.WriteLine("Podaj id użytkownika do usunięcia: ");
+            Console.WriteLine();
+            try
+            {
+                RemoveUser.UserDelete(int.Parse(Console.ReadLine()));
+            }
+            catch(ExceptionDeleteUser e)
+            {
+                Console.WriteLine(e);
+            }
+            FormsAddUser.ShowAllUsers(UserRegister.GetUsersCookBook());
+            */
         }
     }
 }
