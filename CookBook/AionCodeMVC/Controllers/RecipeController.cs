@@ -23,7 +23,8 @@ namespace AionCodeMVC.Controllers
         // GET: RecipeController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var model = _recipe.GetById(id);
+            return View(model);
         }
 
         // GET: RecipeController/Create
@@ -35,10 +36,14 @@ namespace AionCodeMVC.Controllers
         // POST: RecipeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Recipe model)
         {
             try
-            {
+            {if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+                _recipe.Create(model);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -50,17 +55,10 @@ namespace AionCodeMVC.Controllers
         // GET: RecipeController/Edit/5
         public ActionResult Edit(int id)
         {
-            var recipeToEdit = _recipe.GetById(id);
+            var model = _recipe.GetById(id);
 
-            if (recipeToEdit != null)
-            {
-                return View(recipeToEdit);
-            }
-            else 
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            
+            return View(model);
+
         }
 
         // POST: RecipeController/Edit/5
@@ -97,6 +95,7 @@ namespace AionCodeMVC.Controllers
         {
             try
             {
+                _recipe.DeleteById(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
