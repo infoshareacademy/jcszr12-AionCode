@@ -1,18 +1,14 @@
 ﻿using CookBook.BuisnesLogic.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CookBook.BuisnesLogic.Services
 {
-    public class RecipeService
+    public class RecipeService : IRecipeService
     {
-        private static int _idCounter = 0;
-        private readonly List<Recipe> _recipe = GetRecipeList.ReadRecipesFromFile();
+        private static int _idCounter = 3;
+        private readonly IList<Recipe> _recipe = GetRecipeList.ReadRecipesFromFile();
 
-        public List<Recipe> GetAll() 
+        public IEnumerable<Recipe> GetAll() 
         {
             return _recipe;
         }
@@ -29,20 +25,36 @@ namespace CookBook.BuisnesLogic.Services
             recipe.Id = GetNextId();
             _recipe.Add(recipe);
         }
-        public void Update(Recipe model) 
+        public bool Update(int id, Recipe model) 
         {
             var recipe = GetById(model.Id);
 
             recipe.Name = model.Name;
             recipe.Category = model.Category;
             recipe.Description = model.Description;
-            //recipe.IngredientList = model.IngredientList;
+            recipe.IngredientList = model.IngredientList;
+
+            return true;
         }
 
         private int GetNextId()
         {
+            //GetMaxId(); ???? 
             _idCounter++;
             return _idCounter;
+        }
+
+        public bool DeleteById(int id)
+        {
+            return _recipe.Remove(GetById(id));
+        }
+
+        Recipe IRecipeService.Create(Recipe newRecipe)
+        {
+            newRecipe.Id = _recipe.Max(recipe => recipe.Id) + 1;
+            _recipe.Add(newRecipe);
+
+            return newRecipe;
         }
     }
 }
