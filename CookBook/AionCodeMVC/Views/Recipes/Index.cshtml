@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers;
+@model IEquatable<AionCodeMVC.Models.Recipes>
+@{
+    Layout = "_Layout";
+    int lenght = ViewBag.quantity;
+}
+
+<section class="cookbook">
+
+    <div class="container-fluid">
+
+        <header>
+
+            <h1>Lista przepisów</h1>
+            <p>Przedstawiamy listę przepisów z naszej biblioteki</p>
+
+        </header>
+        <div class="row g-0">
+
+            @for(int i = 0; i < 12 * lenght; i++)
+            {
+                <div class="col-sm-6 col-md-4 col-xl-3 bg-gradient">
+                    <recipesCss>
+                        <a href="#"><img src="~/img/recipes/null.png" alt="Nazwa potrawy"></a>
+                        <figcaption>Nazwa potrawy</figcaption>
+                    </recipesCss>
+                </div>
+            }
+
+
+
+        </div>
+    </div>
+   
+
+</section> @TempData["Active"]
