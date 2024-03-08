@@ -30,7 +30,7 @@ namespace CookBook.BuisnesLogic.Services
         {
             var recipesList = ReadRecipesFromFile();
             recipesList.Add(recipe);
-            var recipesJson = JsonConvert.SerializeObject(recipesList);
+            var recipesJson = JsonConvert.SerializeObject(recipesList, Formatting.Indented);
             File.WriteAllText(path, recipesJson);
         }
 
