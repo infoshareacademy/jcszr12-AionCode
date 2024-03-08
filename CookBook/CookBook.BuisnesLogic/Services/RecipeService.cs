@@ -24,6 +24,7 @@ namespace CookBook.BuisnesLogic.Services
         {
             recipe.Id = GetNextId();
             _recipe.Add(recipe);
+            GetRecipeList.SaveRecipeToFile(recipe);
         }
         public bool Update(int id, Recipe model) 
         {

@@ -8,7 +8,7 @@ namespace AionCodeMVC.Controllers
 {
     public class RecipeController : Controller
     {
-        private readonly RecipeService _recipe;
+        private  RecipeService _recipe;
         // GET: RecipeController
         public RecipeController() 
         {
@@ -38,18 +38,8 @@ namespace AionCodeMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Recipe model)
         {
-            try
-            {if (!ModelState.IsValid)
-                {
-                    return View(model);
-                }
-                _recipe.Create(model);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _recipe.Create(model);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: RecipeController/Edit/5

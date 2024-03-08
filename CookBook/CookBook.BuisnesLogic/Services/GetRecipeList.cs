@@ -25,6 +25,14 @@ namespace CookBook.BuisnesLogic.Services
             }
             return recipesList;
         }
+        
+        public static void SaveRecipeToFile(Recipe recipe)
+        {
+            var recipesList = ReadRecipesFromFile();
+            recipesList.Add(recipe);
+            var recipesJson = JsonConvert.SerializeObject(recipesList);
+            File.WriteAllText(path, recipesJson);
+        }
 
         private static void CreateDataFileIfFileDoesntExist()
         {
