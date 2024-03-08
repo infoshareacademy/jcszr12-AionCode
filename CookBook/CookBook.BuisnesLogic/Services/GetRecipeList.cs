@@ -1,15 +1,10 @@
 ﻿using CookBook.BuisnesLogic.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace CookBook.BuisnesLogic.Services
 {
-    public class GetRecipeList //Mariusz
+    public class GetRecipeList 
     {
         private static string path = PathProviderRecipe.GetRecipeFile();
 

@@ -33,7 +33,7 @@ namespace CookBook.BuisnesLogic.Services
                 throw new ExceptionRecipeNot();
             }
 
-            var json = JsonConvert.SerializeObject(recipes);
+            var json = JsonConvert.SerializeObject(recipes, Formatting.Indented);
             File.WriteAllText(path, json);
             return statusRecipe;
         }
