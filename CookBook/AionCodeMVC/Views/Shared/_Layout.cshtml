@@ -32,6 +32,18 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if (TempData.ContainsKey("Success added"))
+            {
+                <div class="alert alert-success" role="alert"> @TempData["Success added"]</div>
+            }
+            @if (TempData.ContainsKey("Success delete"))
+            {
+                <div class="alert alert-success" role="alert"> @TempData["Success delete"]</div>
+            }
+            @if (TempData.ContainsKey("Success edit"))
+            {
+                <div class="alert alert-success" role="alert"> @TempData["Success edit"]</div>
+            }
             @RenderBody()
         </main>
     </div>

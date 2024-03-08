@@ -21,16 +21,28 @@ namespace CookBook.BuisnesLogic.Services
             _recipe.Add(recipe); 
             GetRecipeList.SaveRecipeToFile(recipe); 
         }
-        public bool Update(int id, Recipe model) 
+        public bool Update(int id, Recipe recipe) 
         {
-            var recipe = GetById(model.Id);
+            var recipeToRemove = GetById(id);
+            if (recipeToRemove != null)
+            {
+                _recipe.Remove(recipeToRemove);
+                DeleteRecipe.RecipeDelete(recipeToRemove.Id);
+                recipeToRemove = null;
 
-            recipe.Name = model.Name;
-            recipe.Category = model.Category;
-            recipe.Description = model.Description;
-            recipe.IngredientList = model.IngredientList;
+                if (recipeToRemove == null)
+                {
+                    recipe.Id = _recipe.Max(x => x.Id) + 1;
+                    _recipe.Add(recipe);
+                    GetRecipeList.SaveRecipeToFile(recipe);
+                }
+                return true;
 
-            return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public bool DeleteById(int id)
         {

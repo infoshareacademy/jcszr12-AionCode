@@ -39,6 +39,7 @@ namespace AionCodeMVC.Controllers
         public ActionResult Create(Recipe model)
         {
             _recipe.Create(model);
+            TempData["Success added"] = "Produkt został dodany";
             return RedirectToAction(nameof(Index));
         }
 
@@ -56,14 +57,10 @@ namespace AionCodeMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Recipe recipe)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(recipe);
-            }
-
             try
             {
                 _recipe.Update(id, recipe);
+                TempData["Success edit"] = "Pomyślnie zmieniono dane";
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -74,7 +71,7 @@ namespace AionCodeMVC.Controllers
 
         // GET: RecipeController/Delete/5
         public ActionResult Delete(int id)
-        {
+        {   
             return View();
         }
 
@@ -86,6 +83,7 @@ namespace AionCodeMVC.Controllers
             try
             {
                 _recipe.DeleteById(id);
+                TempData["Success delete"] = "Produkt został usunięty";
                 return RedirectToAction(nameof(Index));
             }
             catch
