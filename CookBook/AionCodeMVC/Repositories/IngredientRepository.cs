@@ -81,29 +81,5 @@ namespace AionCodeMVC.Repositories
 
 
 
-
-
-        /*        public static bool RecipeAdd(Recipe newRecipe)
-        {
-            bool statusRecipe = false;
-            var recipes = GetRecipe();
-
-            if (!recipes.Any(i => i.Name == newRecipe.Name || i.Id == newRecipe.Id))
-            {
-                newRecipe.Id = recipes.Count() + 1;
-                recipes.Add(newRecipe);
-                statusRecipe = true;
-
-            }
-            else 
-            {
-                throw new ExceptionAddRecipe();
-            }
-
-            var json = JsonConvert.SerializeObject(recipes);
-            File.WriteAllText(path, json);
-            return statusRecipe;
-        }*/
-
     }
 }
