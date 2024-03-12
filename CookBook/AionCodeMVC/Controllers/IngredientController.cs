@@ -7,8 +7,8 @@ namespace AionCodeMVC.Controllers
     public class IngredientController : Controller
     {
 
-        private IIngredientService _ingredientService;
-        public IngredientController(IIngredientService ingredientService)
+        private IGetIngredientService _ingredientService;
+        public IngredientController(IGetIngredientService ingredientService)
         {
                 _ingredientService = ingredientService;
         }
@@ -17,14 +17,15 @@ namespace AionCodeMVC.Controllers
         // GET: IngredientController
         public ActionResult Index()
         {
-            var allIngredients = _ingredientService.GetAll();
-            return View(allIngredients);
+            var model = _ingredientService.GetAll();
+            return View(model);
         }
 
         // GET: IngredientController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var model = _ingredientService.GetByID(id);
+            return View(model);
         }
 
         // GET: IngredientController/Create

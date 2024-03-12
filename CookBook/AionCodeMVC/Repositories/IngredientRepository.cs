@@ -11,9 +11,12 @@ namespace AionCodeMVC.Repositories
         {
             return ReadIngredientsFomJson();
         }
+        public Ingredient GetByID(int id)
+        {
+            return ReadIngredientsFomJson().FirstOrDefault(x=> x.Id == id);
+        }
 
         private static string path = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), "ingredients.json");
-
         private static List<Ingredient> ReadIngredientsFomJson()
         {
             if (!File.Exists(path))

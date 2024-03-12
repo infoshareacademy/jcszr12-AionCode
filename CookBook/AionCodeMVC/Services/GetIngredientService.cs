@@ -4,10 +4,10 @@ using Newtonsoft.Json;
 
 namespace AionCodeMVC.Services
 {
-    public class IngredientService : IIngredientService
+    public class GetIngredientService : IGetIngredientService
     {
         private IIngredientRepository _repository;
-        public IngredientService(IIngredientRepository repository)
+        public GetIngredientService(IIngredientRepository repository)
         {
             _repository = repository;
         }
@@ -15,6 +15,11 @@ namespace AionCodeMVC.Services
         public IEnumerable<Ingredient> GetAll()
         {
             return _repository.GetAll();
+        }
+
+        public Ingredient GetByID(int id)
+        {
+            return _repository.GetByID(id);
         }
     }
 }
