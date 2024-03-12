@@ -1,3 +1,6 @@
+using AionCodeMVC.Interfaces;
+using AionCodeMVC.Repositories;
+
 namespace AionCodeMVC
 {
     public class Program
@@ -8,6 +11,9 @@ namespace AionCodeMVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+
+            builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
 
             var app = builder.Build();
 
