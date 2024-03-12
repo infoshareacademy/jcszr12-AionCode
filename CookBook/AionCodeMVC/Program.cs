@@ -1,5 +1,6 @@
 using AionCodeMVC.Interfaces;
 using AionCodeMVC.Repositories;
+using AionCodeMVC.Services;
 
 namespace AionCodeMVC
 {
@@ -14,6 +15,7 @@ namespace AionCodeMVC
 
 
             builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
+            builder.Services.AddScoped<IIngredientService, IngredientService>();
 
             var app = builder.Build();
 

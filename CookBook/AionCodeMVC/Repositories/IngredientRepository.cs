@@ -12,16 +12,9 @@ namespace AionCodeMVC.Repositories
             new Ingredient{ Id =3, Name = "Kurczak", Type = "Mięso", Description = "Mięso drobiowe", Calories = 165, Carbohydrates = 0, Proteins = 31, Fats = 3.6, Price = 19.99m},
         };
 
-
-
-
-
-
-
-
         public IEnumerable<Ingredient> GetAll()
         {
-            throw new NotImplementedException();
+            return _ingredients;
         }
     }
 }
