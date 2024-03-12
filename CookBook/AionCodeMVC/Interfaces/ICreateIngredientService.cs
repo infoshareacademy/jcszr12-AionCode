@@ -2,11 +2,8 @@
 
 namespace AionCodeMVC.Interfaces
 {
-    public interface IIngredientRepository
+    public interface ICreateIngredientService
     {
-        public IEnumerable<Ingredient> GetAll();
-        public Ingredient GetByID(int id);
         public void CreateIngredient(Ingredient ingredient);
-
     }
 }
