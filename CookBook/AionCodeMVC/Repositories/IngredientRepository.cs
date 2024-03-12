@@ -46,13 +46,35 @@ namespace AionCodeMVC.Repositories
 
         public void DeleteIngredient(int id)
         {
-            var recipes = GetAll().ToList();
-            var recipeToDelete = recipes.FirstOrDefault(r => r.Id == id);
-            if (recipeToDelete != null)
+            var ingredients = GetAll().ToList();
+            var ingredientToDelete = ingredients.FirstOrDefault(r => r.Id == id);
+            if (ingredientToDelete != null)
             {
-                recipes.Remove(recipeToDelete);
+                ingredients.Remove(ingredientToDelete);
             }
-            var json = JsonConvert.SerializeObject(recipes);
+            var json = JsonConvert.SerializeObject(ingredients);
+            File.WriteAllText(path, json);
+
+        }
+
+        public void Edit(Ingredient ingredient)
+        {
+            var ingredients = GetAll().ToList();
+            var ingredientToEdit = ingredients.FirstOrDefault(r => r.Id == ingredient.Id);
+
+            if (ingredientToEdit!=null)
+            {
+                ingredientToEdit.Price = ingredient.Price;
+                ingredientToEdit.Carbohydrates = ingredient.Carbohydrates;
+                ingredientToEdit.Proteins = ingredient.Proteins;
+                ingredientToEdit.Calories = ingredient.Calories;
+                ingredientToEdit.Description = ingredient.Description;
+                ingredientToEdit.Fats = ingredient.Fats;
+                ingredientToEdit.Name = ingredient.Name;
+                ingredientToEdit.Type = ingredient.Type;
+            }
+
+            var json = JsonConvert.SerializeObject(ingredients);
             File.WriteAllText(path, json);
 
         }

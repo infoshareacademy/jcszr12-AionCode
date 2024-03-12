@@ -6,7 +6,7 @@ namespace AionCodeMVC.Models
     {
         [Display(Name = "Lp.")]
         public int Id { get; set; }
-        [Display (Name = "Imię")]
+        [Display (Name = "Nazwa")]
         public string Name { get; set; }
         [Display(Name = "Opis")]
         public string Description { get; set; }
@@ -14,9 +14,9 @@ namespace AionCodeMVC.Models
         public string Type { get; set; }
         [Display(Name = "Kalorie [kcal]")]
         public double Calories { get; set; }
-        [Display(Name = "Białgo [g]")]
+        [Display(Name = "Białko [g]")]
         public double Proteins { get; set; }
-        [Display(Name = "tłuszcze [g]")]
+        [Display(Name = "Tłuszcze [g]")]
         public double Fats { get; set; }
         [Display(Name = "Węglowodany [g]")]
         public double Carbohydrates { get; set; }

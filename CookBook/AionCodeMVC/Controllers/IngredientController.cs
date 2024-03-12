@@ -11,11 +11,14 @@ namespace AionCodeMVC.Controllers
         private IGetIngredientService _getIngredientService;
         private ICreateIngredientService _createIngredientService;
         private IDeleteIngredientService _deleteIngredientService;
-        public IngredientController(IGetIngredientService getIngredientService, ICreateIngredientService createIngredientService, IDeleteIngredientService deleteIngredientService)
+        private IEditIngredientService _editIngredientService;
+
+        public IngredientController(IGetIngredientService getIngredientService, ICreateIngredientService createIngredientService, IDeleteIngredientService deleteIngredientService, IEditIngredientService editIngredientService)
         {
             _getIngredientService = getIngredientService;
             _createIngredientService= createIngredientService;
             _deleteIngredientService = deleteIngredientService;
+            _editIngredientService = editIngredientService;
         }
 
 
@@ -64,16 +67,18 @@ namespace AionCodeMVC.Controllers
         // GET: IngredientController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var model = _getIngredientService.GetByID(id);
+            return View(model);
         }
 
         // POST: IngredientController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Ingredient model)
         {
             try
             {
+                _editIngredientService.Edit(model);
                 return RedirectToAction(nameof(Index));
             }
             catch

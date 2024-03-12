@@ -8,6 +8,7 @@ namespace AionCodeMVC.Interfaces
         public Ingredient GetByID(int id);
         public void CreateIngredient(Ingredient ingredient);
         public void DeleteIngredient(int id);
+        public void Edit(Ingredient ingredient);
 
     }
 }
