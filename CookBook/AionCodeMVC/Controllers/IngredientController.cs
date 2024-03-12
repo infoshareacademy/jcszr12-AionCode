@@ -10,10 +10,12 @@ namespace AionCodeMVC.Controllers
 
         private IGetIngredientService _getIngredientService;
         private ICreateIngredientService _createIngredientService;
-        public IngredientController(IGetIngredientService getIngredientService, ICreateIngredientService createIngredientService)
+        private IDeleteIngredientService _deleteIngredientService;
+        public IngredientController(IGetIngredientService getIngredientService, ICreateIngredientService createIngredientService, IDeleteIngredientService deleteIngredientService)
         {
             _getIngredientService = getIngredientService;
             _createIngredientService= createIngredientService;
+            _deleteIngredientService = deleteIngredientService;
         }
 
 
@@ -58,27 +60,6 @@ namespace AionCodeMVC.Controllers
             }
         }
 
-        /*
-         *        // GET: IngredientController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: IngredientController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
 
         // GET: IngredientController/Edit/5
         public ActionResult Edit(int id)
@@ -104,16 +85,18 @@ namespace AionCodeMVC.Controllers
         // GET: IngredientController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var model = _getIngredientService.GetByID(id);
+            return View(model);
         }
 
         // POST: IngredientController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Ingredient ingredient)
         {
             try
             {
+                _deleteIngredientService.DeleteIngredient(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

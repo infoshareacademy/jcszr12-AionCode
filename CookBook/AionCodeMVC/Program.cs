@@ -16,7 +16,8 @@ namespace AionCodeMVC
 
             builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
             builder.Services.AddScoped<IGetIngredientService, GetIngredientService>();
-            builder.Services.AddScoped<ICreateIngredientService,  CreateIngredientService>();
+            builder.Services.AddScoped<ICreateIngredientService, CreateIngredientService>();
+            builder.Services.AddScoped<IDeleteIngredientService, DeleteIngredientService>();
 
             var app = builder.Build();
 
