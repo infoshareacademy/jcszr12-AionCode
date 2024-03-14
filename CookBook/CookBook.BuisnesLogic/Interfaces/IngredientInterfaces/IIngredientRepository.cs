@@ -1,6 +1,5 @@
-﻿using AionCodeMVC.Models;
-
-namespace AionCodeMVC.Interfaces
+﻿using CookBook.BuisnesLogic.Models;
+namespace CookBook.BuisnesLogic.Interfaces.IngredientInterfaces
 {
     public interface IIngredientRepository
     {

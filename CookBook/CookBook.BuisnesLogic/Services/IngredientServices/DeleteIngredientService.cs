@@ -1,6 +1,7 @@
-﻿using AionCodeMVC.Interfaces;
+﻿using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+using CookBook.BuisnesLogic.Models;
 
-namespace AionCodeMVC.Services
+namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
     public class DeleteIngredientService : IDeleteIngredientService
     {

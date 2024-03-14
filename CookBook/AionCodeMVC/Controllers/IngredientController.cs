@@ -1,5 +1,6 @@
-﻿using AionCodeMVC.Interfaces;
-using AionCodeMVC.Models;
+﻿using AionCodeMVC.Models;
+using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+using CookBook.BuisnesLogic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

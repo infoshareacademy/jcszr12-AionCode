@@ -1,4 +1,5 @@
-﻿namespace AionCodeMVC.Interfaces
+﻿
+namespace CookBook.BuisnesLogic.Interfaces.IngredientInterfaces
 {
     public interface IDeleteIngredientService
     {

@@ -1,6 +1,6 @@
-using AionCodeMVC.Interfaces;
+using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+using CookBook.BuisnesLogic.Services.IngredientServices;
 using AionCodeMVC.Repositories;
-using AionCodeMVC.Services;
 
 namespace AionCodeMVC
 {

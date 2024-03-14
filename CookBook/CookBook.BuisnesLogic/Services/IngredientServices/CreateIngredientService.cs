@@ -1,7 +1,7 @@
-﻿using AionCodeMVC.Interfaces;
-using AionCodeMVC.Models;
+﻿using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+using CookBook.BuisnesLogic.Models;
 
-namespace AionCodeMVC.Services
+namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
     public class CreateIngredientService : ICreateIngredientService
     {

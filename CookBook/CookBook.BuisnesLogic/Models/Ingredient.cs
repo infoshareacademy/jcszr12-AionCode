@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AionCodeMVC.Models
+namespace CookBook.BuisnesLogic.Models
 {
     public class Ingredient
     {
