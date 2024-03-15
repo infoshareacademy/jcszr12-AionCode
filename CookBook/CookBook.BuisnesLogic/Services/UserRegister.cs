@@ -34,7 +34,7 @@ namespace CookBook.BuisnesLogic.Services
 
             if (!users.Any(i => i.Name == newUser.Name || i.Name == newUser.Email))
             {
-                var number = users.Max(a=> a.Id);
+                var number = users.Max(a => a.Id);
                 newUser.Id = number + 1;
                 users.Add(newUser);
                 status = true;

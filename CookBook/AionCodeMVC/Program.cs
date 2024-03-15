@@ -1,6 +1,8 @@
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Services.IngredientServices;
 using AionCodeMVC.Repositories;
+using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
+using CookBook.BuisnesLogic.Services.UserServices;
 
 namespace AionCodeMVC
 {
@@ -19,6 +21,12 @@ namespace AionCodeMVC
             builder.Services.AddScoped<ICreateIngredientService, CreateIngredientService>();
             builder.Services.AddScoped<IDeleteIngredientService, DeleteIngredientService>();
             builder.Services.AddScoped<IEditIngredientService,  EditIngredientService>();
+
+            builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+            builder.Services.AddScoped<IGetUserService, GetUserService>();
+            builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
+            builder.Services.AddScoped<IEditUserService, EditUserService>();
+            builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
 
             var app = builder.Build();
 
