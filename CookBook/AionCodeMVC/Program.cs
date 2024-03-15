@@ -1,3 +1,7 @@
+using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+using CookBook.BuisnesLogic.Services.IngredientServices;
+using AionCodeMVC.Repositories;
+
 namespace AionCodeMVC
 {
     public class Program
@@ -8,6 +12,13 @@ namespace AionCodeMVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+
+            builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
+            builder.Services.AddScoped<IGetIngredientService, GetIngredientService>();
+            builder.Services.AddScoped<ICreateIngredientService, CreateIngredientService>();
+            builder.Services.AddScoped<IDeleteIngredientService, DeleteIngredientService>();
+            builder.Services.AddScoped<IEditIngredientService,  EditIngredientService>();
 
             var app = builder.Build();
 
