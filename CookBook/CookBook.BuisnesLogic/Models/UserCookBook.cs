@@ -12,9 +12,17 @@ namespace CookBook.BuisnesLogic.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Display(Name = "Imię i Nazwisko")]
         public string Name { get; set; }
+
+        [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "Hasło")]
         public string Password { get; set; }
+
+        [Display(Name = "Rola")]
         public  Roles Role { get; set; }   
 
     }
