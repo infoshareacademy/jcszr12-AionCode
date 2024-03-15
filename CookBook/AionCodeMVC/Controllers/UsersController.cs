@@ -96,18 +96,20 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: UsersController/Delete/5
-        public ActionResult Remove(int id)
+        public ActionResult Delete(int id)
         {
-            return View();
+            var model = _getUserService.GetByID(id);
+            return View(model);
         }
 
         // POST: UsersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Remove(int id, IFormCollection collection)
+        public ActionResult Delete(int id, UserCookBook user)
         {
             try
             {
+                 _deleteUserService.DeleteUser(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

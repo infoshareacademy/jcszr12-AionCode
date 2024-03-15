@@ -1,11 +1,10 @@
 ﻿@model CookBook.BuisnesLogic.Models.UserCookBook
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
 }
 
-<h1>O użytkowniku</h1>
-
+<h3>Jesteś pewien, że chcesz usunąc to konto użytkownika?</h3>
 <div>
     <hr />
     <dl class="row">
@@ -40,8 +39,9 @@
             @Html.DisplayFor(model => model.Role)
         </dd>
     </dl>
-</div>
-<div>
-    @Html.ActionLink("Edycja", "Edit", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+    
+    <form asp-action="Delete">
+        <input type="submit" value="Usuń" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
 </div>
