@@ -11,4 +11,14 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CookBook.BuisnesLogic\CookBook.BuisnesLogic.csproj" />
+    <ProjectReference Include="..\CookBook.UI\CookBook.UI.csproj" />
+  </ItemGroup>
+
 </Project>
