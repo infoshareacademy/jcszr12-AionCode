@@ -16,18 +16,16 @@ namespace AionCodeMVC.Repositories
             if (!File.Exists(path))
             {
                 File.Create(path).Dispose();
-            }  
-            
+            }              
             var recipeAllSerialize = File.ReadAllText(path);
             var recipeList = JsonConvert.DeserializeObject<List<Recipe>>(recipeAllSerialize);
+
             if (recipeList == null)
             {
                 recipeList = new List<Recipe>();
             }
-            return recipeList;
-            
+            return recipeList;            
         }
-
         public void CreateRecipe(Recipe recipe)
         {
             var recipes = GetAll().ToList();
@@ -40,7 +38,6 @@ namespace AionCodeMVC.Repositories
             var json = JsonConvert.SerializeObject(recipes, Formatting.Indented);
             File.WriteAllText(path, json);
         }
-
         public void DeleteRecipe(int id)
         {
             var recipes = GetAll().ToList();
@@ -52,7 +49,6 @@ namespace AionCodeMVC.Repositories
             var json = JsonConvert.SerializeObject(recipes, Formatting.Indented);
             File.WriteAllText(path, json);
         }
-
         public void EditRecipe(Recipe recipe)
         {
             var recipes = GetAll().ToList();
