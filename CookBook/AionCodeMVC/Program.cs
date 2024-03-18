@@ -3,6 +3,8 @@ using CookBook.BuisnesLogic.Services.IngredientServices;
 using AionCodeMVC.Repositories;
 using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using CookBook.BuisnesLogic.Services.UserServices;
+using CookBook.BuisnesLogic.Interfaces.RecipeInterfaces;
+using CookBook.BuisnesLogic.Services.RecipeServices;
 
 namespace AionCodeMVC
 {
@@ -15,6 +17,11 @@ namespace AionCodeMVC
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+            builder.Services.AddScoped<IGetRecipeService, GetRecipeService>();
+            builder.Services.AddScoped<ICreateRecipeService, CreateRecipeService>();
+            builder.Services.AddScoped<IDeleteRecipeService, DeleteRecipeService>();
+            builder.Services.AddScoped<IEditRecipeService, EditRecipeService>();
 
             builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
             builder.Services.AddScoped<IGetIngredientService, GetIngredientService>();

@@ -3,13 +3,9 @@ using CookBook.BuisnesLogic.Models;
 
 namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
-    public class GetIngredientService : IGetIngredientService
+    public class GetIngredientService(IIngredientRepository repository) : IGetIngredientService
     {
-        private IIngredientRepository _repository;
-        public GetIngredientService(IIngredientRepository repository)
-        {
-            _repository = repository;
-        }
+        private readonly IIngredientRepository _repository = repository;
 
         public IEnumerable<Ingredient> GetAll()
         {

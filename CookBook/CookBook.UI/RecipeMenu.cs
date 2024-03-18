@@ -59,7 +59,7 @@ namespace CookBook.UI
             Console.Write("Kategoria potrawy: "); recipe.Category = Console.ReadLine();
             Console.Write("Nazwa potrawy: "); recipe.Name = Console.ReadLine();
             Console.Write("Składniki potrawy (oddziel składniki przecinkiem): "); ingredients = Console.ReadLine().Split(',');
-            for (int ii = 0; ii < ingredients.Length; ii++) ingredients[ii] = ingredients[ii].Trim(); recipe.IngredientList = new List<string>(ingredients);
+            for (int ii = 0; ii < ingredients.Length; ii++) ingredients[ii] = ingredients[ii].Trim(); recipe.IngredientList = null;// new List<string>(ingredients);
             Console.Write("Opis potrawy: "); recipe.Description = Console.ReadLine();
 
             try
