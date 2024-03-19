@@ -23,8 +23,17 @@
         {
             <div class="col-sm-6 col-md-4 col-xl-3 bg-gradient">
                 <recipesCss>
-                    <a href="@Url.Action("Details", "Recipes", new { id = recipe.Id })"><img src="~/img/recipes/null.png" alt="Nazwa potrawy"></a>
-                    <figcaption>@recipe.Name</figcaption>
+                    <a href="@Url.Action("Details", "Recipes", new { id = recipe.Id })">
+                        @if (recipe.imageURL == null)
+                        {
+                             <img src="~/img/recipes/null.png" alt=@recipe.Category>
+                        }
+                        else 
+                        {
+                             <img src=@recipe.imageURL alt=@recipe.Category>
+                        }
+                     </a>
+                            <figcaption>@recipe.Name</figcaption>
                 </recipesCss>
             </div>
         }

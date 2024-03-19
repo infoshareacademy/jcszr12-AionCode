@@ -8,7 +8,7 @@ namespace CookBook.BuisnesLogic.Models
         public string Category { get; set; }    
         public string Description { get; set; }
         public List<string> IngredientList { get; set; }
-        //public double Rating { get; set; }
+        public string imageURL { get; set; }    
 
     }
 

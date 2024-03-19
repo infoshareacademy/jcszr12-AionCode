@@ -5,6 +5,7 @@ using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using CookBook.BuisnesLogic.Services.UserServices;
 using CookBook.BuisnesLogic.Interfaces.RecipeInterfaces;
 using CookBook.BuisnesLogic.Services.RecipeServices;
+using CookBook.BuisnesLogic.Services.BlobServices;
 
 namespace AionCodeMVC
 {
@@ -16,6 +17,8 @@ namespace AionCodeMVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IBlobClientService, BlobCilientService>();
 
             builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
             builder.Services.AddScoped<IGetRecipeService, GetRecipeService>();
