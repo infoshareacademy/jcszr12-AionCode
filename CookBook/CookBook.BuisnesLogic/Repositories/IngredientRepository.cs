@@ -1,11 +1,11 @@
-﻿//using AionCodeMVC.Interfaces;
-using AionCodeMVC.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.IO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Models;
+using Azure.Storage.Blobs;
+using Microsoft.AspNetCore.Http;
 
-namespace AionCodeMVC.Repositories
+namespace CookBook.BuisnesLogic.Repositories
 {
     public class IngredientRepository : IIngredientRepository
     {
@@ -79,6 +79,20 @@ namespace AionCodeMVC.Repositories
             var json = JsonConvert.SerializeObject(ingredients);
             File.WriteAllText(path, json);
 
+        }
+
+        public string AddPhoto(IFormFile file)
+        {
+            var uploadPhotoServiceClient = new BlobServiceClient("UseDevelopmentStorage=true");
+            var ingredientPhotosContainer = uploadPhotoServiceClient.GetBlobContainerClient("ingredient-photos");
+
+            using (var stream = new MemoryStream())
+            {
+                file.CopyTo(stream);
+                stream.Position = 0;
+                ingredientPhotosContainer.UploadBlob(file.FileName, stream);
+                return $"{ingredientPhotosContainer.Uri}/{file.FileName}";
+            }
         }
 
 

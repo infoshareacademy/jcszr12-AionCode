@@ -1,6 +1,7 @@
 ﻿using AionCodeMVC.Models;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Models;
+using CookBook.BuisnesLogic.Services.IngredientServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +14,15 @@ namespace AionCodeMVC.Controllers
         private ICreateIngredientService _createIngredientService;
         private IDeleteIngredientService _deleteIngredientService;
         private IEditIngredientService _editIngredientService;
+        private IUploadIngredientPhotoService _uploadIngredientPhotoService;
 
-        public IngredientController(IGetIngredientService getIngredientService, ICreateIngredientService createIngredientService, IDeleteIngredientService deleteIngredientService, IEditIngredientService editIngredientService)
+        public IngredientController(IGetIngredientService getIngredientService, ICreateIngredientService createIngredientService, IDeleteIngredientService deleteIngredientService, IEditIngredientService editIngredientService, IUploadIngredientPhotoService uploadIngredientPhotoService)
         {
             _getIngredientService = getIngredientService;
             _createIngredientService= createIngredientService;
             _deleteIngredientService = deleteIngredientService;
             _editIngredientService = editIngredientService;
+            _uploadIngredientPhotoService = uploadIngredientPhotoService;
         }
 
 
@@ -110,5 +113,31 @@ namespace AionCodeMVC.Controllers
                 return View();
             }
         }
+
+
+
+        
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(IFormFile file)
+        {
+            try
+            {
+                var urlToSource = _uploadIngredientPhotoService.AddPhoto(file);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+
+
     }
 }
