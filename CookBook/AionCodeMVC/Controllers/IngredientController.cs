@@ -123,11 +123,11 @@ namespace AionCodeMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(IFormFile file)
+        public ActionResult Upload(IFormFile file, int id)
         {
             try
             {
-                var urlToSource = _uploadIngredientPhotoService.AddPhoto(file);
+                var urlToSource = _uploadIngredientPhotoService.AddPhoto(file, id);
                 return RedirectToAction(nameof(Index));
             }
             catch
