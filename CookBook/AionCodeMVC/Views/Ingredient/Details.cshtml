@@ -1,71 +1,72 @@
 ﻿@model CookBook.BuisnesLogic.Models.Ingredient
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Szczegółowe informacje";
 }
 
-<h1>Szczegółowe informacje.</h1>
+<h1 class ="col-12 text-center  bg-transparent">@ViewData["Title"]</h1>
 
-<div>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
+<div class="row">
+    
+    <div class=" col-6 offset-3  p-2 rounded-2 ">
+
+        <dt >
             @Html.DisplayNameFor(model => model.Id)
         </dt>
-        <dd class = "col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Id)
         </dd>
-        <dt class = "col-sm-2">
+        <dt >
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-        <dd class = "col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt class = "col-sm-2">
+        <dt >
             @Html.DisplayNameFor(model => model.Type)
         </dt>
-        <dd class = "col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Type)
         </dd>
-        <dt class = "col-sm-2">
+        <dt >
             @Html.DisplayNameFor(model => model.Calories)
         </dt>
-        <dd class = "col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Calories)
         </dd>
-        <dt class = "col-sm-2">
+        <dt >
             @Html.DisplayNameFor(model => model.Proteins)
         </dt>
-        <dd class = "col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Proteins)
         </dd>
-        <dt class = "col-sm-2">
+        <dt >
             @Html.DisplayNameFor(model => model.Fats)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Fats)
         </dd>
-        <dt class = "col-sm-2">
+        <dt >
             @Html.DisplayNameFor(model => model.Carbohydrates)
         </dt>
-        <dd class = "col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Carbohydrates)
         </dd>
-        <dt class = "col-sm-2">
+        <dt >
             @Html.DisplayNameFor(model => model.Price)
         </dt>
-        <dd class = "col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Price)
         </dd>
-    </dl>
+    </div>
 </div>
-<div>
+<div class="text-center">
     @Html.ActionLink("Edytuj", "Edit", new { id = Model.Id  }) |
     <a asp-action="Index">Powrót</a>
 </div>
