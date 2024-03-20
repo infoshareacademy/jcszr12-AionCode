@@ -9,7 +9,7 @@ namespace CookBook.BuisnesLogic.Interfaces.IngredientInterfaces
         public void CreateIngredient(Ingredient ingredient);
         public void DeleteIngredient(int id);
         public void Edit(Ingredient ingredient);
-        public string AddPhoto(IFormFile file);
+        public string AddPhoto(IFormFile file, int id);
 
     }
 }

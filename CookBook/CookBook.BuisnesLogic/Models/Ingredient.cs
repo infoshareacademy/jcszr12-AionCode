@@ -22,5 +22,7 @@ namespace CookBook.BuisnesLogic.Models
         public double Carbohydrates { get; set; }
         [Display(Name = "Szacowana cena [zł.]")]
         public decimal Price { get; set; }
+        public string? PhotoUrl { get; set; }
+
     }
 }

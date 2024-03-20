@@ -13,9 +13,9 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
             _repository = repository;
         }
 
-        public string AddPhoto(IFormFile file)
+        public string AddPhoto(IFormFile file, int id)
         { 
-            return _repository.AddPhoto(file);
+            return _repository.AddPhoto(file, id);
         }
 
 

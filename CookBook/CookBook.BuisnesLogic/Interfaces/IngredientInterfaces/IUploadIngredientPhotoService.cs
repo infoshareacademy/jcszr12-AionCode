@@ -4,6 +4,6 @@ namespace CookBook.BuisnesLogic.Interfaces.IngredientInterfaces
 {
     public interface IUploadIngredientPhotoService
     {
-        public string AddPhoto(IFormFile file);
+        public string AddPhoto(IFormFile file, int id);
     }
 }

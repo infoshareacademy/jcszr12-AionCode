@@ -81,7 +81,7 @@ namespace CookBook.BuisnesLogic.Repositories
 
         }
 
-        public string AddPhoto(IFormFile file)
+        public string AddPhoto(IFormFile file, int id)
         {
             var uploadPhotoServiceClient = new BlobServiceClient("UseDevelopmentStorage=true");
             var ingredientPhotosContainer = uploadPhotoServiceClient.GetBlobContainerClient("ingredient-photos");
@@ -91,7 +91,18 @@ namespace CookBook.BuisnesLogic.Repositories
                 file.CopyTo(stream);
                 stream.Position = 0;
                 ingredientPhotosContainer.UploadBlob(file.FileName, stream);
-                return $"{ingredientPhotosContainer.Uri}/{file.FileName}";
+
+                var ingredients = GetAll().ToList();
+                var ingredientToEdit = ingredients.FirstOrDefault(r => r.Id == id);
+
+                string photoUrl = $"{ingredientPhotosContainer.Uri}/{file.FileName}";
+
+                ingredientToEdit.PhotoUrl =photoUrl;
+
+                var json = JsonConvert.SerializeObject(ingredients);
+                File.WriteAllText(path, json);
+
+                return photoUrl;
             }
         }
 
