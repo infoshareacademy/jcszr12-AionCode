@@ -1,83 +1,91 @@
 ﻿@model IEnumerable<CookBook.BuisnesLogic.Models.Ingredient>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Spis składników";
 }
 
-<h1>Spis składników.</h1>
+<h1 class="col-12 text-center  bg-transparent">@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Dodaj nowy składnik.</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Calories)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Proteins)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fats)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Carbohydrates)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.ActionLink(item.Name, "Details", new { id = item.Id })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Calories)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Proteins)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fats)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Carbohydrates)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Szczegóły", "Details", new {id=item.Id}) |
-                @Html.ActionLink("Usuń", "Delete", new {  id = item.Id } )
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<h3 class="col-12 text-center font-weight-light">
+    <a asp-action="Create">Dodaj nowy składnik</a>
+</h3>
+<div class="container">
+    <div class="row">
+
+        <div class="col-12 bg-white rounded-2">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Calories)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Proteins)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Fats)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Carbohydrates)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Name, "Details", new { id = item.Id })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Calories)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Proteins)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fats)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Carbohydrates)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Usuń", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

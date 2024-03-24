@@ -18,58 +18,19 @@
 
 <body>
     <!--************************************************************************
-    Heder Blog content starts here
+    Heder content starts here
     ****************************************************************************-->
 
     <header>
-        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-warning ">
+        <!--************************************************************************
+        Menu content starts here
+        ****************************************************************************-->
 
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/AIONcode_logo.png" height="50" alt="" /></a>
-            
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#minemenu" aria-controls="mainmenu" aria-expanded="false" aria-label="navigation switch">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <partial name="_PartialMenu"/>
 
-            <div class="collapse navbar-collapse bg-black" id="minemenu">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Home" asp-action="Privacy" class="nav-link">Privacy</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a asp-area="" asp-controller="Recipes" asp-action="Index" class="nav-link dropdown-toggle"
-                           data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true">Przepisy</a>
-
-                        <div class="dropdown-menu" aria-labelledby="submenu">
-                            <a class="dropdown-item" asp-area="" asp-controller="Recipes" asp-action="Index">Wszystkie </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Śniadania </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Obiady </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index" >Kolacje </a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Ingredient" asp-action="Index" class="nav-link">Składniki</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Users" asp-action="Login" class="nav-link">Logowanie</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Users" asp-action="RegisterUser" class="nav-link">Rejestracja</a>
-                    </li>
-                </ul>
-                <form class="form-inline">
-                    <input class="form-control mr-1" type="search" placeholder="Wyszukaj" aria-label="Wyszukaj" />
-                    <button class="btn btn-light" type="submit">Znajdź</button>
-                </form>
-
-            </div>
-
-        </nav>
+        <!--************************************************************************
+        Logo content starts here
+        ****************************************************************************-->
 
         <section class="logo">
             <div class="container">
@@ -86,9 +47,8 @@
 
     </header>
 
-
     <!--************************************************************************
-    Main Blog content starts here
+    Main content starts here
     ****************************************************************************-->
 
         @RenderBody()
