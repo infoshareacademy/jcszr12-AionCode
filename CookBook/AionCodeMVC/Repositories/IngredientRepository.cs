@@ -1,9 +1,7 @@
 ﻿//using AionCodeMVC.Interfaces;
-using AionCodeMVC.Models;
-using Newtonsoft.Json;
-using System.IO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Models;
+using Newtonsoft.Json;
 
 namespace AionCodeMVC.Repositories
 {

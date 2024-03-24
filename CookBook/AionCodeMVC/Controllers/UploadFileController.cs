@@ -1,5 +1,6 @@
 ﻿using CookBook.BuisnesLogic.Interfaces.RecipeInterfaces;
-using CookBook.BuisnesLogic.Services.BlobServices;
+using CookBook.BuisnesLogic.Models;
+using CookBook.BuisnesLogic.Services.RecipeServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AionCodeMVC.Controllers
@@ -13,15 +14,15 @@ namespace AionCodeMVC.Controllers
             _blobClientService = blobClientService;
         }
 
-        public IActionResult Index() 
+        public IActionResult Index()
         {
             return View();
         }
-        [HttpPost] 
+        [HttpPost]
         public IActionResult Upload(IFormFile file)
         {
             var urlToSource = _blobClientService.AddPhoto(file);
-            return RedirectToAction(nameof(Index));            
+            return RedirectToAction(nameof(Index));
         }
     }
 }
