@@ -35,6 +35,9 @@ h1, h2, h3, h4,h5{
 	.cookbook figcaption {
 		margin-top: 10px;
 	}
+	.cookbook div{
+		border-radius: 6px;
+	}
 .wpis {
 	text-align: justify;
 	font-size: 16px;
