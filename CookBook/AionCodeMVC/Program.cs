@@ -4,6 +4,8 @@ using CookBook.BuisnesLogic.Repositories;
 using AionCodeMVC.Repositories;
 using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using CookBook.BuisnesLogic.Services.UserServices;
+using Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace AionCodeMVC
 {
@@ -12,6 +14,13 @@ namespace AionCodeMVC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            //Add database
+            //builder.Services.AddDbContext<DatabaseContext>(
+        //options => options.UseSqlServer("Server=localhost;Database=AionCodeDatabase;Trusted_Connection=True;TrustServerCertificate=True"));
+            builder.Services.AddDbContext<DatabaseContext>(
+        options => options.UseSqlServer(builder.Configuration.GetConnectionString("AionCodeDatabase")));
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -24,6 +33,7 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IEditIngredientService,  EditIngredientService>();
             builder.Services.AddScoped<IUploadIngredientPhotoService, UploadIngredientPhotoService>();
             
+
 
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IGetUserService, GetUserService>();
