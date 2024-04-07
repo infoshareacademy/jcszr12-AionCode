@@ -10,9 +10,20 @@ namespace Database
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<IngredientDetails> IngredientDetails{ get; set; }
+        public DbSet<IngredientDetails> IngredientDetails { get; set; } = null!;
+        public DbSet<IngridientUsed> IngridientUsed { get; set; } = null!;
+        public DbSet<RecipeDetails> RecipeDetails { get; set; } = null!;
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+
+
+
+
         }
     }
 }

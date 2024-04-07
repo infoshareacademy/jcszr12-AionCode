@@ -19,6 +19,6 @@ namespace Database.Entities
         public string ImagePath { get; set; }
         public DateTime AddDate { get; set; }
         public int GI { get; set; }
-        public int AdderId { get; set; }
+        public int UserCookBookId { get; set; }
     }
 }
