@@ -20,5 +20,6 @@ namespace Database.Entities
         public DateTime AddDate { get; set; }
         public int GI { get; set; }
         public int UserCookBookId { get; set; }
+
     }
 }

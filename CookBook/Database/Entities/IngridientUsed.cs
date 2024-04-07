@@ -10,13 +10,16 @@ namespace Database.Entities
 {
     public class IngridientUsed
     {
-        int Id { get; set; }
-        DateTime AddDate { get; set; }
-        int RecipeDetailsId { get; set; }
+        public int Id { get; set; }
+        public DateTime AddDate { get; set; }
+
+        [ForeignKey("RecipeDetails")]
+        public int RecipeDetailsId { get; set; }
         public virtual RecipeDetails RecipeDetails { get; set; }
-        int IngridientDetailsId { get; set; }
+        [ForeignKey("IngredientDetails")]
+        public int IngridientDetailsId { get; set; }
         public virtual IngredientDetails IngredientDetails { get; set; }
-        decimal Weight { get; set; }
-        
+        public decimal Weight { get; set; }
+
     }
 }
