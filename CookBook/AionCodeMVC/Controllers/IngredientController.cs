@@ -27,9 +27,9 @@ namespace AionCodeMVC.Controllers
 
 
         // GET: IngredientController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var model = _getIngredientService.GetAll();
+            IEnumerable<Ingredient>? model = await _getIngredientService.GetAll();
             return View(model);
         }
 

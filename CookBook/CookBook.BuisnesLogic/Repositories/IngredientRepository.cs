@@ -66,7 +66,6 @@ namespace CookBook.BuisnesLogic.Repositories
 
             if (ingredientToEdit!=null)
             {
-                ingredientToEdit.Price = ingredient.Price;
                 ingredientToEdit.Carbohydrates = ingredient.Carbohydrates;
                 ingredientToEdit.Proteins = ingredient.Proteins;
                 ingredientToEdit.Calories = ingredient.Calories;

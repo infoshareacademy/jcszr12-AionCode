@@ -13,16 +13,30 @@ namespace CookBook.BuisnesLogic.Models
         [Display(Name = "Grupa")]
         public string Type { get; set; }
         [Display(Name = "Kalorie [kcal]")]
-        public double Calories { get; set; }
+        public decimal Calories { get; set; }
         [Display(Name = "Białko [g]")]
-        public double Proteins { get; set; }
+        public decimal Proteins { get; set; }
         [Display(Name = "Tłuszcze [g]")]
-        public double Fats { get; set; }
+        public decimal Fats { get; set; }
         [Display(Name = "Węglowodany [g]")]
-        public double Carbohydrates { get; set; }
-        [Display(Name = "Szacowana cena [zł.]")]
-        public decimal Price { get; set; }
+        public decimal Carbohydrates { get; set; }
+        [Display(Name = "Zdjęcie")]
+        public string ImagePath { get; set; }
+        public DateTime AddDate { get; set; }
+        public int GI {  get; set; }
         public string? PhotoUrl { get; set; }
 
     }
 }
+/*Id int
+Name nvarchar
+Description nvarchar
+Type nvarchar
+Calories decimal
+Proteins decimal
+Fats decimal
+Carbohydrates decimal
+ImagePath ncarchar
+AddDate date
+GI int
+UserCookBookId integer*/
