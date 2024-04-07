@@ -1,0 +1,64 @@
+Table IngredientDetails{
+  Id int [primary key]
+  Name nvarchar
+  Description nvarchar
+  Type nvarchar
+  Calories decimal
+  Proteins decimal
+  Fats decimal
+  Carbohydrates decimal
+  ImagePath ncarchar
+  AddDate date
+  GI int
+  UserCookBookId integer
+}
+
+Table IngredientUsed{
+  Id int [primary key]
+  AddDate date
+  RecipeDetailsId int
+  IngridinetDetailsId int
+  Weight decimal
+}
+
+Table RecipeUsed{
+  Id int [primary key]
+  RecipeDetailsId int
+  AddDate date
+  PartOfDay nvarchar
+  MealDayId int
+}
+
+Table RecipeDetails {
+  Id int [primary key]
+  Name nvarchar
+  Category nvarchar
+  Description nvarchar
+  ImagePath ncarchar
+  AddDate date
+  UserCookBookId int
+}
+
+Table UserCookBook{
+Id int [primary key]
+Name nvarchar
+Email nvarchar
+Password binary(64)
+Role nvarchar
+AddDate date
+}
+
+Table MealDay{
+  Id int [primary key]
+  Day date
+  AddDate date
+  UserCookBookId integer
+}
+
+Ref: "RecipeDetails"."Id" < "IngredientUsed"."RecipeDetailsId"
+Ref: "IngredientDetails"."Id" < "IngredientUsed"."IngridinetDetailsId"
+Ref: "RecipeUsed"."MealDayId" > "MealDay"."Id"
+Ref: "RecipeUsed"."RecipeDetailsId" > "RecipeDetails"."Id"
+Ref: "UserCookBook"."Id" < "IngredientDetails"."UserCookBookId"
+Ref: "UserCookBook"."Id" < "RecipeDetails"."UserCookBookId"
+Ref: "UserCookBook"."Id" < "MealDay"."UserCookBookId"

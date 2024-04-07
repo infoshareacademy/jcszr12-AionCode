@@ -14,6 +14,9 @@
             @Html.DisplayNameFor(model => model.Id)
         </dt>
         <dd >
+            <img src=@Model.PhotoUrl height="100" width="100" />
+        </dd>
+        <dd >
             @Html.DisplayFor(model => model.Id)
         </dd>
         <dt >
@@ -57,12 +60,6 @@
         </dt>
         <dd >
             @Html.DisplayFor(model => model.Carbohydrates)
-        </dd>
-        <dt >
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd >
-            @Html.DisplayFor(model => model.Price)
         </dd>
     </div>
 </div>

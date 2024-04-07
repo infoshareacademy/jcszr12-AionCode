@@ -1,8 +1,11 @@
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Services.IngredientServices;
+using CookBook.BuisnesLogic.Repositories;
 using AionCodeMVC.Repositories;
 using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using CookBook.BuisnesLogic.Services.UserServices;
+using Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace AionCodeMVC
 {
@@ -11,6 +14,13 @@ namespace AionCodeMVC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            //Add database
+            //builder.Services.AddDbContext<DatabaseContext>(
+        //options => options.UseSqlServer("Server=localhost;Database=AionCodeDatabase;Trusted_Connection=True;TrustServerCertificate=True"));
+            builder.Services.AddDbContext<DatabaseContext>(
+        options => options.UseSqlServer(builder.Configuration.GetConnectionString("AionCodeDatabase")));
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -21,12 +31,16 @@ namespace AionCodeMVC
             builder.Services.AddScoped<ICreateIngredientService, CreateIngredientService>();
             builder.Services.AddScoped<IDeleteIngredientService, DeleteIngredientService>();
             builder.Services.AddScoped<IEditIngredientService,  EditIngredientService>();
+            builder.Services.AddScoped<IUploadIngredientPhotoService, UploadIngredientPhotoService>();
+            
+
 
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IGetUserService, GetUserService>();
             builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
             builder.Services.AddScoped<IEditUserService, EditUserService>();
             builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
+            
 
             var app = builder.Build();
 
