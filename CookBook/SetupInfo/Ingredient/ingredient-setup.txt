@@ -1,0 +1,11 @@
+Konfiguracja dot. zakladki skladniki na stronie internetowej.
+
+1. W aplikacji azurite - zakladka Emulator -> Blob Containers. Dodac nowy kontener o nazwie: ingredient-files.
+2. Przeciagnac pliki .png znajdujace sie w folderze -> do utworzonego kontenera.
+3. Prawym przyciskiem myszy na kontener i ustawić publiczny poziom dostepu.
+4. Zrobic Update-Database w visual studio w package manager console.
+5. Uruchomic skrypt sql. (powinno byc 1 row i 3 rows affacted)
+6. Uruchomic aplikacje.
+
+
+
