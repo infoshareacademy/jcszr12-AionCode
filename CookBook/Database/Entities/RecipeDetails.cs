@@ -21,6 +21,6 @@ namespace Database.Entities
         public int? UserCookBookId {  get; set; }
         public UserCookBook UserCookBook { get; set; }
         public virtual ICollection<RecipeUsed> RecipesUsed { get; set; }
-        public virtual ICollection<IngridientUsed> IngridientsUsed { get; set;}
+        public virtual ICollection<IngredientUsed> IngredientsUsed { get; set;}
     }
 }

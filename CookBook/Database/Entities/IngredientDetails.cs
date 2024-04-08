@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Database.Entities
 {
-    public class IngridientDetails
+    public class IngredientDetails
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -25,7 +25,7 @@ namespace Database.Entities
         public int? UserCookBookId { get; set; }
         public virtual UserCookBook UserCookBook { get; set; }
 
-        public virtual ICollection<IngridientUsed> IngridientsUsed { get; set; }
+        public virtual ICollection<IngredientUsed> IngredientsUsed { get; set; }
 
     }
 }

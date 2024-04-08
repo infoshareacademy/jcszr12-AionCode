@@ -12,7 +12,7 @@ namespace Database.Entities
         public int Id { get; set; }
         public virtual ICollection<MealDay> MealDays { get; set; }
         public virtual ICollection<RecipeDetails> RecipesDetails { get; set; }
-        public virtual ICollection<IngridientDetails> IngridientsDetails { get; set; }
+        public virtual ICollection<IngredientDetails> IngredientsDetails { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public byte[] Password { get; set; }

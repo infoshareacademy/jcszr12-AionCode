@@ -11,8 +11,8 @@ namespace Database
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<IngridientDetails> IngridientDetails { get; set; } = null!;
-        public DbSet<IngridientUsed> IngridientUsed { get; set; } = null!;
+        public DbSet<IngredientDetails> IngredientDetails { get; set; } = null!;
+        public DbSet<IngredientUsed> IngredientUsed { get; set; } = null!;
         public DbSet<RecipeDetails> RecipeDetails { get; set; } = null!;
         public DbSet<MealDay> MealDay { get; set; }
         public DbSet<RecipeUsed> RecipeUsed { get; set; }
@@ -27,9 +27,9 @@ namespace Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //IngridientDetails
-            modelBuilder.Entity<IngridientDetails>().HasKey(ingridient=>ingridient.Id);
-            modelBuilder.Entity<IngridientDetails>().Property(ingridient => ingridient.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<IngridientDetails>().Property(ingridient => ingridient.AddDate).HasColumnType("date");
+            modelBuilder.Entity<IngredientDetails>().HasKey(ingridient=>ingridient.Id);
+            modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.AddDate).HasColumnType("date");
 
 
 
@@ -40,9 +40,9 @@ namespace Database
 
 
             //IngridientUsed
-            modelBuilder.Entity<IngridientUsed>().HasKey(ingridientUsed => ingridientUsed.Id);
-            modelBuilder.Entity<IngridientUsed>().Property(ingridientUsed => ingridientUsed.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<IngridientUsed>().Property(ingridientUsed => ingridientUsed.AddDate).HasColumnType("date");
+            modelBuilder.Entity<IngredientUsed>().HasKey(ingridientUsed => ingridientUsed.Id);
+            modelBuilder.Entity<IngredientUsed>().Property(ingridientUsed => ingridientUsed.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<IngredientUsed>().Property(ingridientUsed => ingridientUsed.AddDate).HasColumnType("date");
 
 
             //MealDay

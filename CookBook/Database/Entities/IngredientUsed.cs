@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Database.Entities
 {
-    public class IngridientUsed
+    public class IngredientUsed
     {
         public int Id { get; set; }
         public DateTime AddDate { get; set; }
@@ -17,8 +17,8 @@ namespace Database.Entities
         public int? RecipeDetailsId { get; set; }
         public virtual RecipeDetails RecipeDetails { get; set; }
         [ForeignKey("IngredientDetails")]
-        public int? IngridientDetailsId { get; set; }
-        public virtual IngridientDetails IngredientDetails { get; set; }
+        public int? IngredientDetailsId { get; set; }
+        public virtual IngredientDetails IngredientDetails { get; set; }
         public decimal Weight { get; set; }
 
     }
