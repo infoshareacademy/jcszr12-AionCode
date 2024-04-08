@@ -4,6 +4,7 @@ using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240408095622_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Database.Entities.IngredientDetails", b =>
+            modelBuilder.Entity("Database.Entities.IngridientDetails", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,10 +74,10 @@ namespace Database.Migrations
 
                     b.HasIndex("UserCookBookId");
 
-                    b.ToTable("IngredientDetails");
+                    b.ToTable("IngridientDetails");
                 });
 
-            modelBuilder.Entity("Database.Entities.IngredientUsed", b =>
+            modelBuilder.Entity("Database.Entities.IngridientUsed", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,7 +88,7 @@ namespace Database.Migrations
                     b.Property<DateTime>("AddDate")
                         .HasColumnType("date");
 
-                    b.Property<int?>("IngredientDetailsId")
+                    b.Property<int?>("IngridientDetailsId")
                         .HasColumnType("int");
 
                     b.Property<int?>("RecipeDetailsId")
@@ -96,11 +99,11 @@ namespace Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IngredientDetailsId");
+                    b.HasIndex("IngridientDetailsId");
 
                     b.HasIndex("RecipeDetailsId");
 
-                    b.ToTable("IngredientUsed");
+                    b.ToTable("IngridientUsed");
                 });
 
             modelBuilder.Entity("Database.Entities.MealDay", b =>
@@ -227,23 +230,23 @@ namespace Database.Migrations
                     b.ToTable("userCookBook");
                 });
 
-            modelBuilder.Entity("Database.Entities.IngredientDetails", b =>
+            modelBuilder.Entity("Database.Entities.IngridientDetails", b =>
                 {
                     b.HasOne("Database.Entities.UserCookBook", "UserCookBook")
-                        .WithMany("IngredientsDetails")
+                        .WithMany("IngridientsDetails")
                         .HasForeignKey("UserCookBookId");
 
                     b.Navigation("UserCookBook");
                 });
 
-            modelBuilder.Entity("Database.Entities.IngredientUsed", b =>
+            modelBuilder.Entity("Database.Entities.IngridientUsed", b =>
                 {
-                    b.HasOne("Database.Entities.IngredientDetails", "IngredientDetails")
-                        .WithMany("IngredientsUsed")
-                        .HasForeignKey("IngredientDetailsId");
+                    b.HasOne("Database.Entities.IngridientDetails", "IngredientDetails")
+                        .WithMany("IngridientsUsed")
+                        .HasForeignKey("IngridientDetailsId");
 
                     b.HasOne("Database.Entities.RecipeDetails", "RecipeDetails")
-                        .WithMany("IngredientsUsed")
+                        .WithMany("IngridientsUsed")
                         .HasForeignKey("RecipeDetailsId");
 
                     b.Navigation("IngredientDetails");
@@ -284,9 +287,9 @@ namespace Database.Migrations
                     b.Navigation("RecipeDetails");
                 });
 
-            modelBuilder.Entity("Database.Entities.IngredientDetails", b =>
+            modelBuilder.Entity("Database.Entities.IngridientDetails", b =>
                 {
-                    b.Navigation("IngredientsUsed");
+                    b.Navigation("IngridientsUsed");
                 });
 
             modelBuilder.Entity("Database.Entities.MealDay", b =>
@@ -296,14 +299,14 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Database.Entities.RecipeDetails", b =>
                 {
-                    b.Navigation("IngredientsUsed");
+                    b.Navigation("IngridientsUsed");
 
                     b.Navigation("RecipesUsed");
                 });
 
             modelBuilder.Entity("Database.Entities.UserCookBook", b =>
                 {
-                    b.Navigation("IngredientsDetails");
+                    b.Navigation("IngridientsDetails");
 
                     b.Navigation("MealDays");
 

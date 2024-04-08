@@ -24,6 +24,7 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
             foreach (var item in allIngredientsDetails)
             {
+                //DTO
                 Ingredient ingredient = new Ingredient()
                 {
                     Id = item.Id,
@@ -44,6 +45,7 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
             return allIngredients;
         }
+
 
         public Ingredient GetByID(int id)
         {

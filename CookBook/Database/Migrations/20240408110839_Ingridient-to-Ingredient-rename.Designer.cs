@@ -4,6 +4,7 @@ using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240408110839_Ingridient-to-Ingredient-rename")]
+    partial class IngridienttoIngredientrename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,7 +74,7 @@ namespace Database.Migrations
 
                     b.HasIndex("UserCookBookId");
 
-                    b.ToTable("IngredientDetails");
+                    b.ToTable("IngridientDetails");
                 });
 
             modelBuilder.Entity("Database.Entities.IngredientUsed", b =>
@@ -100,7 +103,7 @@ namespace Database.Migrations
 
                     b.HasIndex("RecipeDetailsId");
 
-                    b.ToTable("IngredientUsed");
+                    b.ToTable("IngridientUsed");
                 });
 
             modelBuilder.Entity("Database.Entities.MealDay", b =>
