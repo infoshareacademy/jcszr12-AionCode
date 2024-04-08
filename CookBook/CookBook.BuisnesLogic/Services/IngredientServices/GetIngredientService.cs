@@ -19,11 +19,12 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
         public async Task<IEnumerable<Ingredient>> GetAll()
         {
-            List<IngredientDetails>? allIngredientsDetails = await _dbContext.IngredientDetails.ToListAsync();
+            List<IngridientDetails>? allIngredientsDetails = await _dbContext.IngridientDetails.ToListAsync();
             List<Ingredient> allIngredients = new();
 
             foreach (var item in allIngredientsDetails)
             {
+                //DTO
                 Ingredient ingredient = new Ingredient()
                 {
                     Id = item.Id,
@@ -44,6 +45,7 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
             return allIngredients;
         }
+
 
         public Ingredient GetByID(int id)
         {
