@@ -1,4 +1,6 @@
-﻿using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+﻿using AutoMapper;
+using CookBook.BuisnesLogic.DTO;
+using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Models;
 using Database;
 using Database.Entities;
@@ -8,74 +10,32 @@ using System.ComponentModel.DataAnnotations;
 namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
     public class GetIngredientService : IGetIngredientService
-    {   //  Db version
-        private readonly DatabaseContext _dbContext;
+    {   
 
-        //private IIngredientRepository _repository;
-        public GetIngredientService(DatabaseContext dbContext)
+        private readonly DatabaseContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public GetIngredientService(DatabaseContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Ingredient>> GetAll()
+        public async Task<IEnumerable<IngredientDTO>> GetIngredientDTOListAll()
         {
             List<IngredientDetails>? allIngredientsDetails = await _dbContext.IngredientDetails.ToListAsync();
-            List<Ingredient> allIngredients = new();
 
-            foreach (var item in allIngredientsDetails)
-            {
-                //DTO
-                Ingredient ingredient = new Ingredient()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Description = item.Description,
-                    Type = item.Type,
-                    Calories = item.Calories,
-                    Proteins = item.Proteins,
-                    Fats = item.Fats,
-                    Carbohydrates = item.Carbohydrates,
-                    ImagePath = item.ImagePath,
-                    AddDate = item.AddDate,
-                    GI = item.GI,
-                    PhotoUrl = item.ImagePath
-                };
-                allIngredients.Add(ingredient);
-            }
+            var allIngredientsDetailsDTO = _mapper.Map<List<IngredientDTO>>(allIngredientsDetails);
 
-            return allIngredients;
+            return allIngredientsDetailsDTO;
         }
 
 
         public Ingredient GetByID(int id)
         {
+            // to do -> return by name not by id ??
             return new Ingredient();
             //return _repository.GetByID(id);
         }
     }
-
-
-
-    //Repo version
-    /*    public class GetIngredientService : IGetIngredientService
-    {
-
-        private IIngredientRepository _repository;
-        public GetIngredientService(IIngredientRepository repository)
-        {
-            _repository = repository;
-        }
-
-        public IEnumerable<Ingredient> GetAll()
-        {
-            return _repository.GetAll();
-        }
-
-        public Ingredient GetByID(int id)
-        {
-            return _repository.GetByID(id);
-        }
-    }*/
-
-
 }

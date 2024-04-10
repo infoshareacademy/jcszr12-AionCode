@@ -23,6 +23,10 @@ namespace AionCodeMVC
             //Add AzureStorage configuration -> appsettings.Development.json
             builder.Services.Configure<AzureStorage>(options=>builder.Configuration.GetSection("AzureStorage").Bind(options));
 
+            //Add automapper
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 

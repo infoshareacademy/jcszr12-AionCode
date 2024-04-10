@@ -1,4 +1,5 @@
 ﻿using AionCodeMVC.Models;
+using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Models;
 using CookBook.BuisnesLogic.Services.IngredientServices;
@@ -29,7 +30,7 @@ namespace AionCodeMVC.Controllers
         // GET: IngredientController
         public async Task<ActionResult> Index()
         {
-            IEnumerable<Ingredient>? model = await _getIngredientService.GetAll();
+            IEnumerable<IngredientDTO>? model = await _getIngredientService.GetIngredientDTOListAll();
             return View(model);
         }
 
