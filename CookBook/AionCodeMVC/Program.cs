@@ -6,6 +6,8 @@ using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using CookBook.BuisnesLogic.Services.UserServices;
 using Database;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using CookBook.BuisnesLogic.AzureStorage;
 
 namespace AionCodeMVC
 {
@@ -16,11 +18,10 @@ namespace AionCodeMVC
             var builder = WebApplication.CreateBuilder(args);
 
             //Add database
-            //builder.Services.AddDbContext<DatabaseContext>(
-        //options => options.UseSqlServer("Server=localhost;Database=AionCodeDatabase;Trusted_Connection=True;TrustServerCertificate=True"));
             builder.Services.AddDbContext<DatabaseContext>(
         options => options.UseSqlServer(builder.Configuration.GetConnectionString("AionCodeDatabase")));
-
+            //Add AzureStorage configuration -> appsettings.Development.json
+            builder.Services.Configure<AzureStorage>(options=>builder.Configuration.GetSection("AzureStorage").Bind(options));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
