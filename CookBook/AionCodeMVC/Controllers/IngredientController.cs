@@ -35,9 +35,9 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: IngredientController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string name)
         {
-            var model = _getIngredientService.GetByID(id);
+            var model = await _getIngredientService.GetByNameIngredientDetailedDTO(name);
             return View(model);
         }
 
@@ -72,8 +72,8 @@ namespace AionCodeMVC.Controllers
         // GET: IngredientController/Edit/5
         public ActionResult Edit(int id)
         {
-            var model = _getIngredientService.GetByID(id);
-            return View(model);
+            //var model = _getIngredientService.GetByID(id);
+            return View(1);
         }
 
         // POST: IngredientController/Edit/5
@@ -95,8 +95,8 @@ namespace AionCodeMVC.Controllers
         // GET: IngredientController/Delete/5
         public ActionResult Delete(int id)
         {
-            var model = _getIngredientService.GetByID(id);
-            return View(model);
+            //var model = _getIngredientService.GetByID(id);
+            return View(1);
         }
 
         // POST: IngredientController/Delete/5

@@ -24,18 +24,15 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
         public async Task<IEnumerable<IngredientDTO>> GetIngredientDTOListAll()
         {
             List<IngredientDetails>? allIngredientsDetails = await _dbContext.IngredientDetails.ToListAsync();
-
             var allIngredientsDetailsDTO = _mapper.Map<List<IngredientDTO>>(allIngredientsDetails);
-
             return allIngredientsDetailsDTO;
         }
 
-
-        public Ingredient GetByID(int id)
+        public async Task<IngredientDetailedDTO> GetByNameIngredientDetailedDTO(string name)
         {
-            // to do -> return by name not by id ??
-            return new Ingredient();
-            //return _repository.GetByID(id);
+            IngredientDetails? ingredient = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Name == name).FirstOrDefaultAsync();
+            var ingredientDetailedDTO = _mapper.Map<IngredientDetailedDTO> (ingredient);
+            return ingredientDetailedDTO;
         }
     }
 }
