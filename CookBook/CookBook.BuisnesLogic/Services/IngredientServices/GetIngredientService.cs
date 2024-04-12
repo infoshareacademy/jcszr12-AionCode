@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Azure.Storage.Blobs;
 using CookBook.BuisnesLogic.DTO;
+using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Models;
 using Database;
@@ -14,11 +16,17 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
         private readonly DatabaseContext _dbContext;
         private readonly IMapper _mapper;
+        
+        private readonly IAzureStorage _azureStorage;
 
-        public GetIngredientService(DatabaseContext dbContext, IMapper mapper)
+
+
+
+        public GetIngredientService(DatabaseContext dbContext, IMapper mapper, IAzureStorage azureStorage)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _azureStorage = azureStorage;
         }
 
         public async Task<IEnumerable<IngredientDTO>> GetIngredientDTOListAll()
@@ -32,6 +40,8 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
         {
             IngredientDetails? ingredient = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Name == name).FirstOrDefaultAsync();
             var ingredientDetailedDTO = _mapper.Map<IngredientDetailedDTO> (ingredient);
+
+            ingredientDetailedDTO.ImagePath = $"{_azureStorage._blobContainerClientIngredientFiles.Uri.ToString()}/{ingredientDetailedDTO.ImagePath}";
             return ingredientDetailedDTO;
         }
     }
