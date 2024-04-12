@@ -17,7 +17,7 @@ namespace Database.Entities
         public decimal Proteins { get; set; }
         public decimal Fats { get; set; }
         public decimal Carbohydrates { get; set; }
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
         public DateTime AddDate { get; set; }
         public int GI { get; set; }
 

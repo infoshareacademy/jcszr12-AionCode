@@ -6,6 +6,7 @@ using CookBook.BuisnesLogic.Services.IngredientServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
 namespace AionCodeMVC.Controllers
 {
@@ -51,8 +52,9 @@ namespace AionCodeMVC.Controllers
         // POST: IngredientController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Ingredient model)
+        public async Task<ActionResult> Create(IngredientDetailedDTO model)
         {
+            //throw new NotImplementedException();
             try
             {
                 if (!ModelState.IsValid)
@@ -60,7 +62,7 @@ namespace AionCodeMVC.Controllers
                     return View(model);
                 }
 
-                _createIngredientService.CreateIngredient(model);
+                await _createIngredientService.CreateIngredient(model);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -69,10 +71,10 @@ namespace AionCodeMVC.Controllers
             }
         }
 
-
         // GET: IngredientController/Edit/5
         public ActionResult Edit(int id)
         {
+            return RedirectToAction(nameof(Index));
             //var model = _getIngredientService.GetByID(id);
             return View(1);
         }
@@ -82,6 +84,7 @@ namespace AionCodeMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Ingredient model)
         {
+            return RedirectToAction(nameof(Index));
             try
             {
                 _editIngredientService.Edit(model);
@@ -118,12 +121,14 @@ namespace AionCodeMVC.Controllers
 
         public ActionResult Upload()
         {
+            return RedirectToAction(nameof(Index));
             return View();
         }
 
         [HttpPost]
         public ActionResult Upload(IFormFile file, int id)
         {
+            return RedirectToAction(nameof(Index));
             try
             {
                 var urlToSource = _uploadIngredientPhotoService.AddPhoto(file, id);
