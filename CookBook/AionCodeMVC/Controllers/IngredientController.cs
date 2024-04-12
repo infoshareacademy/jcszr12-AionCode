@@ -5,6 +5,7 @@ using CookBook.BuisnesLogic.Models;
 using CookBook.BuisnesLogic.Services.IngredientServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AionCodeMVC.Controllers
 {
@@ -92,21 +93,21 @@ namespace AionCodeMVC.Controllers
             }
         }
 
-        // GET: IngredientController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: IngredientController/Delete/name
+        public async Task<IActionResult> Delete(string? name)
         {
-            //var model = _getIngredientService.GetByID(id);
-            return View(1);
+            IngredientDetailedDTO? model = await _getIngredientService.GetByNameIngredientDetailedDTO(name);
+            return View(model);
         }
 
-        // POST: IngredientController/Delete/5
-        [HttpPost]
+        // POST: Movies/Delete/name
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Ingredient ingredient)
+        public async Task<IActionResult> DeleteConfirmed(string name)
         {
             try
             {
-                _deleteIngredientService.DeleteIngredient(id);
+                await _deleteIngredientService.DeleteIngredient(name);  
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -115,9 +116,6 @@ namespace AionCodeMVC.Controllers
             }
         }
 
-
-
-        
         public ActionResult Upload()
         {
             return View();
@@ -136,9 +134,5 @@ namespace AionCodeMVC.Controllers
                 return View();
             }
         }
-
-
-
-
-    }
+}
 }
