@@ -1,4 +1,8 @@
-﻿using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+﻿using AutoMapper;
+using Azure.Storage.Blobs;
+using CookBook.BuisnesLogic.DTO;
+using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
+using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Models;
 using Database;
 using Database.Entities;
@@ -8,74 +12,54 @@ using System.ComponentModel.DataAnnotations;
 namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
     public class GetIngredientService : IGetIngredientService
-    {   //  Db version
-        private readonly DatabaseContext _dbContext;
+    {   
 
-        //private IIngredientRepository _repository;
-        public GetIngredientService(DatabaseContext dbContext)
+        private readonly DatabaseContext _dbContext;
+        private readonly IMapper _mapper;
+        
+        private readonly IAzureStorage _azureStorage;
+
+
+
+
+        public GetIngredientService(DatabaseContext dbContext, IMapper mapper, IAzureStorage azureStorage)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
+            _azureStorage = azureStorage;
         }
 
-        public async Task<IEnumerable<Ingredient>> GetAll()
+        public async Task<IEnumerable<IngredientDTO>> GetIngredientDTOListAll()
         {
             List<IngredientDetails>? allIngredientsDetails = await _dbContext.IngredientDetails.ToListAsync();
-            List<Ingredient> allIngredients = new();
-
-            foreach (var item in allIngredientsDetails)
-            {
-                //DTO
-                Ingredient ingredient = new Ingredient()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Description = item.Description,
-                    Type = item.Type,
-                    Calories = item.Calories,
-                    Proteins = item.Proteins,
-                    Fats = item.Fats,
-                    Carbohydrates = item.Carbohydrates,
-                    ImagePath = item.ImagePath,
-                    AddDate = item.AddDate,
-                    GI = item.GI,
-                    PhotoUrl = item.ImagePath
-                };
-                allIngredients.Add(ingredient);
-            }
-
-            return allIngredients;
+            var allIngredientsDetailsDTO = _mapper.Map<List<IngredientDTO>>(allIngredientsDetails);
+            return allIngredientsDetailsDTO;
         }
 
-
-        public Ingredient GetByID(int id)
+        public async Task<IngredientDetailedDTO> GetByNameIngredientDetailedDTO(string name)
         {
-            return new Ingredient();
-            //return _repository.GetByID(id);
+            IngredientDetails? ingredient = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Name == name).FirstOrDefaultAsync();
+            var ingredientDetailedDTO = _mapper.Map<IngredientDetailedDTO> (ingredient);
+
+            ingredientDetailedDTO.ImagePath = $"{_azureStorage._blobContainerClientIngredientFiles.Uri.ToString()}/{ingredientDetailedDTO.ImagePath}";
+
+
+            /* Usuwanie dziala z poziomu getingredient
+            IngredientDetails? aa = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Name == "TEst").FirstOrDefaultAsync();
+            _dbContext.IngredientDetails.Remove(aa);
+            _dbContext.SaveChanges();
+            */
+
+            return ingredientDetailedDTO;
+
+
+
+
+
+
+
+
+
         }
     }
-
-
-
-    //Repo version
-    /*    public class GetIngredientService : IGetIngredientService
-    {
-
-        private IIngredientRepository _repository;
-        public GetIngredientService(IIngredientRepository repository)
-        {
-            _repository = repository;
-        }
-
-        public IEnumerable<Ingredient> GetAll()
-        {
-            return _repository.GetAll();
-        }
-
-        public Ingredient GetByID(int id)
-        {
-            return _repository.GetByID(id);
-        }
-    }*/
-
-
 }

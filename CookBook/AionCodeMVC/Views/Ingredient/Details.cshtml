@@ -1,4 +1,4 @@
-﻿@model CookBook.BuisnesLogic.Models.Ingredient
+﻿@model CookBook.BuisnesLogic.DTO.IngredientDetailedDTO;
 
 @{
     ViewData["Title"] = "Szczegółowe informacje";
@@ -9,15 +9,8 @@
 <div class="row">
     
     <div class=" col-6 offset-3  p-2 rounded-2 ">
-
-        <dt >
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
         <dd >
-            <img src=@Model.PhotoUrl height="100" width="100" />
-        </dd>
-        <dd >
-            @Html.DisplayFor(model => model.Id)
+            <img src=@Model.ImagePath height="100" width="100" />
         </dd>
         <dt >
             @Html.DisplayNameFor(model => model.Name)
@@ -25,7 +18,7 @@
         <dd >
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd >
@@ -52,7 +45,7 @@
         <dt >
             @Html.DisplayNameFor(model => model.Fats)
         </dt>
-        <dd class="col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.Fats)
         </dd>
         <dt >
@@ -61,9 +54,15 @@
         <dd >
             @Html.DisplayFor(model => model.Carbohydrates)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GI)
+        </dt>
+        <dd >
+            @Html.DisplayFor(model => model.GI)
+        </dd>
     </div>
 </div>
 <div class="text-center">
-    @Html.ActionLink("Edytuj", "Edit", new { id = Model.Id  }) |
+    @Html.ActionLink("Edytuj", "Edit", new { id = 1  }) |
     <a asp-action="Index">Powrót</a>
 </div>

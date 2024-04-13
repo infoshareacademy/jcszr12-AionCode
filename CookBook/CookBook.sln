@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookBook.UI", "CookBook.UI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AionCodeMVC", "AionCodeMVC\AionCodeMVC.csproj", "{AE8C96B7-E1FB-4CD5-B938-686C37545677}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{4CE7C3B6-CE4A-4CB0-ABAE-86408DEC5111}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{4CE7C3B6-CE4A-4CB0-ABAE-86408DEC5111}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

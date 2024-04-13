@@ -6,6 +6,11 @@ using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using CookBook.BuisnesLogic.Services.UserServices;
 using Database;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using Microsoft.Extensions.Azure;
+using Azure.Storage.Blobs;
+using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
+using CookBook.BuisnesLogic.Services.AzureStorage;
 
 namespace AionCodeMVC
 {
@@ -16,15 +21,20 @@ namespace AionCodeMVC
             var builder = WebApplication.CreateBuilder(args);
 
             //Add database
-            //builder.Services.AddDbContext<DatabaseContext>(
-        //options => options.UseSqlServer("Server=localhost;Database=AionCodeDatabase;Trusted_Connection=True;TrustServerCertificate=True"));
             builder.Services.AddDbContext<DatabaseContext>(
         options => options.UseSqlServer(builder.Configuration.GetConnectionString("AionCodeDatabase")));
+
+            //Azurite storage
+            builder.Services.AddAzureClients(clientBuilder => clientBuilder.AddBlobServiceClient(builder.Configuration["AzureStorage:BlolbConnectionString"]));
+            builder.Services.AddScoped<IAzureStorage, AzureStorageService>();
+
+
+            //Add automapper
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
 
             builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
             builder.Services.AddScoped<IGetIngredientService, GetIngredientService>();
@@ -40,7 +50,7 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
             builder.Services.AddScoped<IEditUserService, EditUserService>();
             builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
-            
+
 
             var app = builder.Build();
 

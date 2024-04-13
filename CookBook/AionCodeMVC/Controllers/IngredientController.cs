@@ -1,9 +1,12 @@
 ﻿using AionCodeMVC.Models;
+using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Models;
 using CookBook.BuisnesLogic.Services.IngredientServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
 namespace AionCodeMVC.Controllers
 {
@@ -29,14 +32,14 @@ namespace AionCodeMVC.Controllers
         // GET: IngredientController
         public async Task<ActionResult> Index()
         {
-            IEnumerable<Ingredient>? model = await _getIngredientService.GetAll();
+            IEnumerable<IngredientDTO>? model = await _getIngredientService.GetIngredientDTOListAll();
             return View(model);
         }
 
         // GET: IngredientController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string name)
         {
-            var model = _getIngredientService.GetByID(id);
+            var model = await _getIngredientService.GetByNameIngredientDetailedDTO(name);
             return View(model);
         }
 
@@ -49,8 +52,9 @@ namespace AionCodeMVC.Controllers
         // POST: IngredientController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Ingredient model)
+        public async Task<ActionResult> Create(IngredientDetailedDTO model)
         {
+            //throw new NotImplementedException();
             try
             {
                 if (!ModelState.IsValid)
@@ -58,7 +62,7 @@ namespace AionCodeMVC.Controllers
                     return View(model);
                 }
 
-                _createIngredientService.CreateIngredient(model);
+                await _createIngredientService.CreateIngredient(model);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -67,12 +71,12 @@ namespace AionCodeMVC.Controllers
             }
         }
 
-
         // GET: IngredientController/Edit/5
         public ActionResult Edit(int id)
         {
-            var model = _getIngredientService.GetByID(id);
-            return View(model);
+            return RedirectToAction(nameof(Index));
+            //var model = _getIngredientService.GetByID(id);
+            return View(1);
         }
 
         // POST: IngredientController/Edit/5
@@ -80,6 +84,7 @@ namespace AionCodeMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Ingredient model)
         {
+            return RedirectToAction(nameof(Index));
             try
             {
                 _editIngredientService.Edit(model);
@@ -91,21 +96,21 @@ namespace AionCodeMVC.Controllers
             }
         }
 
-        // GET: IngredientController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: IngredientController/Delete/name
+        public async Task<IActionResult> Delete(string? name)
         {
-            var model = _getIngredientService.GetByID(id);
+            IngredientDetailedDTO? model = await _getIngredientService.GetByNameIngredientDetailedDTO(name);
             return View(model);
         }
 
-        // POST: IngredientController/Delete/5
-        [HttpPost]
+        // POST: Movies/Delete/name
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Ingredient ingredient)
+        public async Task<IActionResult> DeleteConfirmed(string name)
         {
             try
             {
-                _deleteIngredientService.DeleteIngredient(id);
+                await _deleteIngredientService.DeleteIngredient(name);  
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -114,17 +119,16 @@ namespace AionCodeMVC.Controllers
             }
         }
 
-
-
-        
         public ActionResult Upload()
         {
+            return RedirectToAction(nameof(Index));
             return View();
         }
 
         [HttpPost]
         public ActionResult Upload(IFormFile file, int id)
         {
+            return RedirectToAction(nameof(Index));
             try
             {
                 var urlToSource = _uploadIngredientPhotoService.AddPhoto(file, id);
@@ -135,9 +139,5 @@ namespace AionCodeMVC.Controllers
                 return View();
             }
         }
-
-
-
-
-    }
+}
 }
