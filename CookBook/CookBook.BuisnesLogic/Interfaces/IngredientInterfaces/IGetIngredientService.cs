@@ -1,11 +1,14 @@
-﻿using CookBook.BuisnesLogic.Models;
+﻿using CookBook.BuisnesLogic.DTO;
+using CookBook.BuisnesLogic.Models;
 
 namespace CookBook.BuisnesLogic.Interfaces.IngredientInterfaces
 {
     public interface IGetIngredientService
     {
-        public Task<IEnumerable<Ingredient>> GetAll();
-        //public IEnumerable<Ingredient> GetAll();
-        public Ingredient GetByID(int id);
+        public Task<IEnumerable<IngredientDTO>> GetIngredientDTOListAll();
+
+        public Task<IngredientDetailedDTO> GetByNameIngredientDetailedDTO(string name);
+
+        public Task<IngredientEditDTO> GetByIdIngredientEditedDTO(int id);
     }
 }
