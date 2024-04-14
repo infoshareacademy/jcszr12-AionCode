@@ -30,7 +30,9 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
                 ingredientToAdd.ImagePath = "TEst.png";
             }
             
+            ingredientToAdd.UserCookBookId = 1;
             ingredientToAdd.AddDate = DateTime.Now;
+
             await _dbContext.IngredientDetails.AddAsync(ingredientToAdd);
             _dbContext.SaveChanges();
         }

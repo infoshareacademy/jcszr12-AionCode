@@ -1,20 +1,41 @@
-﻿using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+﻿using AutoMapper;
+using CookBook.BuisnesLogic.DTO;
+using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Models;
+using Database;
+using Database.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
+using System.Diagnostics;
+using System.IO;
+
 
 namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
-    //TO DO
     public class EditIngredientService : IEditIngredientService
     {
-        private IIngredientRepository _repository;
-        public EditIngredientService(IIngredientRepository repository)
+        private readonly DatabaseContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public EditIngredientService(DatabaseContext dbContext, IMapper mapper)
         {
-            _repository = repository;
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public void Edit(Ingredient ingredient)
+        public async Task Edit(IngredientEditDTO ingredientEdited)
         {
-            _repository.Edit(ingredient);
+            var ingredientEditedMapped = _mapper.Map<IngredientDetails>(ingredientEdited);
+
+            var ingredientInDatabase = await _dbContext.IngredientDetails.Where(x=>x.Id == ingredientEdited.Id).FirstOrDefaultAsync();
+
+            if (ingredientInDatabase !=null)
+            {
+                _dbContext.IngredientDetails.Entry(ingredientInDatabase).CurrentValues.SetValues(ingredientEditedMapped);
+                _dbContext.SaveChanges();
+            }
         }
+
     }
 }

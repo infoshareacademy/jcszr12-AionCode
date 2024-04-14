@@ -74,7 +74,6 @@ namespace AionCodeMVC.Controllers
         // GET: IngredientController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            //return RedirectToAction(nameof(Index));
             var model = await _getIngredientService.GetByIdIngredientEditedDTO(id);
             return View(model); 
         }
@@ -87,7 +86,7 @@ namespace AionCodeMVC.Controllers
             //return RedirectToAction(nameof(Index));
             try
             {
-                //_editIngredientService.Edit(model);
+                await _editIngredientService.Edit(model);
                 return RedirectToAction(nameof(Index));
             }
             catch

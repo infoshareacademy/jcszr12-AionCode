@@ -43,13 +43,6 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
             ingredientDetailedDTO.ImagePath = $"{_azureStorage._blobContainerClientIngredientFiles.Uri.ToString()}/{ingredientDetailedDTO.ImagePath}";
 
-
-            /* Usuwanie dziala z poziomu getingredient
-            IngredientDetails? aa = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Name == "TEst").FirstOrDefaultAsync();
-            _dbContext.IngredientDetails.Remove(aa);
-            _dbContext.SaveChanges();
-            */
-
             return ingredientDetailedDTO;
         }
 
