@@ -83,7 +83,7 @@
 @*                             <img src=@item.PhotoUrl height="100" width="100"/> *@
                         </td>
                         <td>
-                            @Html.ActionLink("Edytuj", "Edit", new { name = item.Name }) |
+                            @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }) |
                             @Html.ActionLink("Szczegóły", "Details", new { name = item.Name }) |
                             @Html.ActionLink("Usuń", "Delete", new { name = item.Name })|
                             @Html.ActionLink("Uploaduj", "Upload", new { id = item.Id })

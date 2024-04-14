@@ -51,15 +51,14 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
             */
 
             return ingredientDetailedDTO;
+        }
 
+        public async Task<IngredientEditDTO> GetByIdIngredientEditedDTO (int id)
+        {
+            var ingredient = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Id == id).FirstOrDefaultAsync();
+            var ingredientEditDTO = _mapper.Map<IngredientEditDTO>(ingredient);
 
-
-
-
-
-
-
-
+            return ingredientEditDTO;
         }
     }
 }

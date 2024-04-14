@@ -72,22 +72,22 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: IngredientController/Edit/5
-        public async Task<ActionResult> Edit(string name)
+        public async Task<ActionResult> Edit(int id)
         {
             //return RedirectToAction(nameof(Index));
-            var model = await _getIngredientService.GetByNameIngredientDetailedDTO(name);
+            var model = await _getIngredientService.GetByIdIngredientEditedDTO(id);
             return View(model); 
         }
 
         // POST: IngredientController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, Ingredient model)
+        public async Task<ActionResult> Edit(int id, IngredientEditDTO model)
         {
             //return RedirectToAction(nameof(Index));
             try
             {
-                _editIngredientService.Edit(model);
+                //_editIngredientService.Edit(model);
                 return RedirectToAction(nameof(Index));
             }
             catch
