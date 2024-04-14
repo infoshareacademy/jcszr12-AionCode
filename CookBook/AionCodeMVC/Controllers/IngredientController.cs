@@ -72,19 +72,19 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: IngredientController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string name)
         {
-            return RedirectToAction(nameof(Index));
-            //var model = _getIngredientService.GetByID(id);
-            return View(1);
+            //return RedirectToAction(nameof(Index));
+            var model = await _getIngredientService.GetByNameIngredientDetailedDTO(name);
+            return View(model); 
         }
 
         // POST: IngredientController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Ingredient model)
+        public async Task<ActionResult> Edit(int id, Ingredient model)
         {
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
             try
             {
                 _editIngredientService.Edit(model);
