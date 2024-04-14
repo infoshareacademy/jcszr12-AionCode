@@ -6,11 +6,13 @@ using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using CookBook.BuisnesLogic.Services.UserServices;
 using Database;
 using Microsoft.EntityFrameworkCore;
+
 using System.Configuration;
 using Microsoft.Extensions.Azure;
 using Azure.Storage.Blobs;
 using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
 using CookBook.BuisnesLogic.Services.AzureStorage;
+
 
 namespace AionCodeMVC
 {
@@ -19,6 +21,8 @@ namespace AionCodeMVC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<AionCodeDatabase>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("AionCodeDatabase") ?? throw new InvalidOperationException("Connection string 'AionCodeDatabase' not found.")));
 
             //Add database
             builder.Services.AddDbContext<DatabaseContext>(
@@ -31,6 +35,7 @@ namespace AionCodeMVC
 
             //Add automapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 
             // Add services to the container.
