@@ -4,65 +4,44 @@
     ViewData["Title"] = "Szczegółowe informacje";
 }
 
-<h1 class ="col-12 text-center  bg-transparent">@ViewData["Title"]</h1>
+<h1 class="col-12 text-center bg-transparent">@ViewData["Title"]</h1>
 
-<div class="row">
-    
-    <div class=" col-6 offset-3  p-2 rounded-2 ">
-        <dd >
-            <img src=@Model.ImagePath height="100" width="100" />
-        </dd>
-        <dt >
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd >
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd >
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt >
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd >
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt >
-            @Html.DisplayNameFor(model => model.Calories)
-        </dt>
-        <dd >
-            @Html.DisplayFor(model => model.Calories)
-        </dd>
-        <dt >
-            @Html.DisplayNameFor(model => model.Proteins)
-        </dt>
-        <dd >
-            @Html.DisplayFor(model => model.Proteins)
-        </dd>
-        <dt >
-            @Html.DisplayNameFor(model => model.Fats)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Fats)
-        </dd>
-        <dt >
-            @Html.DisplayNameFor(model => model.Carbohydrates)
-        </dt>
-        <dd >
-            @Html.DisplayFor(model => model.Carbohydrates)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.GI)
-        </dt>
-        <dd >
-            @Html.DisplayFor(model => model.GI)
-        </dd>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-3">
+                <div class="text-center">
+                    <img src="@Model.ImagePath" height="100" width="100" />
+                </div>
+                <dl class="row">
+                    <dt class="col-sm-4">Nazwa:</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Name)</dd>
+
+                    <dt class="col-sm-4">Opis:</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Description)</dd>
+
+                    <dt class="col-sm-4">Typ:</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Type)</dd>
+
+                    <dt class="col-sm-4">Kalorie:</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Calories)</dd>
+
+                    <dt class="col-sm-4">Białka:</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Proteins)</dd>
+
+                    <dt class="col-sm-4">Tłuszcze:</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Fats)</dd>
+
+                    <dt class="col-sm-4">Węglowodany:</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Carbohydrates)</dd>
+
+                    <dt class="col-sm-4">Indeks Glikemiczny:</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.GI)</dd>
+                </dl>
+                <div class="text-center">
+                    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div class="text-center">
-    @Html.ActionLink("Edytuj", "Edit", new { id = 1  }) |
-    <a asp-action="Index">Powrót</a>
 </div>
