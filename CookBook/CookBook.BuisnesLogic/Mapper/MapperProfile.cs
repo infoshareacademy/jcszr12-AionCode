@@ -15,6 +15,7 @@ namespace CookBook.BuisnesLogic.Mapper
         {
             CreateMap<IngredientDetails, IngredientDTO>().ReverseMap();
             CreateMap<IngredientDetails, IngredientDetailedDTO>().ReverseMap();
+            CreateMap<IngredientDetails, IngredientEditDTO>().ReverseMap();
             
         }
     }

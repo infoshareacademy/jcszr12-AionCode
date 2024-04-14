@@ -10,12 +10,9 @@ using System.IO;
 
 namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
-    //TO DO
+
     public class DeleteIngredientService : IDeleteIngredientService
     {
-
-
-
         private DatabaseContext _dbContext;
         public DeleteIngredientService(DatabaseContext dbContext)
         {
@@ -24,11 +21,9 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
         public async Task DeleteIngredient(string name)
         {
-            
             IngredientDetails? ingredient = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Name == name).FirstOrDefaultAsync();
             _dbContext.IngredientDetails.Remove(ingredient);
             _dbContext.SaveChanges();
-
         }
     }
 }

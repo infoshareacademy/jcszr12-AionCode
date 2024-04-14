@@ -6,6 +6,9 @@ namespace CookBook.BuisnesLogic.Interfaces.IngredientInterfaces
     public interface IGetIngredientService
     {
         public Task<IEnumerable<IngredientDTO>> GetIngredientDTOListAll();
+
         public Task<IngredientDetailedDTO> GetByNameIngredientDetailedDTO(string name);
+
+        public Task<IngredientEditDTO> GetByIdIngredientEditedDTO(int id);
     }
 }
