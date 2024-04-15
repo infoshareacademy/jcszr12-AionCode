@@ -119,17 +119,15 @@ namespace AionCodeMVC.Controllers
 
         public ActionResult Upload()
         {
-            return RedirectToAction(nameof(Index));
             return View();
         }
 
         [HttpPost]
-        public ActionResult Upload(IFormFile file, int id)
+        public async Task<ActionResult> Upload(IFormFile file, int id)
         {
-            return RedirectToAction(nameof(Index));
             try
             {
-                var urlToSource = _uploadIngredientPhotoService.AddPhoto(file, id);
+                await _uploadIngredientPhotoService.AddPhoto(file, id);
                 return RedirectToAction(nameof(Index));
             }
             catch
