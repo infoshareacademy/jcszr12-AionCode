@@ -95,21 +95,20 @@ namespace AionCodeMVC.Controllers
             }
         }
 
-        // GET: IngredientController/Delete/name
-        public async Task<IActionResult> Delete(string? name)
+        public async Task<IActionResult> Delete(int id)
         {
-            IngredientDetailedDTO? model = await _getIngredientService.GetByNameIngredientDetailedDTO(name);
+            var model = await _getIngredientService.GetByIdIngredientDetailedDTO(id);
             return View(model);
         }
 
         // POST: Movies/Delete/name
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string name)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
             {
-                await _deleteIngredientService.DeleteIngredient(name);  
+                await _deleteIngredientService.DeleteIngredient(id);  
                 return RedirectToAction(nameof(Index));
             }
             catch

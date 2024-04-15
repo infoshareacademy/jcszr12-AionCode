@@ -19,9 +19,9 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
             _dbContext = dbContext;
         }
 
-        public async Task DeleteIngredient(string name)
+        public async Task DeleteIngredient(int id)
         {
-            IngredientDetails? ingredient = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Name == name).FirstOrDefaultAsync();
+            IngredientDetails? ingredient = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Id == id).FirstOrDefaultAsync();
             _dbContext.IngredientDetails.Remove(ingredient);
             _dbContext.SaveChanges();
         }
