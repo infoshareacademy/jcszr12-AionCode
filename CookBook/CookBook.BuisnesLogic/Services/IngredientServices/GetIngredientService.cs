@@ -1,22 +1,19 @@
 ﻿using AutoMapper;
-using Azure.Storage.Blobs;
 using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
-using CookBook.BuisnesLogic.Models;
 using Database;
 using Database.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
     public class GetIngredientService : IGetIngredientService
-    {   
+    {
 
         private readonly DatabaseContext _dbContext;
         private readonly IMapper _mapper;
-        
+
         private readonly IAzureStorage _azureStorage;
 
 
@@ -38,15 +35,27 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
         public async Task<IngredientDetailedDTO> GetByNameIngredientDetailedDTO(string name)
         {
-            IngredientDetails? ingredient = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Name == name).FirstOrDefaultAsync();
-            var ingredientDetailedDTO = _mapper.Map<IngredientDetailedDTO> (ingredient);
+            IngredientDetails? ingredient = await _dbContext.IngredientDetails.FirstOrDefaultAsync(ingredient => ingredient.Name == name);
+            IngredientDetailedDTO? ingredientDetailedDTO = _mapper.Map<IngredientDetailedDTO>(ingredient);
 
-            ingredientDetailedDTO.ImagePath = $"{_azureStorage._blobContainerClientIngredientFiles.Uri.ToString()}/{ingredientDetailedDTO.ImagePath}";
+            ingredientDetailedDTO.ImagePath = $"{_azureStorage.BlobContainerClientIngredientFiles.Uri}/{ingredientDetailedDTO.ImagePath}";
+
+            return ingredientDetailedDTO;
+        }
+        public async Task<IngredientDetailedDTO> GetByIdIngredientDetailedDTO(int id)
+        {
+            IngredientDetails? ingredient = await _dbContext.IngredientDetails.FirstOrDefaultAsync(ingredient => ingredient.Id == id);
+            IngredientDetailedDTO? ingredientDetailedDTO = _mapper.Map<IngredientDetailedDTO>(ingredient);
+
+            ingredientDetailedDTO.ImagePath = $"{_azureStorage.BlobContainerClientIngredientFiles.Uri}/{ingredientDetailedDTO.ImagePath}";
 
             return ingredientDetailedDTO;
         }
 
-        public async Task<IngredientEditDTO> GetByIdIngredientEditedDTO (int id)
+
+
+
+        public async Task<IngredientEditDTO> GetByIdIngredientEditedDTO(int id)
         {
             var ingredient = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Id == id).FirstOrDefaultAsync();
             var ingredientEditDTO = _mapper.Map<IngredientEditDTO>(ingredient);

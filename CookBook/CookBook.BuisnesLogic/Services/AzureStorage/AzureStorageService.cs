@@ -13,11 +13,11 @@ namespace CookBook.BuisnesLogic.Services.AzureStorage
 {
     public class AzureStorageService : IAzureStorage
     {
-        public BlobContainerClient _blobContainerClientIngredientFiles { get; set; }
+        public BlobContainerClient BlobContainerClientIngredientFiles { get; set; }
 
         public AzureStorageService(BlobServiceClient blobServiceClient)
         {
-            _blobContainerClientIngredientFiles = blobServiceClient.GetBlobContainerClient("ingredient-files");
+            BlobContainerClientIngredientFiles = blobServiceClient.GetBlobContainerClient("ingredient-files");
         }
     }
 }

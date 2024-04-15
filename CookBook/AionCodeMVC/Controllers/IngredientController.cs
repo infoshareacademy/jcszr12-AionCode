@@ -37,9 +37,9 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: IngredientController/Details/5
-        public async Task<ActionResult> Details(string name)
+        public async Task<ActionResult> Details(int id)
         {
-            var model = await _getIngredientService.GetByNameIngredientDetailedDTO(name);
+            var model = await _getIngredientService.GetByIdIngredientDetailedDTO(id);
             return View(model);
         }
 

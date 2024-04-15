@@ -13,6 +13,8 @@ namespace CookBook.BuisnesLogic.DTO
 {
     public class IngredientDetailedDTO
     {
+
+        public int Id { get; set; }
         [DisplayName("Nazwa")]
         public string Name { get; set; }
         [DisplayName("Opis")]
