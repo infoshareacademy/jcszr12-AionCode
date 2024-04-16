@@ -30,6 +30,7 @@ namespace Database
             modelBuilder.Entity<IngredientDetails>().HasKey(ingridient=>ingridient.Id);
             modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.AddDate).HasColumnType("date");
+            modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.Type).HasConversion<string>();
 
 
 

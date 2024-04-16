@@ -1,22 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Database.EnumTypes
 {
     public enum IngredientType
     {
-       Vegetable,
-       Fruit,
-       Bread,
-       Fish,
-       Meat,
-       Mushroom,
-       Drink,
-       Dairy,
-       Seasoning,
-       Other
+        [Description("Vegetable")]
+        Warzywa,
+        [Description("Fruit")]
+        Owoce,
+        [Description("Bread")]
+        Pieczywo,
+        [Description("Fish")]
+        Ryby,
+        [Description("Meat")]
+        Mięsa,
+        [Description("Mushroom")]
+        Grzyby,
+        [Description("Drink")]
+        Napoje,
+        [Description("Dairy")]
+        Nabiał,
+        [Description("Seasoning")]
+        Przyprawy,
+        [Description("Other")]
+        Inne
     }
 }
