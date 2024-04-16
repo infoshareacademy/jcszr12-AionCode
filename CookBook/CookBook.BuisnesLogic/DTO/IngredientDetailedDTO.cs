@@ -17,21 +17,29 @@ namespace CookBook.BuisnesLogic.DTO
 
         public int Id { get; set; }
         [DisplayName("Nazwa")]
+        [Required(ErrorMessage = "Wpisz tekst.")]
         public string Name { get; set; }
         [DisplayName("Opis")]
+        [Required(ErrorMessage = "Wpisz tekst.")]
         public string Description { get; set; }
         [DisplayName("Typ")]
+        [Required(ErrorMessage = "Wybierz typ.")]
         public IngredientType Type { get; set; }
         [DisplayName("Kalorie [100g]")]
+        [Required(ErrorMessage = "Wpisz liczbę.")]
         public decimal Calories { get; set; }
         [DisplayName("Białko [g]")]
+        [Required(ErrorMessage = "Wpisz liczbę.")]
         public decimal Proteins { get; set; }
         [DisplayName("Tłuszcz [g]")]
+        [Required(ErrorMessage = "Wpisz liczbę.")]
         public decimal Fats { get; set; }
         [DisplayName("Węglowodany [g]")]
+        [Required(ErrorMessage = "Wpisz liczbę.")]
         public decimal Carbohydrates { get; set; }
         public string? ImagePath { get; set; }
         [DisplayName("Indeks Glikemiczny")]
+        [Required(ErrorMessage = "Wpisz liczbę.")]
         public int GI { get; set; }
     }
 }

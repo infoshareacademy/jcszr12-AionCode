@@ -15,44 +15,33 @@ namespace CookBook.BuisnesLogic.DTO
     {
         public int Id { get; set; }
         [DisplayName("Nazwa")]
+        [Required(ErrorMessage = "Wpisz tekst.")]
         public string Name { get; set; }
-        [DisplayName("Opis")] 
+        [DisplayName("Opis")]
+        [Required(ErrorMessage = "Wpisz tekst.")]
         public string Description { get; set; }
         [DisplayName("Typ")]
+        [Required(ErrorMessage = "Wybierz typ.")]
         public IngredientType Type { get; set; }
+        [Required(ErrorMessage = "Wpisz liczbę.")]
         [DisplayName("Kalorie [100g]")]
         public decimal Calories { get; set; }
         [DisplayName("Białko [g]")]
+        [Required(ErrorMessage = "Wpisz liczbę.")]
         public decimal Proteins { get; set; }
+        [Required(ErrorMessage = "Wpisz liczbę.")]
         [DisplayName("Tłuszcz [g]")]
         public decimal Fats { get; set; }
+        [Required(ErrorMessage = "Wpisz liczbę.")]
         [DisplayName("Węglowodany [g]")]
         public decimal Carbohydrates { get; set; }
         public string? ImagePath { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DisplayName("Data dodania")]
-
+        [Required(ErrorMessage = "Wybierz poprawną datę.")]
         public DateTime AddDate { get; set; }
         [DisplayName("Indeks Glikemiczny")]
+        [Required(ErrorMessage = "Wpisz liczbę.")]
         public int GI { get; set; }
         public int? UserCookBookId { get; set; }
-
-        /* public int Id { get; set; }
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        public IngredientType Type { get; set; }
-
-        public decimal Calories { get; set; }
-
-        public decimal Proteins { get; set; }
-
-        public decimal Fats { get; set; }
-
-        public decimal Carbohydrates { get; set; }
-        public string? ImagePath { get; set; }
-
-        public int GI { get; set; }*/
     }
 }
