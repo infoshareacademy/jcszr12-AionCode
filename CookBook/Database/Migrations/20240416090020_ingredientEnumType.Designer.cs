@@ -4,6 +4,7 @@ using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240416090020_ingredientEnumType")]
+    partial class ingredientEnumType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +34,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("date");
 
                     b.Property<decimal>("Calories")
                         .HasColumnType("decimal(18,2)");
@@ -70,7 +73,7 @@ namespace Database.Migrations
 
                     b.HasIndex("UserCookBookId");
 
-                    b.ToTable("IngredientDetails", (string)null);
+                    b.ToTable("IngredientDetails");
                 });
 
             modelBuilder.Entity("Database.Entities.IngredientUsed", b =>
@@ -82,7 +85,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("date");
 
                     b.Property<int?>("IngredientDetailsId")
                         .HasColumnType("int");
@@ -99,7 +102,7 @@ namespace Database.Migrations
 
                     b.HasIndex("RecipeDetailsId");
 
-                    b.ToTable("IngredientUsed", (string)null);
+                    b.ToTable("IngredientUsed");
                 });
 
             modelBuilder.Entity("Database.Entities.MealDay", b =>
@@ -111,10 +114,10 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("date");
 
                     b.Property<DateTime>("Day")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("date");
 
                     b.Property<int?>("UserCookBookId")
                         .HasColumnType("int");
@@ -123,7 +126,7 @@ namespace Database.Migrations
 
                     b.HasIndex("UserCookBookId");
 
-                    b.ToTable("MealDay", (string)null);
+                    b.ToTable("MealDay");
                 });
 
             modelBuilder.Entity("Database.Entities.RecipeDetails", b =>
@@ -135,7 +138,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("date");
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -160,7 +163,7 @@ namespace Database.Migrations
 
                     b.HasIndex("UserCookBookId");
 
-                    b.ToTable("RecipeDetails", (string)null);
+                    b.ToTable("RecipeDetails");
                 });
 
             modelBuilder.Entity("Database.Entities.RecipeUsed", b =>
@@ -172,7 +175,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("date");
 
                     b.Property<int?>("MealDayId")
                         .HasColumnType("int");
@@ -190,7 +193,7 @@ namespace Database.Migrations
 
                     b.HasIndex("RecipeDetailsId");
 
-                    b.ToTable("RecipeUsed", (string)null);
+                    b.ToTable("RecipeUsed");
                 });
 
             modelBuilder.Entity("Database.Entities.UserCookBook", b =>
@@ -202,7 +205,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("date");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -223,7 +226,7 @@ namespace Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("userCookBook", (string)null);
+                    b.ToTable("userCookBook");
                 });
 
             modelBuilder.Entity("Database.Entities.IngredientDetails", b =>
