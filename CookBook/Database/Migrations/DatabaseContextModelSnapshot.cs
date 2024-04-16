@@ -71,7 +71,7 @@ namespace Database.Migrations
 
                     b.HasIndex("UserCookBookId");
 
-                    b.ToTable("IngredientDetails");
+                    b.ToTable("IngredientDetails", (string)null);
                 });
 
             modelBuilder.Entity("Database.Entities.IngredientUsed", b =>
@@ -100,7 +100,7 @@ namespace Database.Migrations
 
                     b.HasIndex("RecipeDetailsId");
 
-                    b.ToTable("IngredientUsed");
+                    b.ToTable("IngredientUsed", (string)null);
                 });
 
             modelBuilder.Entity("Database.Entities.MealDay", b =>
@@ -124,7 +124,7 @@ namespace Database.Migrations
 
                     b.HasIndex("UserCookBookId");
 
-                    b.ToTable("MealDay");
+                    b.ToTable("MealDay", (string)null);
                 });
 
             modelBuilder.Entity("Database.Entities.RecipeDetails", b =>
@@ -161,7 +161,7 @@ namespace Database.Migrations
 
                     b.HasIndex("UserCookBookId");
 
-                    b.ToTable("RecipeDetails");
+                    b.ToTable("RecipeDetails", (string)null);
                 });
 
             modelBuilder.Entity("Database.Entities.RecipeUsed", b =>
@@ -191,7 +191,7 @@ namespace Database.Migrations
 
                     b.HasIndex("RecipeDetailsId");
 
-                    b.ToTable("RecipeUsed");
+                    b.ToTable("RecipeUsed", (string)null);
                 });
 
             modelBuilder.Entity("Database.Entities.UserCookBook", b =>
@@ -224,7 +224,7 @@ namespace Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("userCookBook");
+                    b.ToTable("userCookBook", (string)null);
                 });
 
             modelBuilder.Entity("Database.Entities.IngredientDetails", b =>
