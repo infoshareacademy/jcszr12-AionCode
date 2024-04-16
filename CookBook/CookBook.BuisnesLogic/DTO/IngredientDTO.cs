@@ -1,4 +1,5 @@
 ﻿using Database.Entities;
+using Database.EnumTypes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +16,7 @@ namespace CookBook.BuisnesLogic.DTO
         public int Id { get; set; }
         [DisplayName("Nazwa")]
         public string Name { get; set; }
-        public string Type { get; set; }
+        public IngredientType Type { get; set; }
         [DisplayName("Białko [g]")]
         public decimal Proteins { get; set; }
         [DisplayName("Tłuszcz [g]")]
