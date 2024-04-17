@@ -1,0 +1,34 @@
+[
+  {
+    "Id": 1,
+    "Name": "John Doe",
+    "Email": "john@example.com",
+    "Password": "Qx7nWg+ZnRg+Znc=",
+    "Role": "Admin",
+    "AddDate": "2024-04-17T10:00:00"
+  },
+  {
+    "Id": 2,
+    "Name": "Alice Smith",
+    "Email": "alice@example.com",
+    "Password": "T5o9IyU8Nc9IwY==",
+    "Role": "User",
+    "AddDate": "2024-04-17T11:00:00"
+  },
+  {
+    "Id": 3,
+    "Name": "Bob Johnson",
+    "Email": "bob@example.com",
+    "Password": "P9lRm9v7Hh6fIc==",
+    "Role": "User",
+    "AddDate": "2024-04-17T12:00:00"
+  },
+  {
+    "Id": 4,
+    "Name": "Emily Brown",
+    "Email": "emily@example.com",
+    "Password": "R2lJy6nBtXm7Kn==",
+    "Role": "User",
+    "AddDate": "2024-04-17T13:00:00"
+  }
+]

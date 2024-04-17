@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace Database
         public DbSet<RecipeDetails> RecipeDetails { get; set; } = null!;
         public DbSet<MealDay> MealDay { get; set; }
         public DbSet<RecipeUsed> RecipeUsed { get; set; }
-        public DbSet<UserCookBook> userCookBook { get; set; }
+        public DbSet<UserCookBook> UserCookBook { get; set; }
 
 
 
@@ -59,6 +60,10 @@ namespace Database
             modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.Password).HasColumnType("binary").HasMaxLength(64);
             modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.AddDate).HasColumnType("smalldatetime");
+
+            modelBuilder.Entity<UserCookBook>().HasData(SampleData.SampleData.GetUserCookBookSampleDataFromJson());
+            modelBuilder.Entity<IngredientDetails>().HasData(SampleData.SampleData.GetIngredientDetailsSampleDataFromJson());
+
 
         }
     }
