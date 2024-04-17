@@ -1,21 +1,30 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Details";
 }
 
-<div class="text-center"
-    <h1>Upload</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h1>Załącz obraz</h1>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Upload", "Ingredient", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            @Html.TextBox("file", "", new { type = "file", accept = ".png, .jpg, .jpeg", @class = "form-control-file" })
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-@using (Html.BeginForm("Upload", "Ingredient",FormMethod.Post, new {enctype = "multipart/form-data" }))
-{
-    <div>
-        @Html.TextBox("file", "", new { type = "file", accept = ".png, .jpg, .jpeg" })<br />
-        
-        <input type = "submit" value="Upload" />
-    </div>
-
-}
-
-
-
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+</div>

@@ -14,15 +14,24 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
     public class DeleteIngredientService : IDeleteIngredientService
     {
         private DatabaseContext _dbContext;
-        public DeleteIngredientService(DatabaseContext dbContext)
+        private readonly IAzureStorage _azureStorage;
+        public DeleteIngredientService(DatabaseContext dbContext, IAzureStorage azureStorage)
         {
             _dbContext = dbContext;
+            _azureStorage = azureStorage;
         }
 
         public async Task DeleteIngredient(int id)
         {
             IngredientDetails? ingredient = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Id == id).FirstOrDefaultAsync();
-            _dbContext.IngredientDetails.Remove(ingredient);
+            if (ingredient != null) 
+            {
+                _dbContext.IngredientDetails.Remove(ingredient);
+                if (ingredient.ImagePath!=null)
+                {
+                    await _azureStorage.BlobContainerClientIngredientFiles.DeleteBlobIfExistsAsync(ingredient.ImagePath, Azure.Storage.Blobs.Models.DeleteSnapshotsOption.IncludeSnapshots);
+                }
+            }
             _dbContext.SaveChanges();
         }
     }

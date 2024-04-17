@@ -47,7 +47,7 @@
                             @Lp
                         </td>
                         <td>
-                                @Html.ActionLink(item.Name, "Details", new { id = item.Id })
+                             @Html.ActionLink(item.Name, "Details", new { id = item.Id })
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Calories)
@@ -65,7 +65,7 @@
                             @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }) |
                                 @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }) |
                                 @Html.ActionLink("Usuń", "Delete", new { id = item.Id })|
-                            @Html.ActionLink("Uploaduj", "Upload", new { id = item.Id })
+                            @Html.ActionLink("Załącz obraz", "Upload", new { id = item.Id })
                         </td>
                     </tr>
                 }

@@ -5,6 +5,7 @@ using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using Database;
 using Database.Entities;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
@@ -47,6 +48,10 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
             IngredientDetails? ingredient = await _dbContext.IngredientDetails.FirstOrDefaultAsync(ingredient => ingredient.Id == id);
             IngredientDetailedDTO? ingredientDetailedDTO = _mapper.Map<IngredientDetailedDTO>(ingredient);
 
+            if (ingredientDetailedDTO.ImagePath==null)
+            {
+                ingredientDetailedDTO.ImagePath = "NoImage.png";
+            }
             ingredientDetailedDTO.ImagePath = $"{_azureStorage.BlobContainerClientIngredientFiles.Uri}/{ingredientDetailedDTO.ImagePath}";
 
             return ingredientDetailedDTO;
