@@ -6,11 +6,6 @@
       "type": "secrets.user",
       "connectionId": null
     },
-    "storage1": {
-      "secretStore": null,
-      "type": "storage.emulator",
-      "connectionId": "localStorage"
-    },
     "mssql1": {
       "type": "mssql.local",
       "connectionId": "ConnectionStrings:AionCodeDatabase"

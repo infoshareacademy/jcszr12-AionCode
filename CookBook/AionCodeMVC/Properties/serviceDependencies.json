@@ -4,10 +4,6 @@
       "type": "secrets",
       "connectionId": null
     },
-    "storage1": {
-      "type": "storage",
-      "connectionId": "localStorage"
-    },
     "mssql1": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:AionCodeDatabase"

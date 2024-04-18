@@ -31,10 +31,24 @@ namespace AionCodeMVC.Controllers
 
 
         // GET: IngredientController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string SearchString, string Type)
         {
+            if (Type!=null)
+            {
+                IEnumerable<IngredientDTO>? modelType = await _getIngredientService.GetIngredientDTOListType(Type);
+                return View(modelType);
+            }
+
+            ViewData["IngredientFilter"] = SearchString;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                IEnumerable<IngredientDTO>? modelSearch = await _getIngredientService.GetIngredientDTOListContainString(SearchString);
+                return View(modelSearch);
+            }
             IEnumerable<IngredientDTO>? model = await _getIngredientService.GetIngredientDTOListAll();
             return View(model);
+
+
         }
 
         // GET: IngredientController/Details/5

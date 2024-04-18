@@ -1,5 +1,4 @@
 ﻿using CookBook.BuisnesLogic.DTO;
-using CookBook.BuisnesLogic.Models;
 
 namespace CookBook.BuisnesLogic.Interfaces.IngredientInterfaces
 {
@@ -12,5 +11,7 @@ namespace CookBook.BuisnesLogic.Interfaces.IngredientInterfaces
         public Task<IngredientEditDTO> GetByIdIngredientEditedDTO(int id);
 
         public Task<IngredientDetailedDTO> GetByIdIngredientDetailedDTO(int id);
+        public Task<IEnumerable<IngredientDTO>> GetIngredientDTOListContainString(string searchString);
+        public Task<IEnumerable<IngredientDTO>> GetIngredientDTOListType(string type);
     }
 }
