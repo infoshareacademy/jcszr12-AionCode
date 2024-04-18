@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace Database
         public DbSet<RecipeDetails> RecipeDetails { get; set; } = null!;
         public DbSet<MealDay> MealDay { get; set; }
         public DbSet<RecipeUsed> RecipeUsed { get; set; }
-        public DbSet<UserCookBook> userCookBook { get; set; }
+        public DbSet<UserCookBook> UserCookBook { get; set; }
 
 
 
@@ -29,39 +30,39 @@ namespace Database
             //IngridientDetails
             modelBuilder.Entity<IngredientDetails>().HasKey(ingridient=>ingridient.Id);
             modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.AddDate).HasColumnType("date");
-
+            modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.Type).HasConversion<string>();
+            modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.AddDate).HasColumnType("smalldatetime");
 
 
             //RecipeDetails
             modelBuilder.Entity<RecipeDetails>().HasKey(recipeDetails => recipeDetails.Id);
             modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.AddDate).HasColumnType("date");
+            modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.AddDate).HasColumnType("smalldatetime");
 
 
             //IngridientUsed
             modelBuilder.Entity<IngredientUsed>().HasKey(ingridientUsed => ingridientUsed.Id);
             modelBuilder.Entity<IngredientUsed>().Property(ingridientUsed => ingridientUsed.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<IngredientUsed>().Property(ingridientUsed => ingridientUsed.AddDate).HasColumnType("date");
-
+            modelBuilder.Entity<IngredientUsed>().Property(ingridientUsed => ingridientUsed.AddDate).HasColumnType("smalldatetime");
 
             //MealDay
             modelBuilder.Entity<MealDay>().HasKey(mealDay=>mealDay.Id);
             modelBuilder.Entity<MealDay>().Property(mealDay=>mealDay.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.AddDate).HasColumnType("date");
-            modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.Day).HasColumnType("date");
+            modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.AddDate).HasColumnType("smalldatetime");
+            modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.Day).HasColumnType("smalldatetime");
 
             //RecipeUsed
             modelBuilder.Entity<RecipeUsed>().HasKey(recipeUsed => recipeUsed.Id);
             modelBuilder.Entity<RecipeUsed>().Property(recipeUsed => recipeUsed.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<RecipeUsed>().Property(recipeUsed => recipeUsed.AddDate).HasColumnType("date");
-
+            modelBuilder.Entity<RecipeUsed>().Property(recipeUsed => recipeUsed.AddDate).HasColumnType("smalldatetime");
             //UserCookBook
             modelBuilder.Entity<UserCookBook>().HasKey(userCookBook => userCookBook.Id);
             modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.AddDate).HasColumnType("date");
             modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.Password).HasColumnType("binary").HasMaxLength(64);
+            modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.AddDate).HasColumnType("smalldatetime");
 
+            modelBuilder.Entity<UserCookBook>().HasData(SampleData.SampleData.GetUserCookBookSampleDataFromJson());
+            modelBuilder.Entity<IngredientDetails>().HasData(SampleData.SampleData.GetIngredientDetailsSampleDataFromJson());
 
 
         }

@@ -3,6 +3,7 @@ using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Models;
 using CookBook.BuisnesLogic.Services.IngredientServices;
+using Database.SampleData;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,16 +31,30 @@ namespace AionCodeMVC.Controllers
 
 
         // GET: IngredientController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string SearchString, string Type)
         {
+            if (Type!=null)
+            {
+                IEnumerable<IngredientDTO>? modelType = await _getIngredientService.GetIngredientDTOListType(Type);
+                return View(modelType);
+            }
+
+            ViewData["IngredientFilter"] = SearchString;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                IEnumerable<IngredientDTO>? modelSearch = await _getIngredientService.GetIngredientDTOListContainString(SearchString);
+                return View(modelSearch);
+            }
             IEnumerable<IngredientDTO>? model = await _getIngredientService.GetIngredientDTOListAll();
             return View(model);
+
+
         }
 
         // GET: IngredientController/Details/5
-        public async Task<ActionResult> Details(string name)
+        public async Task<ActionResult> Details(int id)
         {
-            var model = await _getIngredientService.GetByNameIngredientDetailedDTO(name);
+            var model = await _getIngredientService.GetByIdIngredientDetailedDTO(id);
             return View(model);
         }
 
@@ -95,21 +110,20 @@ namespace AionCodeMVC.Controllers
             }
         }
 
-        // GET: IngredientController/Delete/name
-        public async Task<IActionResult> Delete(string? name)
+        public async Task<IActionResult> Delete(int id)
         {
-            IngredientDetailedDTO? model = await _getIngredientService.GetByNameIngredientDetailedDTO(name);
+            var model = await _getIngredientService.GetByIdIngredientDetailedDTO(id);
             return View(model);
         }
 
         // POST: Movies/Delete/name
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string name)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
             {
-                await _deleteIngredientService.DeleteIngredient(name);  
+                await _deleteIngredientService.DeleteIngredient(id);  
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -120,17 +134,15 @@ namespace AionCodeMVC.Controllers
 
         public ActionResult Upload()
         {
-            return RedirectToAction(nameof(Index));
             return View();
         }
 
         [HttpPost]
-        public ActionResult Upload(IFormFile file, int id)
+        public async Task<ActionResult> Upload(IFormFile file, int id)
         {
-            return RedirectToAction(nameof(Index));
             try
             {
-                var urlToSource = _uploadIngredientPhotoService.AddPhoto(file, id);
+                await _uploadIngredientPhotoService.AddPhoto(file, id);
                 return RedirectToAction(nameof(Index));
             }
             catch

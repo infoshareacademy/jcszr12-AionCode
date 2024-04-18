@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database.EnumTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Database.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Type { get; set; }
+        public IngredientType Type { get; set; }
         public decimal Calories { get; set; }
         public decimal Proteins { get; set; }
         public decimal Fats { get; set; }

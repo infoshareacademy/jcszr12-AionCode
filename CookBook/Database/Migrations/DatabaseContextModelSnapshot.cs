@@ -31,7 +31,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("date");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<decimal>("Calories")
                         .HasColumnType("decimal(18,2)");
@@ -50,7 +50,6 @@ namespace Database.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -72,6 +71,1763 @@ namespace Database.Migrations
                     b.HasIndex("UserCookBookId");
 
                     b.ToTable("IngredientDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddDate = new DateTime(2024, 4, 17, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 23.0m,
+                            Carbohydrates = 3.63m,
+                            Description = "Marchewka jest warzywem o pomarańczowym kolorze i słodkim smaku.",
+                            Fats = 0.39m,
+                            GI = 35,
+                            ImagePath = "Marchewka.png",
+                            Name = "Marchewka",
+                            Proteins = 2.86m,
+                            Type = "Warzywa",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddDate = new DateTime(2024, 4, 17, 11, 15, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 18.0m,
+                            Carbohydrates = 3.9m,
+                            Description = "Pomidory są czerwonymi owocami o świeżym smaku i soczystej konsystencji.",
+                            Fats = 0.2m,
+                            GI = 15,
+                            ImagePath = "Pomidory.png",
+                            Name = "Pomidory",
+                            Proteins = 0.88m,
+                            Type = "Warzywa",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AddDate = new DateTime(2024, 4, 17, 9, 45, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 23.0m,
+                            Carbohydrates = 3.63m,
+                            Description = "Szpinak jest zielonym liściastym warzywem o charakterystycznym smaku.",
+                            Fats = 0.39m,
+                            GI = 15,
+                            ImagePath = "Szpinak.png",
+                            Name = "Szpinak",
+                            Proteins = 2.86m,
+                            Type = "Warzywa",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AddDate = new DateTime(2024, 4, 17, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 40.0m,
+                            Carbohydrates = 9.34m,
+                            Description = "Cebula to warzywo o ostrym smaku i charakterystycznym zapachu.",
+                            Fats = 0.1m,
+                            GI = 10,
+                            ImagePath = "Cebula.png",
+                            Name = "Cebula",
+                            Proteins = 1.1m,
+                            Type = "Warzywa",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AddDate = new DateTime(2024, 4, 17, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 31.0m,
+                            Carbohydrates = 6.0m,
+                            Description = "Papryka to warzywo o różnych kolorach i słodkim smaku.",
+                            Fats = 0.3m,
+                            GI = 20,
+                            ImagePath = "Papryka.png",
+                            Name = "Papryka",
+                            Proteins = 1.0m,
+                            Type = "Warzywa",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AddDate = new DateTime(2024, 4, 17, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 27.0m,
+                            Carbohydrates = 4.8m,
+                            Description = "Pietruszka to warzywo o intensywnym aromacie i lekko korzennym smaku.",
+                            Fats = 0.3m,
+                            GI = 10,
+                            ImagePath = "Pietruszka.png",
+                            Name = "Pietruszka",
+                            Proteins = 1.2m,
+                            Type = "Warzywa",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AddDate = new DateTime(2024, 4, 17, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 43.0m,
+                            Carbohydrates = 9.6m,
+                            Description = "Buraki to warzywa o intensywnym czerwonym kolorze i słodkim smaku.",
+                            Fats = 0.1m,
+                            GI = 40,
+                            ImagePath = "Buraki.png",
+                            Name = "Buraki",
+                            Proteins = 1.6m,
+                            Type = "Warzywa",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AddDate = new DateTime(2024, 4, 17, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 25.0m,
+                            Carbohydrates = 4.97m,
+                            Description = "Kalafior to warzywo o delikatnym smaku i chrupiącej konsystencji.",
+                            Fats = 0.3m,
+                            GI = 15,
+                            ImagePath = "Kalafior.png",
+                            Name = "Kalafior",
+                            Proteins = 1.9m,
+                            Type = "Warzywa",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AddDate = new DateTime(2024, 4, 17, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 86.0m,
+                            Carbohydrates = 19.0m,
+                            Description = "Kukurydza to warzywo o słodkim smaku i chrupiących ziarnach.",
+                            Fats = 1.2m,
+                            GI = 50,
+                            ImagePath = "Kukurydza.png",
+                            Name = "Kukurydza",
+                            Proteins = 3.2m,
+                            Type = "Warzywa",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            AddDate = new DateTime(2024, 4, 17, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 34.0m,
+                            Carbohydrates = 6.6m,
+                            Description = "Brokuły to warzywa o intensywno-zielonym kolorze i chrupiących różyczkach.",
+                            Fats = 0.4m,
+                            GI = 15,
+                            ImagePath = "Brokuły.png",
+                            Name = "Brokuły",
+                            Proteins = 2.8m,
+                            Type = "Warzywa",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 11,
+                            AddDate = new DateTime(2024, 4, 17, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 16.0m,
+                            Carbohydrates = 3.4m,
+                            Description = "Rzodkiewka to warzywo o ostrym smaku i charakterystycznym czerwonym kolorze.",
+                            Fats = 0.1m,
+                            GI = 15,
+                            ImagePath = "Rzodkiewka.png",
+                            Name = "Rzodkiewka",
+                            Proteins = 0.7m,
+                            Type = "Warzywa",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 12,
+                            AddDate = new DateTime(2024, 4, 17, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 26.0m,
+                            Carbohydrates = 6.5m,
+                            Description = "Dynia to warzywo o intensywnym pomarańczowym kolorze i słodkim smaku.",
+                            Fats = 0.1m,
+                            GI = 75,
+                            ImagePath = "Dynia.png",
+                            Name = "Dynia",
+                            Proteins = 1.0m,
+                            Type = "Warzywa",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 13,
+                            AddDate = new DateTime(2024, 4, 17, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 15.0m,
+                            Carbohydrates = 3.6m,
+                            Description = "Ogórek to warzywo o charakterystycznym zielonym kolorze i świeżym smaku.",
+                            Fats = 0.1m,
+                            GI = 10,
+                            ImagePath = "Ogórek.png",
+                            Name = "Ogórek",
+                            Proteins = 0.7m,
+                            Type = "Warzywa",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            AddDate = new DateTime(2024, 4, 17, 21, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 20.0m,
+                            Carbohydrates = 3.4m,
+                            Description = "Szparagi to warzywo o delikatnym smaku i charakterystycznym wyglądzie.",
+                            Fats = 0.1m,
+                            GI = 15,
+                            ImagePath = "Szparagi.png",
+                            Name = "Szparagi",
+                            Proteins = 2.2m,
+                            Type = "Warzywa",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 15,
+                            AddDate = new DateTime(2024, 4, 17, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 149.0m,
+                            Carbohydrates = 33.06m,
+                            Description = "Czosnek to warzywo o intensywnym smaku i aromacie.",
+                            Fats = 0.5m,
+                            GI = 10,
+                            ImagePath = "Czosnek.png",
+                            Name = "Czosnek",
+                            Proteins = 6.36m,
+                            Type = "Warzywa",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 16,
+                            AddDate = new DateTime(2024, 4, 18, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 31.0m,
+                            Carbohydrates = 6.0m,
+                            Description = "Fasola to warzywo o charakterystycznym smaku i konsystencji.",
+                            Fats = 0.5m,
+                            GI = 30,
+                            ImagePath = "Fasola.png",
+                            Name = "Fasola",
+                            Proteins = 2.0m,
+                            Type = "Warzywa",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 17,
+                            AddDate = new DateTime(2024, 4, 18, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 27.0m,
+                            Carbohydrates = 5.0m,
+                            Description = "Kapusta to warzywo o charakterystycznym smaku i konsystencji.",
+                            Fats = 0.5m,
+                            GI = 15,
+                            ImagePath = "Kapusta.png",
+                            Name = "Kapusta",
+                            Proteins = 1.3m,
+                            Type = "Warzywa",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 18,
+                            AddDate = new DateTime(2024, 4, 18, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 16.0m,
+                            Carbohydrates = 3.4m,
+                            Description = "Szczypiorek to warzywo o intensywnym smaku i aromacie.",
+                            Fats = 0.2m,
+                            GI = 10,
+                            ImagePath = "Szczypiorek.png",
+                            Name = "Szczypiorek",
+                            Proteins = 1.0m,
+                            Type = "Warzywa",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 19,
+                            AddDate = new DateTime(2024, 4, 18, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 31.0m,
+                            Carbohydrates = 7.3m,
+                            Description = "Por to warzywo o delikatnym smaku i konsystencji.",
+                            Fats = 0.3m,
+                            GI = 15,
+                            ImagePath = "Por.png",
+                            Name = "Por",
+                            Proteins = 1.5m,
+                            Type = "Warzywa",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 20,
+                            AddDate = new DateTime(2024, 4, 18, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 25.0m,
+                            Carbohydrates = 5.7m,
+                            Description = "Bakłażan to warzywo o fioletowym kolorze i delikatnym smaku.",
+                            Fats = 0.2m,
+                            GI = 10,
+                            ImagePath = "Bakłażan.png",
+                            Name = "Bakłażan",
+                            Proteins = 1.0m,
+                            Type = "Warzywa",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 21,
+                            AddDate = new DateTime(2024, 4, 18, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 28.0m,
+                            Carbohydrates = 4.9m,
+                            Description = "Rzepa to warzywo o intensywnym smaku i charakterystycznym zapachu.",
+                            Fats = 0.3m,
+                            GI = 15,
+                            ImagePath = "Rzepa.png",
+                            Name = "Rzepa",
+                            Proteins = 1.1m,
+                            Type = "Warzywa",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 22,
+                            AddDate = new DateTime(2024, 4, 18, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 17.0m,
+                            Carbohydrates = 3.1m,
+                            Description = "Cukinia to warzywo o zielonym kolorze i delikatnym smaku.",
+                            Fats = 0.1m,
+                            GI = 10,
+                            ImagePath = "Cukinia.png",
+                            Name = "Cukinia",
+                            Proteins = 1.2m,
+                            Type = "Warzywa",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 23,
+                            AddDate = new DateTime(2024, 4, 18, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 30.0m,
+                            Carbohydrates = 6.8m,
+                            Description = "Szalotka to warzywo o intensywnym smaku i aromacie.",
+                            Fats = 0.2m,
+                            GI = 15,
+                            ImagePath = "Szalotka.png",
+                            Name = "Szalotka",
+                            Proteins = 1.3m,
+                            Type = "Warzywa",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 24,
+                            AddDate = new DateTime(2024, 4, 18, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 57.0m,
+                            Carbohydrates = 15.0m,
+                            Description = "Gruszka to owoc o soczystym wnętrzu i słodkim smaku.",
+                            Fats = 0.1m,
+                            GI = 35,
+                            ImagePath = "Gruszka.png",
+                            Name = "Gruszka",
+                            Proteins = 0.4m,
+                            Type = "Owoce",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 25,
+                            AddDate = new DateTime(2024, 4, 18, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 50.0m,
+                            Carbohydrates = 12.0m,
+                            Description = "Wiśnia to owoc o intensywnym smaku i kwaśnym posmaku.",
+                            Fats = 0.3m,
+                            GI = 40,
+                            ImagePath = "Wiśnia.png",
+                            Name = "Wiśnia",
+                            Proteins = 1.0m,
+                            Type = "Owoce",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 26,
+                            AddDate = new DateTime(2024, 4, 18, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 32.0m,
+                            Carbohydrates = 7.7m,
+                            Description = "Truskawka to owoc o intensywnym czerwonym kolorze i słodkim smaku.",
+                            Fats = 0.4m,
+                            GI = 25,
+                            ImagePath = "Truskawka.png",
+                            Name = "Truskawka",
+                            Proteins = 0.8m,
+                            Type = "Owoce",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 27,
+                            AddDate = new DateTime(2024, 4, 18, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 30.0m,
+                            Carbohydrates = 8.0m,
+                            Description = "Arbuz to owoc o soczystym wnętrzu i słodkim smaku.",
+                            Fats = 0.2m,
+                            GI = 75,
+                            ImagePath = "Arbuz.png",
+                            Name = "Arbuz",
+                            Proteins = 0.6m,
+                            Type = "Owoce",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 28,
+                            AddDate = new DateTime(2024, 4, 18, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 52.0m,
+                            Carbohydrates = 5.4m,
+                            Description = "Malina to owoc o intensywnym smaku i charakterystycznym czerwonym kolorze.",
+                            Fats = 0.7m,
+                            GI = 25,
+                            ImagePath = "Malina.png",
+                            Name = "Malina",
+                            Proteins = 1.3m,
+                            Type = "Owoce",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 29,
+                            AddDate = new DateTime(2024, 4, 18, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 50.0m,
+                            Carbohydrates = 13.1m,
+                            Description = "Ananas to egzotyczny owoc o soczystym wnętrzu i słodko-kwaśnym smaku.",
+                            Fats = 0.1m,
+                            GI = 50,
+                            ImagePath = "Ananas.png",
+                            Name = "Ananas",
+                            Proteins = 0.5m,
+                            Type = "Owoce",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 30,
+                            AddDate = new DateTime(2024, 4, 18, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 39.0m,
+                            Carbohydrates = 9.5m,
+                            Description = "Brzoskwinia to owoc o delikatnym smaku i soczystym wnętrzu.",
+                            Fats = 0.2m,
+                            GI = 30,
+                            ImagePath = "Brzoskwinia.png",
+                            Name = "Brzoskwinia",
+                            Proteins = 0.9m,
+                            Type = "Owoce",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 31,
+                            AddDate = new DateTime(2024, 4, 18, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 53.0m,
+                            Carbohydrates = 12.9m,
+                            Description = "Mandarynka to owoc o delikatnym smaku i soczystym wnętrzu.",
+                            Fats = 0.2m,
+                            GI = 40,
+                            ImagePath = "Mandarynka.png",
+                            Name = "Mandarynka",
+                            Proteins = 0.8m,
+                            Type = "Owoce",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 32,
+                            AddDate = new DateTime(2024, 4, 18, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 69.0m,
+                            Carbohydrates = 18.1m,
+                            Description = "Winogrono to owoc o soczystym wnętrzu i słodkim smaku.",
+                            Fats = 0.2m,
+                            GI = 45,
+                            ImagePath = "Winogrono.png",
+                            Name = "Winogrono",
+                            Proteins = 0.7m,
+                            Type = "Owoce",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 33,
+                            AddDate = new DateTime(2024, 4, 18, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 46.0m,
+                            Carbohydrates = 11.7m,
+                            Description = "Śliwka to owoc o soczystym wnętrzu i słodkim smaku.",
+                            Fats = 0.2m,
+                            GI = 30,
+                            ImagePath = "Śliwka.png",
+                            Name = "Śliwka",
+                            Proteins = 0.7m,
+                            Type = "Owoce",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 34,
+                            AddDate = new DateTime(2024, 4, 18, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 89.0m,
+                            Carbohydrates = 22.8m,
+                            Description = "Brązowy banan to owoc o intensywnym smaku i aromacie.",
+                            Fats = 0.3m,
+                            GI = 60,
+                            ImagePath = "Brązowy Banan.png",
+                            Name = "Brązowy Banan",
+                            Proteins = 1.1m,
+                            Type = "Owoce",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 35,
+                            AddDate = new DateTime(2024, 4, 18, 21, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 71.0m,
+                            Carbohydrates = 15.9m,
+                            Description = "Kumquat to owoc o intensywnym smaku i aromacie.",
+                            Fats = 0.9m,
+                            GI = 40,
+                            ImagePath = "Kumquat.png",
+                            Name = "Kumquat",
+                            Proteins = 2.6m,
+                            Type = "Owoce",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 36,
+                            AddDate = new DateTime(2024, 4, 18, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 66.0m,
+                            Carbohydrates = 16.5m,
+                            Description = "Liczi to owoc o delikatnym smaku i soczystym wnętrzu.",
+                            Fats = 0.4m,
+                            GI = 50,
+                            ImagePath = "Liczi.png",
+                            Name = "Liczi",
+                            Proteins = 0.8m,
+                            Type = "Owoce",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 37,
+                            AddDate = new DateTime(2024, 4, 18, 23, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 83.0m,
+                            Carbohydrates = 18.7m,
+                            Description = "Granat to owoc o soczystym wnętrzu i słodko-kwaśnym smaku.",
+                            Fats = 1.2m,
+                            GI = 35,
+                            ImagePath = "Granat.png",
+                            Name = "Granat",
+                            Proteins = 1.7m,
+                            Type = "Owoce",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 38,
+                            AddDate = new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 61.0m,
+                            Carbohydrates = 14.7m,
+                            Description = "Kiwi to owoc o intensywnym zielonym wnętrzu i słodkim smaku.",
+                            Fats = 0.5m,
+                            GI = 50,
+                            ImagePath = "Kiwi.png",
+                            Name = "Kiwi",
+                            Proteins = 1.1m,
+                            Type = "Owoce",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 39,
+                            AddDate = new DateTime(2024, 4, 19, 1, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 29.0m,
+                            Carbohydrates = 9.3m,
+                            Description = "Cytryna to owoc o intensywnym kwaśnym smaku.",
+                            Fats = 0.3m,
+                            GI = 20,
+                            ImagePath = "Cytryna.png",
+                            Name = "Cytryna",
+                            Proteins = 1.1m,
+                            Type = "Owoce",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 40,
+                            AddDate = new DateTime(2024, 4, 19, 2, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 34.0m,
+                            Carbohydrates = 8.6m,
+                            Description = "Melon to owoc o soczystym wnętrzu i słodkim smaku.",
+                            Fats = 0.2m,
+                            GI = 65,
+                            ImagePath = "Melon.png",
+                            Name = "Melon",
+                            Proteins = 0.8m,
+                            Type = "Owoce",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 41,
+                            AddDate = new DateTime(2024, 4, 19, 3, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 38.0m,
+                            Carbohydrates = 9.6m,
+                            Description = "Pomelo to owoc o soczystym wnętrzu i słodko-kwaśnym smaku.",
+                            Fats = 0.1m,
+                            GI = 30,
+                            ImagePath = "Pomelo.png",
+                            Name = "Pomelo",
+                            Proteins = 0.8m,
+                            Type = "Owoce",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 42,
+                            AddDate = new DateTime(2024, 4, 19, 4, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 74.0m,
+                            Carbohydrates = 19.2m,
+                            Description = "Figa to owoc o intensywnym smaku i soczystym wnętrzu.",
+                            Fats = 0.3m,
+                            GI = 35,
+                            ImagePath = "Figa.png",
+                            Name = "Figa",
+                            Proteins = 0.8m,
+                            Type = "Owoce",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 43,
+                            AddDate = new DateTime(2024, 4, 19, 5, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 68.0m,
+                            Carbohydrates = 14.3m,
+                            Description = "Guawa to owoc o intensywnym smaku i aromacie.",
+                            Fats = 0.9m,
+                            GI = 40,
+                            ImagePath = "Guawa.png",
+                            Name = "Guawa",
+                            Proteins = 2.6m,
+                            Type = "Owoce",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 44,
+                            AddDate = new DateTime(2024, 4, 19, 6, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 60.0m,
+                            Carbohydrates = 14.8m,
+                            Description = "Mango to owoc o soczystym wnętrzu i intensywnym słodkim smaku.",
+                            Fats = 0.4m,
+                            GI = 55,
+                            ImagePath = "Mango.png",
+                            Name = "Mango",
+                            Proteins = 0.8m,
+                            Type = "Owoce",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 45,
+                            AddDate = new DateTime(2024, 4, 19, 7, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 81.0m,
+                            Carbohydrates = 18.7m,
+                            Description = "Pomarańczowy granat to owoc o soczystym wnętrzu i słodkim smaku.",
+                            Fats = 1.1m,
+                            GI = 50,
+                            ImagePath = "omarańczowy Granat.png",
+                            Name = "Pomarańczowy Granat",
+                            Proteins = 1.6m,
+                            Type = "Owoce",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 46,
+                            AddDate = new DateTime(2024, 4, 19, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 47.0m,
+                            Carbohydrates = 12.3m,
+                            Description = "Świeża figa to owoc o intensywnym smaku i aromacie.",
+                            Fats = 0.3m,
+                            GI = 35,
+                            ImagePath = "Świeża Fig.png",
+                            Name = "Świeża Fig",
+                            Proteins = 0.8m,
+                            Type = "Owoce",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 47,
+                            AddDate = new DateTime(2024, 4, 19, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 79.0m,
+                            Carbohydrates = 17.2m,
+                            Description = "Malinowy granat to owoc o soczystym wnętrzu i intensywnym smaku.",
+                            Fats = 1.0m,
+                            GI = 45,
+                            ImagePath = "Malinowy Granat.png",
+                            Name = "Malinowy Granat",
+                            Proteins = 1.5m,
+                            Type = "Owoce",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 48,
+                            AddDate = new DateTime(2024, 4, 19, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 265.0m,
+                            Carbohydrates = 54.6m,
+                            Description = "Bagietka to rodzaj pieczywa charakteryzującego się chrupiącą skórką i miękkim wnętrzem.",
+                            Fats = 0.9m,
+                            GI = 60,
+                            ImagePath = "Bagietka.png",
+                            Name = "Bagietka",
+                            Proteins = 8.2m,
+                            Type = "Pieczywo",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 49,
+                            AddDate = new DateTime(2024, 4, 19, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 211.0m,
+                            Carbohydrates = 42.4m,
+                            Description = "Chleb żytni to pieczywo wytwarzane z mąki żytniej, charakteryzujące się intensywnym smakiem.",
+                            Fats = 1.2m,
+                            GI = 45,
+                            ImagePath = "Chleb żytni.png",
+                            Name = "Chleb żytni",
+                            Proteins = 5.8m,
+                            Type = "Pieczywo",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 50,
+                            AddDate = new DateTime(2024, 4, 19, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 265.0m,
+                            Carbohydrates = 52.0m,
+                            Description = "Bułka to małe okrągłe bochenki pieczywa, zazwyczaj chrupiące na zewnątrz i miękkie wewnątrz.",
+                            Fats = 1.0m,
+                            GI = 70,
+                            ImagePath = "Bułka.png",
+                            Name = "Bułka",
+                            Proteins = 9.0m,
+                            Type = "Pieczywo",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 51,
+                            AddDate = new DateTime(2024, 4, 19, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 245.0m,
+                            Carbohydrates = 52.0m,
+                            Description = "Bagel to rodzaj pierścienia pieczywa, zazwyczaj ugotowanego przed pieczeniem, charakteryzujący się gładką skórką i miękkim wnętrzem.",
+                            Fats = 1.0m,
+                            GI = 70,
+                            ImagePath = "Bagel.png",
+                            Name = "Bagel",
+                            Proteins = 9.0m,
+                            Type = "Pieczywo",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 52,
+                            AddDate = new DateTime(2024, 4, 19, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 406.0m,
+                            Carbohydrates = 51.0m,
+                            Description = "Croissant to francuskie pieczywo w kształcie półksiężyca, charakteryzujące się chrupiącą skorupką i miękkim wnętrzem.",
+                            Fats = 20.0m,
+                            GI = 45,
+                            ImagePath = "Croissant.png",
+                            Name = "Croissant",
+                            Proteins = 8.5m,
+                            Type = "Pieczywo",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 53,
+                            AddDate = new DateTime(2024, 4, 19, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 250.0m,
+                            Carbohydrates = 55.0m,
+                            Description = "Pumpernikiel to ciemne, gęste pieczywo o intensywnym smaku, tradycyjne dla kuchni niemieckiej i polskiej.",
+                            Fats = 1.5m,
+                            GI = 55,
+                            ImagePath = "Pumpernikiel.png",
+                            Name = "Pumpernikiel",
+                            Proteins = 6.0m,
+                            Type = "Pieczywo",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 54,
+                            AddDate = new DateTime(2024, 4, 19, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 250.0m,
+                            Carbohydrates = 30.0m,
+                            Description = "Focaccia to włoskie pieczywo płaskie, charakteryzujące się obfitością oliwy z oliwek i aromatycznymi ziołami.",
+                            Fats = 12.0m,
+                            GI = 70,
+                            ImagePath = "Focaccia.png",
+                            Name = "Focaccia",
+                            Proteins = 7.0m,
+                            Type = "Pieczywo",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 55,
+                            AddDate = new DateTime(2024, 4, 19, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 275.0m,
+                            Carbohydrates = 55.0m,
+                            Description = "Pita to spłaszczona bułka pieczona na bazie mąki pszennej, używana głównie w kuchni śródziemnomorskiej.",
+                            Fats = 1.0m,
+                            GI = 70,
+                            ImagePath = "Pita.png",
+                            Name = "Pita",
+                            Proteins = 9.0m,
+                            Type = "Pieczywo",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 56,
+                            AddDate = new DateTime(2024, 4, 20, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 206.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Łosoś to rodzaj ryby morskiej, bogaty w kwasy tłuszczowe omega-3 i białko.",
+                            Fats = 13.0m,
+                            GI = 0,
+                            ImagePath = "Łosoś.png",
+                            Name = "Łosoś",
+                            Proteins = 20.0m,
+                            Type = "Ryby",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 57,
+                            AddDate = new DateTime(2024, 4, 20, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 144.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Tuńczyk to duża, oceaniczna ryba charakteryzująca się cennym białkiem i niską zawartością tłuszczu.",
+                            Fats = 1.0m,
+                            GI = 0,
+                            ImagePath = "Tuńczyk.png",
+                            Name = "Tuńczyk",
+                            Proteins = 29.0m,
+                            Type = "Ryby",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 58,
+                            AddDate = new DateTime(2024, 4, 20, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 82.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Dorsz to popularna ryba morska o białym mięsie, charakteryzująca się delikatnym smakiem.",
+                            Fats = 0.7m,
+                            GI = 0,
+                            ImagePath = "Dorsz.png",
+                            Name = "Dorsz",
+                            Proteins = 18.0m,
+                            Type = "Ryby",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 59,
+                            AddDate = new DateTime(2024, 4, 20, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 210.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Śledź to mała, tłusta ryba morska popularna w kuchni skandynawskiej, charakteryzująca się intensywnym smakiem.",
+                            Fats = 14.0m,
+                            GI = 0,
+                            ImagePath = "Śledź.png",
+                            Name = "Śledź",
+                            Proteins = 19.0m,
+                            Type = "Ryby",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 60,
+                            AddDate = new DateTime(2024, 4, 20, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 210.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Anchovies to małe, powszechne ryby słonowodne z rodziny Engraulidae, które są używane jako jedzenie dla ludzi i przynęty rybne.",
+                            Fats = 14.0m,
+                            GI = 0,
+                            ImagePath = "Anchovies.png",
+                            Name = "Anchovies",
+                            Proteins = 19.0m,
+                            Type = "Ryby",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 61,
+                            AddDate = new DateTime(2024, 4, 20, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 305.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Makrela to rodzaj ryby morskiej, która jest bogata w witaminę D, białko i kwasy tłuszczowe omega-3.",
+                            Fats = 25.0m,
+                            GI = 0,
+                            ImagePath = "Makrela.png",
+                            Name = "Makrela",
+                            Proteins = 18.0m,
+                            Type = "Ryby",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 62,
+                            AddDate = new DateTime(2024, 4, 20, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 208.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Sardynki to małe, tłuste ryby, które często są podawane w puszkach i są bogate w kwasy tłuszczowe omega-3.",
+                            Fats = 11.0m,
+                            GI = 0,
+                            ImagePath = "Sardynki.png",
+                            Name = "Sardynki",
+                            Proteins = 25.0m,
+                            Type = "Ryby",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 63,
+                            AddDate = new DateTime(2024, 4, 20, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 168.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Pstrąg to gatunek ryby słodkowodnej o kolorowych rysunkach i delikatnym mięsie.",
+                            Fats = 8.0m,
+                            GI = 0,
+                            ImagePath = "Pstrąg.png",
+                            Name = "Pstrąg",
+                            Proteins = 22.0m,
+                            Type = "Ryby",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 64,
+                            AddDate = new DateTime(2024, 4, 21, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 337.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Kaczka to mięso drobiowe pochodzące z kaczki, które jest bogate w białko i ma intensywny smak.",
+                            Fats = 28.0m,
+                            GI = 0,
+                            ImagePath = "Kaczka.png",
+                            Name = "Kaczka",
+                            Proteins = 16.0m,
+                            Type = "Mięsa",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 65,
+                            AddDate = new DateTime(2024, 4, 21, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 242.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Jagnięcina to mięso pochodzące z młodej owcy, charakteryzujące się delikatnym smakiem i soczystą konsystencją.",
+                            Fats = 17.0m,
+                            GI = 0,
+                            ImagePath = "Jagnięcina.png",
+                            Name = "Jagnięcina",
+                            Proteins = 20.0m,
+                            Type = "Mięsa",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 66,
+                            AddDate = new DateTime(2024, 4, 21, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 238.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Gęś to mięso drobiowe pochodzące z gęsi, które charakteryzuje się intensywnym smakiem i bogatym zapachem.",
+                            Fats = 19.0m,
+                            GI = 0,
+                            ImagePath = "Gęś.png",
+                            Name = "Gęś",
+                            Proteins = 16.0m,
+                            Type = "Mięsa",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 67,
+                            AddDate = new DateTime(2024, 4, 21, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 301.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Kiełbasa to wędliny mięsne charakteryzujące się różnymi smakami i konsystencjami.",
+                            Fats = 27.0m,
+                            GI = 0,
+                            ImagePath = "Kiełbasa.png",
+                            Name = "Kiełbasa",
+                            Proteins = 13.0m,
+                            Type = "Mięsa",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 68,
+                            AddDate = new DateTime(2024, 4, 21, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 123.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Schab to popularne mięso wieprzowe, które jest bogate w białko i niskotłuszczowe.",
+                            Fats = 3.1m,
+                            GI = 0,
+                            ImagePath = "Schab.png",
+                            Name = "Schab",
+                            Proteins = 22.0m,
+                            Type = "Mięsa",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 69,
+                            AddDate = new DateTime(2024, 4, 21, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 225.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Żeberka to popularne mięso wieprzowe, które jest bogate w białko i niskotłuszczowe.",
+                            Fats = 17.0m,
+                            GI = 0,
+                            ImagePath = "Żeberka.png",
+                            Name = "Żeberka",
+                            Proteins = 15.0m,
+                            Type = "Mięsa",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 70,
+                            AddDate = new DateTime(2024, 4, 22, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 22.0m,
+                            Carbohydrates = 3.1m,
+                            Description = "Pieczarki to popularne grzyby spożywcze o delikatnym smaku i mięsistej konsystencji.",
+                            Fats = 0.3m,
+                            GI = 10,
+                            ImagePath = "Pieczarki.png",
+                            Name = "Pieczarki",
+                            Proteins = 3.1m,
+                            Type = "Grzyby",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 71,
+                            AddDate = new DateTime(2024, 4, 22, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 35.0m,
+                            Carbohydrates = 5.0m,
+                            Description = "Kurki to grzyby leśne o intensywnym smaku i charakterystycznym żółtym kolorze.",
+                            Fats = 0.6m,
+                            GI = 10,
+                            ImagePath = "Kurki.png",
+                            Name = "Kurki",
+                            Proteins = 3.6m,
+                            Type = "Grzyby",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 72,
+                            AddDate = new DateTime(2024, 4, 22, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 27.0m,
+                            Carbohydrates = 3.9m,
+                            Description = "Podgrzybki to popularne grzyby leśne o intensywnym smaku i aromacie.",
+                            Fats = 0.5m,
+                            GI = 10,
+                            ImagePath = "Podgrzybki.png",
+                            Name = "Podgrzybki",
+                            Proteins = 2.8m,
+                            Type = "Grzyby",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 73,
+                            AddDate = new DateTime(2024, 4, 22, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 30.0m,
+                            Carbohydrates = 4.1m,
+                            Description = "Borowiki to popularne grzyby leśne o intensywnym smaku i mięsistej konsystencji.",
+                            Fats = 0.5m,
+                            GI = 10,
+                            ImagePath = "Borowiki.png",
+                            Name = "Borowiki",
+                            Proteins = 3.1m,
+                            Type = "Grzyby",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 74,
+                            AddDate = new DateTime(2024, 4, 22, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 19.0m,
+                            Carbohydrates = 2.7m,
+                            Description = "Kaniula to grzyb leśny o intensywnym smaku i chrupiącej konsystencji.",
+                            Fats = 0.2m,
+                            GI = 10,
+                            ImagePath = "Kaniula.png",
+                            Name = "Kaniula",
+                            Proteins = 1.8m,
+                            Type = "Grzyby",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 75,
+                            AddDate = new DateTime(2024, 4, 22, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 0.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Muchomor to grzyb leśny o intensywnym smaku i toksycznych właściwościach.",
+                            Fats = 0.0m,
+                            GI = 0,
+                            ImagePath = "Muchomor.png",
+                            Name = "Muchomor",
+                            Proteins = 0.0m,
+                            Type = "Grzyby",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 76,
+                            AddDate = new DateTime(2024, 4, 22, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 31.0m,
+                            Carbohydrates = 4.1m,
+                            Description = "Kozaki to grzyby leśne o intensywnym smaku i mięsistej konsystencji.",
+                            Fats = 0.6m,
+                            GI = 10,
+                            ImagePath = "Kozaki.png",
+                            Name = "Kozaki",
+                            Proteins = 3.3m,
+                            Type = "Grzyby",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 77,
+                            AddDate = new DateTime(2024, 4, 22, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 22.0m,
+                            Carbohydrates = 3.5m,
+                            Description = "Pieszkot to grzyb leśny o intensywnym smaku i aromacie.",
+                            Fats = 0.4m,
+                            GI = 10,
+                            ImagePath = "Pieszkot.png",
+                            Name = "Pieszkot",
+                            Proteins = 2.8m,
+                            Type = "Grzyby",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 78,
+                            AddDate = new DateTime(2024, 4, 22, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 28.0m,
+                            Carbohydrates = 4.2m,
+                            Description = "Maślak to grzyb leśny o intensywnym smaku i aromacie.",
+                            Fats = 0.5m,
+                            GI = 10,
+                            ImagePath = "Maślak.png",
+                            Name = "Maślak",
+                            Proteins = 2.9m,
+                            Type = "Grzyby",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 79,
+                            AddDate = new DateTime(2024, 4, 22, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 24.0m,
+                            Carbohydrates = 3.8m,
+                            Description = "Gołąbki to grzyb leśny o intensywnym smaku i charakterystycznym kształcie.",
+                            Fats = 0.4m,
+                            GI = 10,
+                            ImagePath = "Gołąbki.png",
+                            Name = "Gołąbki",
+                            Proteins = 3.0m,
+                            Type = "Grzyby",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 80,
+                            AddDate = new DateTime(2024, 4, 22, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 26.0m,
+                            Carbohydrates = 3.9m,
+                            Description = "Opieńki to grzyby leśne o intensywnym smaku i aromacie.",
+                            Fats = 0.4m,
+                            GI = 10,
+                            ImagePath = "Opieńki.png",
+                            Name = "Opieńki",
+                            Proteins = 3.1m,
+                            Type = "Grzyby",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 81,
+                            AddDate = new DateTime(2024, 4, 23, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 2.0m,
+                            Carbohydrates = 0.3m,
+                            Description = "Kawa to popularny napój sporządzany z palonych i zmielonych ziaren kawowca.",
+                            Fats = 0.0m,
+                            GI = 0,
+                            ImagePath = "Kawa.png",
+                            Name = "Kawa",
+                            Proteins = 0.1m,
+                            Type = "Napoje",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 82,
+                            AddDate = new DateTime(2024, 4, 23, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 1.0m,
+                            Carbohydrates = 0.3m,
+                            Description = "Herbata to napój wytwarzany z suszonych liści roślin.",
+                            Fats = 0.0m,
+                            GI = 0,
+                            ImagePath = "Herbata.png",
+                            Name = "Herbata",
+                            Proteins = 0.0m,
+                            Type = "Napoje",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 83,
+                            AddDate = new DateTime(2024, 4, 23, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 0.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Woda to bezbarwna ciecz, która stanowi podstawowy składnik organizmu ludzkiego.",
+                            Fats = 0.0m,
+                            GI = 0,
+                            ImagePath = "Woda.png",
+                            Name = "Woda",
+                            Proteins = 0.0m,
+                            Type = "Napoje",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 84,
+                            AddDate = new DateTime(2024, 4, 23, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 45.0m,
+                            Carbohydrates = 10.4m,
+                            Description = "Sok pomarańczowy to napój otrzymywany z wyciśniętych owoców pomarańczy.",
+                            Fats = 0.2m,
+                            GI = 50,
+                            ImagePath = "Sok pomarańczowy.png",
+                            Name = "Sok pomarańczowy",
+                            Proteins = 0.7m,
+                            Type = "Napoje",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 85,
+                            AddDate = new DateTime(2024, 4, 23, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 42.0m,
+                            Carbohydrates = 10.6m,
+                            Description = "Cola to gazowany napój o smaku karmelowym, zawierający kofeinę.",
+                            Fats = 0.0m,
+                            GI = 65,
+                            ImagePath = "Cola.png",
+                            Name = "Cola",
+                            Proteins = 0.0m,
+                            Type = "Napoje",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 86,
+                            AddDate = new DateTime(2024, 4, 23, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 29.0m,
+                            Carbohydrates = 7.8m,
+                            Description = "Lemoniada to napój otrzymywany z wyciśniętego soku z cytryny wymieszanego z wodą i cukrem.",
+                            Fats = 0.1m,
+                            GI = 24,
+                            ImagePath = "Lemoniada.png",
+                            Name = "Lemoniada",
+                            Proteins = 0.3m,
+                            Type = "Napoje",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 87,
+                            AddDate = new DateTime(2024, 4, 23, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 42.0m,
+                            Carbohydrates = 5.0m,
+                            Description = "Mleko to biały płyn produkowany przez ssaki, stanowiący podstawowy pokarm niemowląt.",
+                            Fats = 1.0m,
+                            GI = 30,
+                            ImagePath = "Mleko.png",
+                            Name = "Mleko",
+                            Proteins = 3.4m,
+                            Type = "Napoje",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 88,
+                            AddDate = new DateTime(2024, 4, 23, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 43.0m,
+                            Carbohydrates = 3.6m,
+                            Description = "Piwo to alkoholowy napój fermentowany wytwarzany z jęczmienia lub innych zbóż.",
+                            Fats = 0.0m,
+                            GI = 55,
+                            ImagePath = "Piwo.png",
+                            Name = "Piwo",
+                            Proteins = 0.5m,
+                            Type = "Napoje",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 89,
+                            AddDate = new DateTime(2024, 4, 23, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 250.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Whisky to alkoholowy napój destylowany wytwarzany z różnych zbożowych surowców.",
+                            Fats = 0.0m,
+                            GI = 0,
+                            ImagePath = "Whisky.png",
+                            Name = "Whisky",
+                            Proteins = 0.0m,
+                            Type = "Napoje",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 90,
+                            AddDate = new DateTime(2024, 4, 23, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 45.0m,
+                            Carbohydrates = 10.5m,
+                            Description = "Sok jabłkowy to napój otrzymywany z wyciśniętych owoców jabłka.",
+                            Fats = 0.0m,
+                            GI = 40,
+                            ImagePath = "Sok jabłkowy.png",
+                            Name = "Sok jabłkowy",
+                            Proteins = 0.4m,
+                            Type = "Napoje",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 91,
+                            AddDate = new DateTime(2024, 4, 23, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 120.0m,
+                            Carbohydrates = 26.0m,
+                            Description = "Koktajl bananowy to napój mleczny o smaku bananowym, często dodawane są do niego inne owoce.",
+                            Fats = 0.5m,
+                            GI = 40,
+                            ImagePath = "Koktajl bananowy.png",
+                            Name = "Koktajl bananowy",
+                            Proteins = 1.5m,
+                            Type = "Napoje",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 92,
+                            AddDate = new DateTime(2024, 4, 23, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 402.0m,
+                            Carbohydrates = 1.3m,
+                            Description = "Ser żółty to rodzaj sera produkowanego z mleka krowiego, charakteryzujący się żółtym kolorem i specyficznym smakiem.",
+                            Fats = 33.0m,
+                            GI = 0,
+                            ImagePath = "Ser żółty.png",
+                            Name = "Ser żółty",
+                            Proteins = 25.0m,
+                            Type = "Nabiał",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 93,
+                            AddDate = new DateTime(2024, 4, 23, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 321.0m,
+                            Carbohydrates = 54.0m,
+                            Description = "Mleko skondensowane to gęsta, słodka forma mleka, w której woda została usunięta i dodano cukru.",
+                            Fats = 8.8m,
+                            GI = 0,
+                            ImagePath = "Mleko skondensowane.png",
+                            Name = "Mleko skondensowane",
+                            Proteins = 8.5m,
+                            Type = "Nabiał",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 94,
+                            AddDate = new DateTime(2024, 4, 23, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 61.0m,
+                            Carbohydrates = 4.7m,
+                            Description = "Jogurt naturalny to kwaśny produkt mleczny otrzymywany z fermentacji mleka.",
+                            Fats = 3.6m,
+                            GI = 0,
+                            ImagePath = "Jogurt naturalny.png",
+                            Name = "Jogurt naturalny",
+                            Proteins = 4.0m,
+                            Type = "Nabiał",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 95,
+                            AddDate = new DateTime(2024, 4, 23, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 717.0m,
+                            Carbohydrates = 0.1m,
+                            Description = "Masło to tłuszcz jadalny otrzymywany z mleka, charakteryzujący się żółtawym kolorem i kremową konsystencją.",
+                            Fats = 81.0m,
+                            GI = 0,
+                            ImagePath = "Masło.png",
+                            Name = "Masło",
+                            Proteins = 0.9m,
+                            Type = "Nabiał",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 96,
+                            AddDate = new DateTime(2024, 4, 23, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 98.0m,
+                            Carbohydrates = 3.5m,
+                            Description = "Ser biały to delikatny i łagodny ser produkowany z mleka krowiego, często wykorzystywany w diecie fitness.",
+                            Fats = 0.3m,
+                            GI = 0,
+                            ImagePath = "Ser biały.png",
+                            Name = "Ser biały",
+                            Proteins = 11.0m,
+                            Type = "Nabiał",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 97,
+                            AddDate = new DateTime(2024, 4, 23, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 56.0m,
+                            Carbohydrates = 4.7m,
+                            Description = "Kefir to napój mleczny otrzymywany z fermentacji mleka krowiego lub koziego.",
+                            Fats = 3.0m,
+                            GI = 0,
+                            ImagePath = "Kefir.png",
+                            Name = "Kefir",
+                            Proteins = 3.3m,
+                            Type = "Nabiał",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 98,
+                            AddDate = new DateTime(2024, 4, 23, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 174.0m,
+                            Carbohydrates = 2.0m,
+                            Description = "Twaróg to biały, miękki ser otrzymywany z kwasu cytrynowego lub innych kwasów.",
+                            Fats = 9.0m,
+                            GI = 0,
+                            ImagePath = "Twaróg.png",
+                            Name = "Twaróg",
+                            Proteins = 18.0m,
+                            Type = "Nabiał",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 99,
+                            AddDate = new DateTime(2024, 4, 23, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 322.0m,
+                            Carbohydrates = 1.0m,
+                            Description = "Żółtko jaja to żółta część jaja, która zawiera dużo składników odżywczych, w tym witaminy A, D i E.",
+                            Fats = 27.0m,
+                            GI = 0,
+                            ImagePath = "Żółtko jaja.png",
+                            Name = "Żółtko jaja",
+                            Proteins = 16.0m,
+                            Type = "Nabiał",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 100,
+                            AddDate = new DateTime(2024, 4, 23, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 155.0m,
+                            Carbohydrates = 1.1m,
+                            Description = "Jajko to produkowany przez kury produkt spożywczy, bogaty w białko i inne składniki odżywcze.",
+                            Fats = 10.6m,
+                            GI = 0,
+                            ImagePath = "Jajko.png",
+                            Name = "Jajko",
+                            Proteins = 12.6m,
+                            Type = "Nabiał",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 101,
+                            AddDate = new DateTime(2024, 4, 23, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 255.0m,
+                            Carbohydrates = 64.8m,
+                            Description = "Pieprz czarny to popularna przyprawa o ostrym smaku, pochodząca z ziaren pieprzu czarnego.",
+                            Fats = 3.3m,
+                            GI = 0,
+                            ImagePath = "Pieprz czarny.png",
+                            Name = "Pieprz czarny",
+                            Proteins = 10.4m,
+                            Type = "Przyprawy",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 102,
+                            AddDate = new DateTime(2024, 4, 23, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 0.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Sól to niezwykle popularna przyprawa dodawana do potraw dla wzmocnienia smaku.",
+                            Fats = 0.0m,
+                            GI = 0,
+                            ImagePath = "Sól.png",
+                            Name = "Sól",
+                            Proteins = 0.0m,
+                            Type = "Przyprawy",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 103,
+                            AddDate = new DateTime(2024, 4, 23, 21, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 247.0m,
+                            Carbohydrates = 80.59m,
+                            Description = "Cynamon to przyprawa o słodkim i korzennym smaku, często stosowana w deserach i napojach.",
+                            Fats = 1.24m,
+                            GI = 0,
+                            ImagePath = "Cynamon.png",
+                            Name = "Cynamon",
+                            Proteins = 3.99m,
+                            Type = "Przyprawy",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 104,
+                            AddDate = new DateTime(2024, 4, 23, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 354.0m,
+                            Carbohydrates = 64.9m,
+                            Description = "Kurkuma to przyprawa o intensywnym żółtym kolorze i lekko pikantnym smaku, popularna w kuchni indyjskiej.",
+                            Fats = 9.88m,
+                            GI = 0,
+                            ImagePath = "Kurkuma.png",
+                            Name = "Kurkuma",
+                            Proteins = 7.83m,
+                            Type = "Przyprawy",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 105,
+                            AddDate = new DateTime(2024, 4, 23, 23, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 265.0m,
+                            Carbohydrates = 68.9m,
+                            Description = "Oregano to zioło o intensywnym zapachu i lekko gorzkim smaku, często używane w kuchni włoskiej.",
+                            Fats = 4.3m,
+                            GI = 0,
+                            ImagePath = "Oregano.png",
+                            Name = "Oregano",
+                            Proteins = 9.0m,
+                            Type = "Przyprawy",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 106,
+                            AddDate = new DateTime(2024, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 20.0m,
+                            Carbohydrates = 4.2m,
+                            Description = "Papryka słodka to przyprawa o delikatnym smaku i intensywnym czerwonym kolorze.",
+                            Fats = 0.3m,
+                            GI = 0,
+                            ImagePath = "Papryka słodka.png",
+                            Name = "Papryka słodka",
+                            Proteins = 1.0m,
+                            Type = "Przyprawy",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 107,
+                            AddDate = new DateTime(2024, 4, 24, 1, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 333.0m,
+                            Carbohydrates = 49.9m,
+                            Description = "Kminek to przyprawa o intensywnym aromacie i charakterystycznym smaku, popularna w kuchni środkowoeuropejskiej.",
+                            Fats = 13.9m,
+                            GI = 0,
+                            ImagePath = "Kminek.png",
+                            Name = "Kminek",
+                            Proteins = 19.8m,
+                            Type = "Przyprawy",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 108,
+                            AddDate = new DateTime(2024, 4, 24, 2, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 43.0m,
+                            Carbohydrates = 6.7m,
+                            Description = "Koper to zioło o delikatnym smaku i intensywnym zapachu, często stosowane w zupach i sałatkach.",
+                            Fats = 0.6m,
+                            GI = 0,
+                            ImagePath = "Koper.png",
+                            Name = "Koper",
+                            Proteins = 2.1m,
+                            Type = "Przyprawy",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 109,
+                            AddDate = new DateTime(2024, 4, 24, 3, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 298.0m,
+                            Carbohydrates = 38.0m,
+                            Description = "Kolendra to zioło o intensywnym zapachu i lekko korzennym smaku, często stosowane w kuchni azjatyckiej.",
+                            Fats = 17.8m,
+                            GI = 0,
+                            ImagePath = "Kolendra.png",
+                            Name = "Kolendra",
+                            Proteins = 12.0m,
+                            Type = "Przyprawy",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 110,
+                            AddDate = new DateTime(2024, 4, 20, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 210.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Śledź to mała, tłusta ryba morska popularna w kuchni skandynawskiej, charakteryzująca się intensywnym smakiem.",
+                            Fats = 14.0m,
+                            GI = 0,
+                            ImagePath = "Śledź.png",
+                            Name = "Śledź",
+                            Proteins = 19.0m,
+                            Type = "Ryby",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 111,
+                            AddDate = new DateTime(2024, 4, 20, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 82.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Dorsz to popularna ryba morska o białym mięsie, charakteryzująca się delikatnym smakiem.",
+                            Fats = 0.7m,
+                            GI = 0,
+                            ImagePath = "Dorsz.png",
+                            Name = "Dorsz",
+                            Proteins = 18.0m,
+                            Type = "Ryby",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 112,
+                            AddDate = new DateTime(2024, 4, 20, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 82.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Flądra to duża, płaska ryba o smacznym mięsie, często stosowana w zupach rybnych i potrawach smażonych.",
+                            Fats = 0.7m,
+                            GI = 0,
+                            ImagePath = "Flądra.png",
+                            Name = "Flądra",
+                            Proteins = 18.0m,
+                            Type = "Ryby",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 113,
+                            AddDate = new DateTime(2024, 4, 21, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 250.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Wołowina to mięso pochodzące z krowy, charakteryzujące się bogatym smakiem i wysoką zawartością białka.",
+                            Fats = 17.0m,
+                            GI = 0,
+                            ImagePath = "Wołowina.png",
+                            Name = "Wołowina",
+                            Proteins = 26.0m,
+                            Type = "Mięsa",
+                            UserCookBookId = 1
+                        },
+                        new
+                        {
+                            Id = 114,
+                            AddDate = new DateTime(2024, 4, 21, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 239.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Kurczak to popularne mięso drobiowe, które jest bogate w białko i niskotłuszczowe.",
+                            Fats = 14.0m,
+                            GI = 0,
+                            ImagePath = "Kurczak.png",
+                            Name = "Kurczak",
+                            Proteins = 27.0m,
+                            Type = "Mięsa",
+                            UserCookBookId = 2
+                        },
+                        new
+                        {
+                            Id = 115,
+                            AddDate = new DateTime(2024, 4, 21, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 242.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Wieprzowina to mięso pochodzące z wieprza, charakteryzujące się intensywnym smakiem i różnorodnymi konsystencjami.",
+                            Fats = 15.0m,
+                            GI = 0,
+                            ImagePath = "Wieprzowina.png",
+                            Name = "Wieprzowina",
+                            Proteins = 26.0m,
+                            Type = "Mięsa",
+                            UserCookBookId = 3
+                        },
+                        new
+                        {
+                            Id = 116,
+                            AddDate = new DateTime(2024, 4, 21, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 135.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Indyk to mięso drobiowe pochodzące z indyka, które jest bogate w białko i niskotłuszczowe.",
+                            Fats = 4.6m,
+                            GI = 0,
+                            ImagePath = "Indyk.png",
+                            Name = "Indyk",
+                            Proteins = 21.0m,
+                            Type = "Mięsa",
+                            UserCookBookId = 4
+                        },
+                        new
+                        {
+                            Id = 117,
+                            AddDate = new DateTime(2024, 4, 21, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Calories = 294.0m,
+                            Carbohydrates = 0.0m,
+                            Description = "Baranina to mięso pochodzące z owcy, charakteryzujące się intensywnym smakiem i soczystą konsystencją.",
+                            Fats = 24.0m,
+                            GI = 0,
+                            ImagePath = "Baranina.png",
+                            Name = "Baranina",
+                            Proteins = 20.0m,
+                            Type = "Mięsa",
+                            UserCookBookId = 1
+                        });
                 });
 
             modelBuilder.Entity("Database.Entities.IngredientUsed", b =>
@@ -83,7 +1839,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("date");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<int?>("IngredientDetailsId")
                         .HasColumnType("int");
@@ -112,10 +1868,10 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("date");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<DateTime>("Day")
-                        .HasColumnType("date");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<int?>("UserCookBookId")
                         .HasColumnType("int");
@@ -136,7 +1892,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("date");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -173,7 +1929,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("date");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<int?>("MealDayId")
                         .HasColumnType("int");
@@ -203,7 +1959,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("date");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -224,7 +1980,45 @@ namespace Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("userCookBook");
+                    b.ToTable("UserCookBook");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddDate = new DateTime(2024, 4, 17, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "john@example.com",
+                            Name = "John Doe",
+                            Password = new byte[] { 67, 30, 231, 90, 15, 153, 157, 24, 62, 102, 119 },
+                            Role = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddDate = new DateTime(2024, 4, 17, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "alice@example.com",
+                            Name = "Alice Smith",
+                            Password = new byte[] { 79, 154, 61, 35, 37, 60, 53, 207, 72, 193 },
+                            Role = "User"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AddDate = new DateTime(2024, 4, 17, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "bob@example.com",
+                            Name = "Bob Johnson",
+                            Password = new byte[] { 63, 217, 81, 155, 219, 251, 30, 30, 159, 33 },
+                            Role = "User"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AddDate = new DateTime(2024, 4, 17, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "emily@example.com",
+                            Name = "Emily Brown",
+                            Password = new byte[] { 71, 105, 73, 203, 169, 193, 181, 121, 187, 42 },
+                            Role = "User"
+                        });
                 });
 
             modelBuilder.Entity("Database.Entities.IngredientDetails", b =>

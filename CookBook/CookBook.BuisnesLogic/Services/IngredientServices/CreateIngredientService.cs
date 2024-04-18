@@ -25,11 +25,7 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
         public async Task CreateIngredient(IngredientDetailedDTO ingredient)
         {
             var ingredientToAdd = _mapper.Map<IngredientDetails>(ingredient);
-            if (ingredientToAdd.ImagePath == null)
-            {
-                ingredientToAdd.ImagePath = "TEst.png";
-            }
-            
+
             ingredientToAdd.UserCookBookId = 1;
             ingredientToAdd.AddDate = DateTime.Now;
 
