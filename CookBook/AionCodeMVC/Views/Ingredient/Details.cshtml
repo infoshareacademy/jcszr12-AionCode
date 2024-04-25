@@ -4,6 +4,19 @@
     ViewData["Title"] = "Szczegółowe informacje";
 }
 
+<head>
+    <style>
+        .btn {
+            color: black;
+            background: #FFC107;
+        }
+            .btn:hover {
+                color: black;
+                background: orange;
+            }
+    </style>
+</head>
+
 <h1 class="col-12 text-center bg-transparent">@ViewData["Title"]</h1>
 
 <div class="container">
@@ -39,10 +52,9 @@
                     <dd class="col-sm-8">@Html.DisplayFor(model => model.GI)</dd>
                 </dl>
                 <div class="text-center mt-3">
-                    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
                     <form class="mx-2" asp-action="Index" method="get">
                         <input type="hidden" name="type" value="@ViewBag.Type"/>
-                        <button type="submit" class="btn btn-primary">Warzywa</button>
+                        <button type="submit" class="btn btn-primary">Powrót</button>
                     </form>
                 </div>
             </div>

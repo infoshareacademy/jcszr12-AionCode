@@ -1,55 +1,45 @@
-﻿using AionCodeMVC.Models;
-using CookBook.BuisnesLogic.DTO;
+﻿using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
-using CookBook.BuisnesLogic.Models;
-using CookBook.BuisnesLogic.Services.IngredientServices;
-using Database.SampleData;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AionCodeMVC.Controllers
 {
     public class IngredientController : Controller
     {
-
-        private IGetIngredientService _getIngredientService;
-        private ICreateIngredientService _createIngredientService;
-        private IDeleteIngredientService _deleteIngredientService;
-        private IEditIngredientService _editIngredientService;
-        private IUploadIngredientPhotoService _uploadIngredientPhotoService;
+        private readonly IGetIngredientService _getIngredientService;
+        private readonly ICreateIngredientService _createIngredientService;
+        private readonly IDeleteIngredientService _deleteIngredientService;
+        private readonly IEditIngredientService _editIngredientService;
+        private readonly IUploadIngredientPhotoService _uploadIngredientPhotoService;
 
         public IngredientController(IGetIngredientService getIngredientService, ICreateIngredientService createIngredientService, IDeleteIngredientService deleteIngredientService, IEditIngredientService editIngredientService, IUploadIngredientPhotoService uploadIngredientPhotoService)
         {
             _getIngredientService = getIngredientService;
-            _createIngredientService= createIngredientService;
+            _createIngredientService = createIngredientService;
             _deleteIngredientService = deleteIngredientService;
             _editIngredientService = editIngredientService;
             _uploadIngredientPhotoService = uploadIngredientPhotoService;
         }
 
-
         // GET: IngredientController
         public async Task<ActionResult> Index(string searchString, string type)
         {
-            ViewBag.Type = type;
-            if (type!=null)
+            if (!type.IsNullOrEmpty())
             {
+                ViewBag.Type = type;
                 IEnumerable<IngredientDTO>? modelType = await _getIngredientService.GetIngredientDTOListType(type);
                 return View(modelType);
             }
 
-            ViewData["IngredientFilter"] = searchString;
-            if (!String.IsNullOrEmpty(searchString))
+            if (!searchString.IsNullOrEmpty())
             {
+                ViewData["IngredientFilter"] = searchString;
                 IEnumerable<IngredientDTO>? modelSearch = await _getIngredientService.GetIngredientDTOListContainString(searchString);
                 return View(modelSearch);
             }
             IEnumerable<IngredientDTO>? model = await _getIngredientService.GetIngredientDTOListAll();
             return View(model);
-
-
         }
 
         // GET: IngredientController/Details/5
@@ -71,14 +61,12 @@ namespace AionCodeMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(IngredientDetailedDTO model)
         {
-            //throw new NotImplementedException();
             try
             {
                 if (!ModelState.IsValid)
                 {
                     return View(model);
                 }
-
                 await _createIngredientService.CreateIngredient(model);
                 return RedirectToAction(nameof(Index));
             }
@@ -92,7 +80,7 @@ namespace AionCodeMVC.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var model = await _getIngredientService.GetByIdIngredientEditedDTO(id);
-            return View(model); 
+            return View(model);
         }
 
         // POST: IngredientController/Edit/5
@@ -100,7 +88,6 @@ namespace AionCodeMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, IngredientEditDTO model)
         {
-            //return RedirectToAction(nameof(Index));
             try
             {
                 await _editIngredientService.Edit(model);
@@ -125,7 +112,7 @@ namespace AionCodeMVC.Controllers
         {
             try
             {
-                await _deleteIngredientService.DeleteIngredient(id);  
+                await _deleteIngredientService.DeleteIngredient(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -152,5 +139,5 @@ namespace AionCodeMVC.Controllers
                 return View();
             }
         }
-}
+    }
 }
