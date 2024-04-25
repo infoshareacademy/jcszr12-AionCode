@@ -31,18 +31,19 @@ namespace AionCodeMVC.Controllers
 
 
         // GET: IngredientController
-        public async Task<ActionResult> Index(string SearchString, string Type)
+        public async Task<ActionResult> Index(string searchString, string type)
         {
-            if (Type!=null)
+            ViewBag.Type = type;
+            if (type!=null)
             {
-                IEnumerable<IngredientDTO>? modelType = await _getIngredientService.GetIngredientDTOListType(Type);
+                IEnumerable<IngredientDTO>? modelType = await _getIngredientService.GetIngredientDTOListType(type);
                 return View(modelType);
             }
 
-            ViewData["IngredientFilter"] = SearchString;
-            if (!String.IsNullOrEmpty(SearchString))
+            ViewData["IngredientFilter"] = searchString;
+            if (!String.IsNullOrEmpty(searchString))
             {
-                IEnumerable<IngredientDTO>? modelSearch = await _getIngredientService.GetIngredientDTOListContainString(SearchString);
+                IEnumerable<IngredientDTO>? modelSearch = await _getIngredientService.GetIngredientDTOListContainString(searchString);
                 return View(modelSearch);
             }
             IEnumerable<IngredientDTO>? model = await _getIngredientService.GetIngredientDTOListAll();
@@ -52,8 +53,9 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: IngredientController/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int id, string type)
         {
+            ViewBag.Type = type;
             var model = await _getIngredientService.GetByIdIngredientDetailedDTO(id);
             return View(model);
         }

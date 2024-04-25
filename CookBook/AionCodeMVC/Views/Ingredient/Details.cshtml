@@ -40,6 +40,10 @@
                 </dl>
                 <div class="text-center mt-3">
                     <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+                    <form class="mx-2" asp-action="Index" method="get">
+                        <input type="hidden" name="type" value="@ViewBag.Type"/>
+                        <button type="submit" class="btn btn-primary">Warzywa</button>
+                    </form>
                 </div>
             </div>
         </div>
