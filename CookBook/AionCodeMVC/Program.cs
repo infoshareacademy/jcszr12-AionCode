@@ -21,8 +21,6 @@ namespace AionCodeMVC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<AionCodeDatabase>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("AionCodeDatabase") ?? throw new InvalidOperationException("Connection string 'AionCodeDatabase' not found.")));
 
             //Add database
             builder.Services.AddDbContext<DatabaseContext>(
