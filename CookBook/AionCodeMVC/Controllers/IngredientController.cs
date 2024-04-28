@@ -32,7 +32,7 @@ namespace AionCodeMVC.Controllers
 
         // GET: IngredientController
         public async Task<ActionResult> Index(string SearchString, string Type)
-        {
+            {
             if (Type!=null)
             {
                 IEnumerable<IngredientDTO>? modelType = await _getIngredientService.GetIngredientDTOListType(Type);

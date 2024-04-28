@@ -1,12 +1,5 @@
 ﻿using Database.Entities;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Database.SampleData
 {
@@ -27,7 +20,7 @@ namespace Database.SampleData
             return JsonConvert.DeserializeObject<List<IngredientDetails>>(seedData);
 
             // Seed data from JSON file
-        }        
+        }
         public static List<UserCookBook> GetUserCookBookSampleDataFromJson()
         {
 
@@ -44,9 +37,21 @@ namespace Database.SampleData
 
             // Seed data from JSON file
         }
+        public static List<RecipeDetails> GetRecipeDetailsSampleDataFromJson()
+        {
+
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+
+            // Połącz ścieżkę katalogu z nazwą pliku
+            string filePath = Path.Combine(basePath, "RecipeDetailsSeed-data.json");
+
+            // Odczytaj zawartość pliku
+            string seedData = File.ReadAllText(filePath);
 
 
+            return JsonConvert.DeserializeObject<List<RecipeDetails>>(seedData);
 
-
+            // Seed data from JSON file
+        }
     }
 }

@@ -1,12 +1,5 @@
 ﻿using Database.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Database
 {
@@ -37,6 +30,10 @@ namespace Database
             //RecipeDetails
             modelBuilder.Entity<RecipeDetails>().HasKey(recipeDetails => recipeDetails.Id);
             modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.Name).ValueGeneratedOnAdd();
+            modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.Category).ValueGeneratedOnAdd();
+            modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.Description).ValueGeneratedOnAdd();
+            modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.ImagePath).ValueGeneratedOnAdd();
             modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.AddDate).HasColumnType("smalldatetime");
 
 
@@ -63,7 +60,7 @@ namespace Database
 
             modelBuilder.Entity<UserCookBook>().HasData(SampleData.SampleData.GetUserCookBookSampleDataFromJson());
             modelBuilder.Entity<IngredientDetails>().HasData(SampleData.SampleData.GetIngredientDetailsSampleDataFromJson());
-
+            modelBuilder.Entity<RecipeDetails>().HasData(SampleData.SampleData.GetRecipeDetailsSampleDataFromJson());
 
         }
     }
