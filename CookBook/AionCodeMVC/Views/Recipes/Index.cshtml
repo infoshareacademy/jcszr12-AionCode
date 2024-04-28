@@ -1,8 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers;
-@model IEquatable<AionCodeMVC.Models.Recipes>
+@using CookBook.BuisnesLogic.Models;
+@model IEnumerable<CookBook.BuisnesLogic.DTO.RecipeDTO>
+
 @{
     Layout = "_Layout";
-    int lenght = ViewBag.quantity;
+    int quantity = ViewBag.Quantity != null ? (int)ViewBag.Quantity : 0;
 }
 
 <section class="cookbook">
@@ -17,12 +19,23 @@
         </header>
         <div class="row g-0">
 
-            @for(int i = 0; i < 12 * lenght; i++)
+            @foreach (var recipe in Model)
             {
                 <div class="col-sm-6 col-md-4 col-xl-3 bg-gradient">
                     <recipesCss>
-                        <a href="#"><img src="~/img/recipes/null.png" alt="Nazwa potrawy"></a>
-                        <figcaption>Nazwa potrawy</figcaption>
+                        <a href="@Url.Action("Details", "Recipes", new { id = recipe.Id })">
+                            <div class="img-container">
+                                @if (recipe.ImagePath == "http://127.0.0.1:10000/devstoreaccount1/book-files/null.jpg")
+                                {
+                                    <img class="recipe-img" src="~/img/recipes/null.png" alt="@recipe.Category">
+                                }
+                                else
+                                {
+                                    <img class="recipe-img" src="@recipe.ImagePath" alt="@recipe.Category">
+                                }
+                            </div>
+                            <figcaption>@recipe.Name</figcaption>
+                        </a>
                     </recipesCss>
                 </div>
             }
@@ -31,6 +44,6 @@
 
         </div>
     </div>
-   
+
 
 </section> 

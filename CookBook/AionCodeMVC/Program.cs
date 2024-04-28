@@ -12,6 +12,9 @@ using Microsoft.Extensions.Azure;
 using Azure.Storage.Blobs;
 using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
 using CookBook.BuisnesLogic.Services.AzureStorage;
+using CookBook.BuisnesLogic.Interfaces.RecipeInterfacces;
+using CookBook.BuisnesLogic.Services.RecipeServices;
+using CookBook.BuisnesLogic.Interfaces.RecipeInterfacces;
 
 
 namespace AionCodeMVC
@@ -22,9 +25,10 @@ namespace AionCodeMVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            
             //Add database
             builder.Services.AddDbContext<DatabaseContext>(
-        options => options.UseSqlServer(builder.Configuration.GetConnectionString("AionCodeDatabase")));
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("AionCodeDatabase")));
 
             //Azurite storage
             builder.Services.AddAzureClients(clientBuilder => clientBuilder.AddBlobServiceClient(builder.Configuration["AzureStorage:BlolbConnectionString"]));
@@ -46,14 +50,18 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IEditIngredientService,  EditIngredientService>();
             builder.Services.AddScoped<IUploadIngredientPhotoService, UploadIngredientPhotoService>();
             
-
-
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IGetUserService, GetUserService>();
             builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
             builder.Services.AddScoped<IEditUserService, EditUserService>();
             builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
 
+            builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+            builder.Services.AddScoped<ICreateRecipeService, CreateRecipeService>();
+            builder.Services.AddScoped<IGetRecipeService, GetRecipeService>();
+            builder.Services.AddScoped<IDeleteRecipeService, DeleteRecipeService>();
+            builder.Services.AddScoped<IEditRecipeService, EditRecipeService>();
+            builder.Services.AddScoped<IUploadRecipePhotoService, UploadRecipePhotoService>();
 
             var app = builder.Build();
 
