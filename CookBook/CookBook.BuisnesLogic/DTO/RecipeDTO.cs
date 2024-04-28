@@ -10,6 +10,7 @@ namespace CookBook.BuisnesLogic.DTO
         public string Category { get; set; }
         //public string Description { get; set; }
         public string ImagePath { get; set; }
+        public string Descripton { get; set; }
            
     }
 }

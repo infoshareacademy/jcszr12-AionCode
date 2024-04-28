@@ -27,6 +27,18 @@ namespace CookBook.BuisnesLogic.Services.RecipeServices
             var allRecipeDetailsDTO = _mapper.Map<List<RecipeDTO>>(allRecipeDetails);
             return allRecipeDetailsDTO;
         }
-        
+        public async Task<RecipeDetailsDTO> GetRecipeByDetails(int id)
+        {
+            RecipeDetails? recipe = await _dbContext.RecipeDetails.FirstOrDefaultAsync(recipe => recipe.Id == id);
+            RecipeDetailsDTO? recipeDetailsDTO = _mapper.Map<RecipeDetailsDTO>(recipe);
+
+            if (recipeDetailsDTO.ImagePath == null)
+            {
+                recipeDetailsDTO.ImagePath = "NoImage.png";
+            }
+            recipeDetailsDTO.ImagePath = $"{_azureStorage.BlobContainerClientIngredientFiles.Uri}/{recipeDetailsDTO.ImagePath}";
+
+            return recipeDetailsDTO;
+        }
     }
 }

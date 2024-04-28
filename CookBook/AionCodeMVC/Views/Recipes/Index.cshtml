@@ -25,7 +25,7 @@
                     <recipesCss>
                         <a href="@Url.Action("Details", "Recipes", new { id = recipe.Id })">
                             <div class="img-container">
-                                @if (recipe.ImagePath == null)
+                                @if (recipe.ImagePath == "http://127.0.0.1:10000/devstoreaccount1/book-files/null.jpg")
                                 {
                                     <img class="recipe-img" src="~/img/recipes/null.png" alt="@recipe.Category">
                                 }

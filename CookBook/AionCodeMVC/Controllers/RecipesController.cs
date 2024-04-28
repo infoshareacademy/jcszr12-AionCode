@@ -33,6 +33,11 @@ namespace AionCodeMVC.Controllers
             IEnumerable<RecipeDTO>? model = await _getRecipeService.GetAllRecipeDTO();
             return View(model);
         }
-      
+        public async Task<ActionResult> Details(int id)
+        {
+            var model = await _getRecipeService.GetRecipeByDetails(id);
+            return View(model);
+        }
+
     }
 }
