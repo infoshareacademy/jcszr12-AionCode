@@ -1,9 +1,12 @@
 ﻿using Database.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Database
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<IngredientDetails> IngredientDetails { get; set; } = null!;
         public DbSet<IngredientUsed> IngredientUsed { get; set; } = null!;
@@ -20,6 +23,7 @@ namespace Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             //IngridientDetails
             modelBuilder.Entity<IngredientDetails>().HasKey(ingridient=>ingridient.Id);
             modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.Id).ValueGeneratedOnAdd();
@@ -62,6 +66,14 @@ namespace Database
             modelBuilder.Entity<IngredientDetails>().HasData(SampleData.SampleData.GetIngredientDetailsSampleDataFromJson());
             modelBuilder.Entity<RecipeDetails>().HasData(SampleData.SampleData.GetRecipeDetailsSampleDataFromJson());
 
+            modelBuilder.Entity<IdentityUser>().ToTable("Users");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins")
+                                                         .HasKey(ul => ul.UserId); // Define primary key
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
         }
     }
 }
