@@ -29,7 +29,7 @@ namespace CookBook.UI
                 if (user.Role == Roles.Admin) action = "adminmenu";
                 else if (user.Role == Roles.StdUser) action = "stdusermenu";
 
-                Console.WriteLine($"\n\nZalogowałeś się jako {user.Name} / {user.Email} / {user.Role}");
+                Console.WriteLine($"\n\nZalogowałeś się jako {user.UserName} / {user.Email} / {user.Role}");
             }
             catch (Exception ex)
             {
@@ -86,7 +86,7 @@ namespace CookBook.UI
             string action = "";
 
             Console.WriteLine("Rejestracja nowego użytkownika\n");
-            Console.Write("Nazwa użytkownika: "); newUser.Name = Console.ReadLine();
+            Console.Write("Nazwa użytkownika: "); newUser.UserName = Console.ReadLine();
             Console.Write("E-mail: "); newUser.Email = Console.ReadLine();
             Console.Write("Hasło: "); newUser.Password = GetPassword(); Console.WriteLine();
             newUser.Role = Roles.StdUser;
@@ -119,7 +119,7 @@ namespace CookBook.UI
 
             foreach (var user in users)
             {
-                Console.WriteLine($"ID: {user.Id} Nazwa: {user.Name} Email: {user.Email} Rola: {user.Role}");
+                Console.WriteLine($"ID: {user.Id} Nazwa: {user.UserName} Email: {user.Email} Rola: {user.Role}");
             }
 
             Console.WriteLine("\nWciśnij dowolny klawisz, aby kontynuować");
@@ -137,7 +137,7 @@ namespace CookBook.UI
 
             foreach (var user in users)
             {
-                UserListMenu.AddPosition(user.Name, user.Id.ToString() );
+                UserListMenu.AddPosition(user.UserName, user.Id.ToString() );
             }
             UserListMenu.ShowMenu();
             UserListMenu.OptionSelect();

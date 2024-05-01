@@ -32,7 +32,7 @@ namespace CookBook.BuisnesLogic.Services
             bool status = false;
             var users = GetUsersCookBook();
 
-            if (!users.Any(i => i.Name == newUser.Name || i.Name == newUser.Email))
+            if (!users.Any(i => i.UserName == newUser.UserName || i.UserName == newUser.Email))
             {
                 var number = users.Max(a => a.Id);
                 newUser.Id = number + 1;

@@ -43,5 +43,6 @@ namespace CookBook.BuisnesLogic.DTO
         [Required(ErrorMessage = "Wpisz liczbę.")]
         public int GI { get; set; }
         public int? UserCookBookId { get; set; }
+        public string UserLoggedin { get; set; }
     }
 }

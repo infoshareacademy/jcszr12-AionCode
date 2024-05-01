@@ -37,7 +37,7 @@ namespace AionCodeMVC.Repositories
         public void RegisterUser(UserCookBook user)
         {
             var users = GetAll().ToList();
-            if (!users.Any(i => i.Name == user.Name || i.Email == user.Email))
+            if (!users.Any(i => i.UserName == user.UserName || i.Email == user.Email))
             {
                 user.Id = users.Count() + 1;
                 users.Add(user);
@@ -66,7 +66,7 @@ namespace AionCodeMVC.Repositories
 
             if (userToEdit != null)
             {
-                userToEdit.Name = user.Name;
+                userToEdit.UserName = user.UserName;
                 userToEdit.Email = user.Email;
                 userToEdit.Password = user.Password;
                 userToEdit.Role = user.Role;

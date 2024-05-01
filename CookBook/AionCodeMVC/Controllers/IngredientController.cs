@@ -2,9 +2,11 @@
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AionCodeMVC.Controllers
 {
+    [Authorize(Policy = "StdUser")]
     public class IngredientController : Controller
     {
         private readonly IGetIngredientService _getIngredientService;
@@ -39,6 +41,7 @@ namespace AionCodeMVC.Controllers
                 return View(modelSearch);
             }
             IEnumerable<IngredientDTO>? model = await _getIngredientService.GetIngredientDTOListAll();
+
             return View(model);
         }
 

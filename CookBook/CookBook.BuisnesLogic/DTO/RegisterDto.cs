@@ -13,7 +13,7 @@ namespace CookBook.BuisnesLogic.DTO
         public int Id { get; set; }
 
         [Display(Name = "Imię i Nazwisko")]
-        public string Name { get; set; }
+        public string UserName { get; set; }
 
         [Display(Name = "Email")]
         public string Email { get; set; }

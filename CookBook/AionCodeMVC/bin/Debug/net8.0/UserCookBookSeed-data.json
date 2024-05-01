@@ -1,7 +1,7 @@
 [
   {
     "Id": 1,
-    "Name": "John Doe",
+    "UserName": "John Doe",
     "Email": "john@example.com",
     "Password": "Qx7nWg+ZnRg+Znc=",
     "Role": "Admin",
@@ -9,7 +9,7 @@
   },
   {
     "Id": 2,
-    "Name": "Alice Smith",
+    "UserName": "Alice Smith",
     "Email": "alice@example.com",
     "Password": "T5o9IyU8Nc9IwY==",
     "Role": "User",
@@ -17,7 +17,7 @@
   },
   {
     "Id": 3,
-    "Name": "Bob Johnson",
+    "UserName": "Bob Johnson",
     "Email": "bob@example.com",
     "Password": "P9lRm9v7Hh6fIc==",
     "Role": "User",
@@ -25,7 +25,7 @@
   },
   {
     "Id": 4,
-    "Name": "Emily Brown",
+    "UserName": "Emily Brown",
     "Email": "emily@example.com",
     "Password": "R2lJy6nBtXm7Kn==",
     "Role": "User",

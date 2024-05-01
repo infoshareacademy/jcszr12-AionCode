@@ -1,6 +1,7 @@
 using AionCodeMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AionCodeMVC.Controllers
 {
@@ -15,11 +16,13 @@ namespace AionCodeMVC.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.UserName = User.Identity.Name;
             return View();
         }
 
         public IActionResult Privacy()
         {
+            ViewBag.UserName = User.Identity.Name;
             return View();
         }
 
