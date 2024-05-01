@@ -4,6 +4,7 @@ using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240429124140_IdentityAdded")]
+    partial class IdentityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2161,16 +2164,16 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<byte[]>("Password")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("binary");
 
                     b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -2184,36 +2187,36 @@ namespace Database.Migrations
                             Id = 1,
                             AddDate = new DateTime(2024, 4, 17, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "john@example.com",
+                            Name = "John Doe",
                             Password = new byte[] { 67, 30, 231, 90, 15, 153, 157, 24, 62, 102, 119 },
-                            Role = "Admin",
-                            UserName = "John Doe"
+                            Role = "Admin"
                         },
                         new
                         {
                             Id = 2,
                             AddDate = new DateTime(2024, 4, 17, 11, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "alice@example.com",
+                            Name = "Alice Smith",
                             Password = new byte[] { 79, 154, 61, 35, 37, 60, 53, 207, 72, 193 },
-                            Role = "User",
-                            UserName = "Alice Smith"
+                            Role = "User"
                         },
                         new
                         {
                             Id = 3,
                             AddDate = new DateTime(2024, 4, 17, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "bob@example.com",
+                            Name = "Bob Johnson",
                             Password = new byte[] { 63, 217, 81, 155, 219, 251, 30, 30, 159, 33 },
-                            Role = "User",
-                            UserName = "Bob Johnson"
+                            Role = "User"
                         },
                         new
                         {
                             Id = 4,
                             AddDate = new DateTime(2024, 4, 17, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "emily@example.com",
+                            Name = "Emily Brown",
                             Password = new byte[] { 71, 105, 73, 203, 169, 193, 181, 121, 187, 42 },
-                            Role = "User",
-                            UserName = "Emily Brown"
+                            Role = "User"
                         });
                 });
 
