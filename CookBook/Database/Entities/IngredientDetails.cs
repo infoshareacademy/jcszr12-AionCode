@@ -23,7 +23,7 @@ namespace Database.Entities
         public int GI { get; set; }
 
         [ForeignKey("UserCookBook")]
-        public int? UserCookBookId { get; set; }
+        public string? UserCookBookId { get; set; }
         public virtual UserCookBook UserCookBook { get; set; }
 
         public virtual ICollection<IngredientUsed> IngredientsUsed { get; set; }

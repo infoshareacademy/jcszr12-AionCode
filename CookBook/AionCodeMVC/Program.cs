@@ -14,6 +14,7 @@ using CookBook.BuisnesLogic.Services.AzureStorage;
 using CookBook.BuisnesLogic.Interfaces.RecipeInterfacces;
 using CookBook.BuisnesLogic.Services.RecipeServices;
 using Microsoft.AspNetCore.Identity;
+using CookBook.BuisnesLogic.Models;
 
 namespace AionCodeMVC
 {
@@ -37,7 +38,7 @@ namespace AionCodeMVC
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //Add Identity
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            builder.Services.AddIdentity<UserCookBook, IdentityRole>()
                 .AddEntityFrameworkStores<DatabaseContext>();
 
             builder.Services.ConfigureApplicationCookie(options =>

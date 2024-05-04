@@ -22,7 +22,7 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
         {
             var recipeToAdd = _mapper.Map<RecipeDetails>(recipe);
 
-            recipeToAdd.UserCookBookId = 1;
+            recipeToAdd.UserCookBookId = "abecadlo";
             recipeToAdd.AddDate = DateTime.Now;
 
             await _dbContext.RecipeDetails.AddAsync(recipeToAdd);

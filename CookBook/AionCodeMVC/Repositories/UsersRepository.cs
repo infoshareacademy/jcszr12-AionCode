@@ -13,7 +13,7 @@ namespace AionCodeMVC.Repositories
             return ReadUsersFomJson();
         }
 
-        public UserCookBook GetByID(int id)
+        public UserCookBook GetByID(string id)
         {
             return ReadUsersFomJson().FirstOrDefault(x => x.Id == id);
         }
@@ -39,14 +39,14 @@ namespace AionCodeMVC.Repositories
             var users = GetAll().ToList();
             if (!users.Any(i => i.UserName == user.UserName || i.Email == user.Email))
             {
-                user.Id = users.Count() + 1;
+                user.Id = "sqsqsqs1";
                 users.Add(user);
             }
             var json = JsonConvert.SerializeObject(users);
             File.WriteAllText(path, json);
         }
 
-        public void DeleteUser(int id)
+        public void DeleteUser(string id)
         {
             var users = GetAll().ToList();
             var userToDelete = users.FirstOrDefault(r => r.Id == id);
@@ -68,8 +68,8 @@ namespace AionCodeMVC.Repositories
             {
                 userToEdit.UserName = user.UserName;
                 userToEdit.Email = user.Email;
-                userToEdit.Password = user.Password;
-                userToEdit.Role = user.Role;
+//                userToEdit.Password = user.Password;
+//                userToEdit.Role = user.Role;
             }
 
             var json = JsonConvert.SerializeObject(users);

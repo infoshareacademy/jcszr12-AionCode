@@ -9,6 +9,6 @@ namespace CookBook.BuisnesLogic.Interfaces.UserInterfaces
 {
     public interface IDeleteUserService
     {
-        public void DeleteUser(int id);
+        public void DeleteUser(string id);
     }
 }
