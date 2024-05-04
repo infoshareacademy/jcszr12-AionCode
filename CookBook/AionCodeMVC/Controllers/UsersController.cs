@@ -17,10 +17,10 @@ namespace AionCodeMVC.Controllers
         private readonly IDeleteUserService _deleteUserService;
         private readonly IEditUserService _editUserService;
 
-        private readonly SignInManager<UserCookBook> _signInManager;
-        private readonly UserManager<UserCookBook> _userManager;
+        private readonly SignInManager<Database.Entities.UserCookBook> _signInManager;
+        private readonly UserManager<Database.Entities.UserCookBook> _userManager;
 
-        public UsersController(IRegisterUserService registerUserService, IGetUserService GetUserService, IDeleteUserService DeleteUserService, IEditUserService EditUserService, SignInManager<UserCookBook> signInManager, UserManager<UserCookBook> userManager)
+        public UsersController(IRegisterUserService registerUserService, IGetUserService GetUserService, IDeleteUserService DeleteUserService, IEditUserService EditUserService, SignInManager<Database.Entities.UserCookBook> signInManager, UserManager<Database.Entities.UserCookBook> userManager)
         {
             _registerUserService = registerUserService;
             _getUserService = GetUserService;
@@ -100,7 +100,7 @@ namespace AionCodeMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterUser(RegisterDto model)
         {
-            UserCookBook user = new()
+            Database.Entities.UserCookBook user = new()
             {
                 UserName = model.UserName,
                 Email = model.Email,

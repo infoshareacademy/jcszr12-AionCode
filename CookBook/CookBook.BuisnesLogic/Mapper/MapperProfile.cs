@@ -22,12 +22,7 @@ namespace CookBook.BuisnesLogic.Mapper
             CreateMap<RecipeDetails, RecipeDetailsDTO>().ReverseMap();
             CreateMap<RecipeDetails, RecipeEditDTO>().ReverseMap();
 
-            CreateMap<CookBook.BuisnesLogic.Models.UserCookBook, UserCookBookDto>()
-                .ForMember(desc => desc.Id, o => o.MapFrom(src => src.Id))
-                .ForMember(desc => desc.UserName, o => o.MapFrom(src => src.UserName))
-                .ForMember(desc => desc.Email, o => o.MapFrom(src => src.Email));
-
-
+            CreateMap<UserCookBook, UserCookBookDto>();
         }
     }
 }

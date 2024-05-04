@@ -10,7 +10,7 @@ namespace Database.Entities
 {
     public class UserCookBook : IdentityUser
     {
-//        public string Id { get; set; }
+ //       public string Id { get; set; }
         public virtual ICollection<MealDay> MealDays { get; set; }
         public virtual ICollection<RecipeDetails> RecipesDetails { get; set; }
         public virtual ICollection<IngredientDetails> IngredientsDetails { get; set; }

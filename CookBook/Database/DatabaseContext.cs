@@ -13,7 +13,7 @@ namespace Database
         public DbSet<RecipeDetails> RecipeDetails { get; set; } = null!;
         public DbSet<MealDay> MealDay { get; set; }
         public DbSet<RecipeUsed> RecipeUsed { get; set; }
-        public DbSet<UserCookBook> UserCookBook { get; set; }
+        public DbSet<Database.Entities.UserCookBook> UserCookBook { get; set; }
 
 
 
@@ -56,6 +56,7 @@ namespace Database
             modelBuilder.Entity<RecipeUsed>().HasKey(recipeUsed => recipeUsed.Id);
             modelBuilder.Entity<RecipeUsed>().Property(recipeUsed => recipeUsed.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<RecipeUsed>().Property(recipeUsed => recipeUsed.AddDate).HasColumnType("smalldatetime");
+           
             //UserCookBook
 //            modelBuilder.Entity<UserCookBook>().HasKey(userCookBook => userCookBook.Id);
 //            modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.Id).ValueGeneratedOnAdd();

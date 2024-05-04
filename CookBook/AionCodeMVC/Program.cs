@@ -38,7 +38,7 @@ namespace AionCodeMVC
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //Add Identity
-            builder.Services.AddIdentity<UserCookBook, IdentityRole>()
+            builder.Services.AddIdentity<Database.Entities.UserCookBook, IdentityRole>()
                 .AddEntityFrameworkStores<DatabaseContext>();
 
             builder.Services.ConfigureApplicationCookie(options =>
@@ -119,7 +119,7 @@ namespace AionCodeMVC
                 using (var scope = serviceProvider.CreateScope())
                 {
                     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Database.Entities.UserCookBook>>();
 
                     string[] roleNames = { "Admin", "StdUser", "Guest" };
 
@@ -140,10 +140,11 @@ namespace AionCodeMVC
                     var adminUser = await userManager.FindByNameAsync("admin");
                     if (adminUser == null)
                     {
-                        var admin = new IdentityUser
+                        var admin = new Database.Entities.UserCookBook
                         {
                             UserName = "admin",
-                            Email = "admin@admin.asd"
+                            Email = "admin@admin.asd",
+                            AddDate = DateTime.Now
                         };
 
                         var result = await userManager.CreateAsync(admin, "Qwerty123!");
