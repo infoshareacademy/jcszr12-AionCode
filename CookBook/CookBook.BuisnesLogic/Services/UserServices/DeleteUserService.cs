@@ -16,7 +16,7 @@ namespace CookBook.BuisnesLogic.Services.UserServices
             _repository = repository;
         }
 
-        public void DeleteUser (int id)
+        public void DeleteUser (string id)
         {
             _repository.DeleteUser(id);
         }

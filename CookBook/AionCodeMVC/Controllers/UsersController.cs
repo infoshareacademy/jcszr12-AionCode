@@ -12,15 +12,15 @@ namespace AionCodeMVC.Controllers
 {
     public class UsersController : Controller
     {
-        private IRegisterUserService _registerUserService;
-        private IGetUserService _getUserService;
-        private IDeleteUserService _deleteUserService;
-        private IEditUserService _editUserService;
+        private readonly IRegisterUserService _registerUserService;
+        private readonly IGetUserService _getUserService;
+        private readonly IDeleteUserService _deleteUserService;
+        private readonly IEditUserService _editUserService;
 
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<Database.Entities.UserCookBook> _signInManager;
+        private readonly UserManager<Database.Entities.UserCookBook> _userManager;
 
-        public UsersController(IRegisterUserService registerUserService, IGetUserService GetUserService, IDeleteUserService DeleteUserService, IEditUserService EditUserService, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public UsersController(IRegisterUserService registerUserService, IGetUserService GetUserService, IDeleteUserService DeleteUserService, IEditUserService EditUserService, SignInManager<Database.Entities.UserCookBook> signInManager, UserManager<Database.Entities.UserCookBook> userManager)
         {
             _registerUserService = registerUserService;
             _getUserService = GetUserService;
@@ -32,9 +32,9 @@ namespace AionCodeMVC.Controllers
         }
 
         [Authorize(Policy = "Admin")]
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = _getUserService.GetAll();
+            IEnumerable<UserCookBookDto>? model = await _getUserService.GetAll();
             return View(model);
         }
 
@@ -83,7 +83,7 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: UsersController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
             var model = _getUserService.GetByID(id);
             return View(model);
@@ -100,10 +100,11 @@ namespace AionCodeMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterUser(RegisterDto model)
         {
-            IdentityUser user = new()
+            Database.Entities.UserCookBook user = new()
             {
                 UserName = model.UserName,
-                Email = model.Email
+                Email = model.Email,
+                AddDate = DateTime.Now
             };
 
             var result = await _userManager.CreateAsync(user, model.Password!);
@@ -132,7 +133,7 @@ namespace AionCodeMVC.Controllers
 
         // GET: UsersController/Edit/5
         [Authorize(Policy = "Admin")]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
             var model = _getUserService.GetByID(id);
             return View(model);
@@ -162,7 +163,7 @@ namespace AionCodeMVC.Controllers
 
         // GET: UsersController/Delete/5
         [Authorize(Policy = "Admin")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
             var model = _getUserService.GetByID(id);
             return View(model);
@@ -172,7 +173,7 @@ namespace AionCodeMVC.Controllers
         [Authorize(Policy = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, UserCookBook user)
+        public ActionResult Delete(string id, UserCookBook user)
         {
             try
             {

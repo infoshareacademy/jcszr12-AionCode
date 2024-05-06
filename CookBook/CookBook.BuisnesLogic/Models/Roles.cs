@@ -8,8 +8,8 @@ namespace CookBook.BuisnesLogic.Models
 {
     public enum Roles
     {   
-        Admin,
-        StdUser,
-        Guest        
+        Admin = 1,
+        StdUser = 2,
+        Guest = 3        
     }
 }

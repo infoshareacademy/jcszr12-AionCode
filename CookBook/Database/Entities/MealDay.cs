@@ -14,7 +14,7 @@ namespace Database.Entities
         public DateTime AddDate { get; set; }
         
         [ForeignKey("UserCookBook")]
-        public int? UserCookBookId { get; set; }
+        public string? UserCookBookId { get; set; }
         public UserCookBook UserCookBook { get; set; }
         public virtual ICollection<RecipeUsed> RecipesUsed { get; set; }
     }

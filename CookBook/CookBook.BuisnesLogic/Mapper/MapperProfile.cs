@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CookBook.BuisnesLogic.DTO;
 using Database.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace CookBook.BuisnesLogic.Mapper
             CreateMap<RecipeDetails, RecipeDTO>().ReverseMap();
             CreateMap<RecipeDetails, RecipeDetailsDTO>().ReverseMap();
             CreateMap<RecipeDetails, RecipeEditDTO>().ReverseMap();
+
+            CreateMap<UserCookBook, UserCookBookDto>();
         }
     }
 }

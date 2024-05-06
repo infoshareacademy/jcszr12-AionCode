@@ -26,7 +26,7 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
         {
             var ingredientToAdd = _mapper.Map<IngredientDetails>(ingredient);
 
-            ingredientToAdd.UserCookBookId = 1;
+            ingredientToAdd.UserCookBookId = "abecadlo";
             ingredientToAdd.AddDate = DateTime.Now;
 
             await _dbContext.IngredientDetails.AddAsync(ingredientToAdd);

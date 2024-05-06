@@ -142,7 +142,7 @@ namespace CookBook.UI
             UserListMenu.ShowMenu();
             UserListMenu.OptionSelect();
 
-            RemoveUser.UserDelete(int.Parse(UserListMenu.MenuActionID[UserListMenu.CurrentMenuPosition]));
+            RemoveUser.UserDelete(UserListMenu.MenuActionID[UserListMenu.CurrentMenuPosition]);
 
             Console.WriteLine("\nWskazany uzytkownik został usunięty.");
             Console.WriteLine("\nWciśniej dowolny klawisz, aby kontynuować.");
