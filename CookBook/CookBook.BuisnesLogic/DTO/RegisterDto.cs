@@ -10,6 +10,7 @@ namespace CookBook.BuisnesLogic.DTO
 {
     public class RegisterDto
     {
+        [ScaffoldColumn(false)]
         public int Id { get; set; }
 
         [Display(Name = "Imię i Nazwisko")]

@@ -49,33 +49,28 @@ namespace AionCodeMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result =
-                    await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
 
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(model.UserName);
-
                     if (user is not null)
                     {
                         if (await _userManager.IsInRoleAsync(user, "Admin"))
                         {
                             return RedirectToAction("Index", "Users");
                         }
-
                         return RedirectToAction("Index", "Home");
                     }
-
                     return RedirectToAction("Index", "Home");
                 }
-
-                ModelState.AddModelError("", "Invalid login attempt");
+                ModelState.AddModelError("", "Błędne dane logowania. Sprawdź nazwę i hasło");
 
             }
-
             return View();
         }
 
+        [Authorize(Policy = "StdUser")]
         public async Task<ActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -83,9 +78,10 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: UsersController/Details/5
-        public ActionResult Details(string id)
+        [Authorize(Policy = "Admin")]
+        public async Task<ActionResult> Details(string id)
         {
-            var model = _getUserService.GetByID(id);
+            var model = await _getUserService.GetByID(id);
             return View(model);
         }
 
@@ -98,44 +94,27 @@ namespace AionCodeMVC.Controllers
         // POST: UsersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterUser(RegisterDto model)
-        {
-            Database.Entities.UserCookBook user = new()
+        public async Task<ActionResult> RegisterUser(RegisterDto user)
+         {
+            var result = await _registerUserService.RegisterUser(user);
+
+            if (!result.Succeeded)
             {
-                UserName = model.UserName,
-                Email = model.Email,
-                AddDate = DateTime.Now
-            };
-
-            var result = await _userManager.CreateAsync(user, model.Password!);
-
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, false);
-
-                await _userManager.AddToRoleAsync(user, "StdUser");
-
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ViewBag.Message = string.Empty;
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                     ViewBag.Message += error.Description;
                     ViewBag.Message += " ";
                 }
-
-                return View();
             }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: UsersController/Edit/5
         [Authorize(Policy = "Admin")]
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
-            var model = _getUserService.GetByID(id);
+            var model = await _getUserService.GetByID(id);
             return View(model);
         }
 
@@ -143,7 +122,7 @@ namespace AionCodeMVC.Controllers
         // POST: UsersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, UserCookBook user)
+        public async Task<ActionResult> Edit(string id, UserCookBookDto user)
         {
             try
             {
@@ -152,7 +131,7 @@ namespace AionCodeMVC.Controllers
                     return View(user);
                 }
 
-                _editUserService.EditUser(user);
+                await _editUserService.EditUser(user);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -163,21 +142,20 @@ namespace AionCodeMVC.Controllers
 
         // GET: UsersController/Delete/5
         [Authorize(Policy = "Admin")]
-        public ActionResult Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
-            var model = _getUserService.GetByID(id);
+            var model = await _getUserService.GetByID(id);
             return View(model);
         }
 
         // POST: UsersController/Delete/5
         [Authorize(Policy = "Admin")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, UserCookBook user)
+        public async Task <ActionResult> Delete(string id, UserCookBookDto user)
         {
             try
             {
-                 _deleteUserService.DeleteUser(id);
+                await _deleteUserService.DeleteUser(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

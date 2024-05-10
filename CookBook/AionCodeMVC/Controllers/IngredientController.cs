@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AionCodeMVC.Controllers
 {
-    [Authorize(Policy = "StdUser")]
     public class IngredientController : Controller
     {
         private readonly IGetIngredientService _getIngredientService;
@@ -54,12 +53,14 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: IngredientController/Create
+        [Authorize(Policy = "StdUser")]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: IngredientController/Create
+        [Authorize(Policy = "StdUser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(IngredientDetailedDTO model)
@@ -80,6 +81,7 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: IngredientController/Edit/5
+        [Authorize(Policy = "StdUser")]
         public async Task<ActionResult> Edit(int id)
         {
             var model = await _getIngredientService.GetByIdIngredientEditedDTO(id);
@@ -87,6 +89,7 @@ namespace AionCodeMVC.Controllers
         }
 
         // POST: IngredientController/Edit/5
+        [Authorize(Policy = "StdUser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, IngredientEditDTO model)
@@ -102,6 +105,7 @@ namespace AionCodeMVC.Controllers
             }
         }
 
+        [Authorize(Policy = "StdUser")]
         public async Task<IActionResult> Delete(int id)
         {
             var model = await _getIngredientService.GetByIdIngredientDetailedDTO(id);
@@ -109,6 +113,7 @@ namespace AionCodeMVC.Controllers
         }
 
         // POST: Movies/Delete/name
+        [Authorize(Policy = "StdUser")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

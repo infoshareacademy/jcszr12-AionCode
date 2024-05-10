@@ -11,6 +11,7 @@ namespace CookBook.BuisnesLogic.DTO
 {
     public class UserCookBookDto
     {
+        [ScaffoldColumn(false)]
         [Display(Name = "Id")]
         public string Id { get; set; }
 
