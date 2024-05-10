@@ -5,9 +5,11 @@ using CookBook.BuisnesLogic.Models;
 using Database;
 using Database.Entities;
 using Database.EnumTypes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing;
+using System.Security.Claims;
 using System.Web.Mvc;
 
 namespace CookBook.BuisnesLogic.Services.UserServices
@@ -18,13 +20,15 @@ namespace CookBook.BuisnesLogic.Services.UserServices
         private readonly DatabaseContext _dbContext;
         private readonly IMapper _mapper;
         private readonly UserManager<Database.Entities.UserCookBook> _userManager;
-        
-        public GetUserService(IUsersRepository repository, DatabaseContext dbContext, IMapper mapper, UserManager<Database.Entities.UserCookBook> userManager)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public GetUserService(IUsersRepository repository, DatabaseContext dbContext, IMapper mapper, UserManager<Database.Entities.UserCookBook> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository;
             _dbContext = dbContext;
             _mapper = mapper;
             _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IEnumerable<UserCookBookDto>> GetAll()
@@ -68,6 +72,21 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                     AddDate = userDb.AddDate
                 };
         return user;
+        }
+
+        public async Task<string> LoggedUserIdAsync()
+        {
+            ClaimsPrincipal loggedUser = _httpContextAccessor.HttpContext.User;
+
+            IdentityUser userData = await _userManager.GetUserAsync(loggedUser);
+            if (userData != null)
+            {
+                return userData.Id;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

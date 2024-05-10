@@ -58,9 +58,6 @@ namespace Database
             modelBuilder.Entity<RecipeUsed>().Property(recipeUsed => recipeUsed.AddDate).HasColumnType("smalldatetime");
            
             //UserCookBook
-//            modelBuilder.Entity<UserCookBook>().HasKey(userCookBook => userCookBook.Id);
-//            modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.Id).ValueGeneratedOnAdd();
-//            modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.Password).HasColumnType("binary").HasMaxLength(64);
             modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.AddDate).HasColumnType("smalldatetime");
 
 //            modelBuilder.Entity<UserCookBook>().HasData(SampleData.SampleData.GetUserCookBookSampleDataFromJson());
