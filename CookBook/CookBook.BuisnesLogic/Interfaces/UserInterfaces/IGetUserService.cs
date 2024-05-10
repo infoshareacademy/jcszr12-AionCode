@@ -12,5 +12,7 @@ namespace CookBook.BuisnesLogic.Interfaces.UserInterfaces
     {
         public Task<IEnumerable<UserCookBookDto>> GetAll();
         public Task<UserCookBookDto> GetByID(string id);
+
+        public Task<string> LoggedUserIdAsync();
     }
 }
