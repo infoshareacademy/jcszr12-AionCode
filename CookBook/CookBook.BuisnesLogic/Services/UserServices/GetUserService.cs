@@ -29,7 +29,7 @@ namespace CookBook.BuisnesLogic.Services.UserServices
 
         public async Task<IEnumerable<UserCookBookDto>> GetAll()
         {
-            List<Database.Entities.UserCookBook>? usersDb = await _dbContext.Users.OrderBy(user => user.UserName).ToListAsync();
+            List<Database.Entities.UserCookBook> usersDb = await _dbContext.Users.OrderBy(user => user.UserName).ToListAsync();
 
             var users = new List<UserCookBookDto>();
             foreach (var user in usersDb)
@@ -51,10 +51,23 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                 return users;
         }
 
-        public CookBook.BuisnesLogic.Models.UserCookBook GetByID(string id)
+        public async Task<UserCookBookDto> GetByID(string id)
         {
-            return _repository.GetByID(id);
-        }
+            Database.Entities.UserCookBook userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
 
+                var roles = await _userManager.GetRolesAsync(userDb);
+                var role = roles.FirstOrDefault();
+
+                var user = new UserCookBookDto
+                {
+                    Id = userDb.Id,
+                    UserName = userDb.UserName,
+                    Email = userDb.Email,
+                    Password = string.Empty,
+                    Role = (Roles)Enum.Parse(typeof(Roles), role),
+                    AddDate = userDb.AddDate
+                };
+        return user;
+        }
     }
 }

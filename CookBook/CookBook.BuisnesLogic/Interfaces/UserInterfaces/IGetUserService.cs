@@ -11,6 +11,6 @@ namespace CookBook.BuisnesLogic.Interfaces.UserInterfaces
     public interface IGetUserService
     {
         public Task<IEnumerable<UserCookBookDto>> GetAll();
-        public UserCookBook GetByID(string id);
+        public Task<UserCookBookDto> GetByID(string id);
     }
 }
