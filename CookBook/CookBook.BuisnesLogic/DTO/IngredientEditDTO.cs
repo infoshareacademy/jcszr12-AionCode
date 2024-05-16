@@ -42,7 +42,7 @@ namespace CookBook.BuisnesLogic.DTO
         [DisplayName("Indeks Glikemiczny")]
         [Required(ErrorMessage = "Wpisz liczbę.")]
         public int GI { get; set; }
-        public int? UserCookBookId { get; set; }
+        public string? UserCookBookId { get; set; }
         public string UserLoggedin { get; set; }
     }
 }

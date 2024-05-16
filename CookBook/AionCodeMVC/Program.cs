@@ -1,4 +1,4 @@
-using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+ï»¿using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Services.IngredientServices;
 using CookBook.BuisnesLogic.Repositories;
 using AionCodeMVC.Repositories;
@@ -15,6 +15,8 @@ using CookBook.BuisnesLogic.Interfaces.RecipeInterfacces;
 using CookBook.BuisnesLogic.Services.RecipeServices;
 using Microsoft.AspNetCore.Identity;
 using CookBook.BuisnesLogic.Models;
+using Database.SampleData;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AionCodeMVC
 {
@@ -24,7 +26,7 @@ namespace AionCodeMVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            
+
             //Add database
             builder.Services.AddDbContext<DatabaseContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("AionCodeDatabase")));
@@ -72,9 +74,9 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IGetIngredientService, GetIngredientService>();
             builder.Services.AddScoped<ICreateIngredientService, CreateIngredientService>();
             builder.Services.AddScoped<IDeleteIngredientService, DeleteIngredientService>();
-            builder.Services.AddScoped<IEditIngredientService,  EditIngredientService>();
+            builder.Services.AddScoped<IEditIngredientService, EditIngredientService>();
             builder.Services.AddScoped<IUploadIngredientPhotoService, UploadIngredientPhotoService>();
-            
+
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IGetUserService, GetUserService>();
             builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
@@ -109,20 +111,28 @@ namespace AionCodeMVC
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            CreateRoles(app.Services).Wait();
+            InitializeDatabaseAndRoles(app.Services).Wait();
 
             app.Run();
 
-            async Task CreateRoles(IServiceProvider serviceProvider)
+
+            async Task InitializeDatabaseAndRoles(IServiceProvider serviceProvider)
             {
                 // Scoped services inside method to avoid directly injecting them into Configure
                 using (var scope = serviceProvider.CreateScope())
                 {
+                    //Used services
                     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Database.Entities.UserCookBook>>();
+                    var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
 
+                    // Ensure the database is created
+                    var wasDbCreated = dbContext.Database.EnsureCreated();
+
+                    // Define role names
                     string[] roleNames = { "Admin", "StdUser", "Guest" };
 
+                    // Create roles if they don't exist
                     foreach (var roleName in roleNames)
                     {
                         var roleExist = await roleManager.RoleExistsAsync(roleName);
@@ -132,11 +142,7 @@ namespace AionCodeMVC
                         }
                     }
 
-                    if (!await roleManager.RoleExistsAsync("Admin"))
-                    {
-                        await roleManager.CreateAsync(new IdentityRole("Admin"));
-                    }
-
+                    // Create Admin user if not exists and assign Admin role
                     var adminUser = await userManager.FindByNameAsync("admin");
                     if (adminUser == null)
                     {
@@ -155,11 +161,22 @@ namespace AionCodeMVC
                         }
                         else
                         {
-                            throw new Exception("Nie mo¿na utworzyæ u¿ytkownika admin.");
+                            throw new Exception("Nie moÅ¼na utworzyÄ‡ uÅ¼ytkownika admin.");
                         }
                     }
+
+                    //if database didnt exist before, seed it with data
+                    if (wasDbCreated)
+                    {
+                        await SampleData.SeedDatabaseWithIngredients(dbContext, userManager.Users);
+                        await SampleData.SeedDatabaseWithRecipes(dbContext, userManager.Users);
+                    }
+
                 }
             }
+
+
+
         }
     }
 }

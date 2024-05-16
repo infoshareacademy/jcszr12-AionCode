@@ -60,10 +60,6 @@ namespace Database
             //UserCookBook
             modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.AddDate).HasColumnType("smalldatetime");
 
-//            modelBuilder.Entity<UserCookBook>().HasData(SampleData.SampleData.GetUserCookBookSampleDataFromJson());
-            modelBuilder.Entity<IngredientDetails>().HasData(SampleData.SampleData.GetIngredientDetailsSampleDataFromJson());
-            modelBuilder.Entity<RecipeDetails>().HasData(SampleData.SampleData.GetRecipeDetailsSampleDataFromJson());
-
             modelBuilder.Entity<UserCookBook>().ToTable("UserCookBook");
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
@@ -72,6 +68,7 @@ namespace Database
                                                          .HasKey(ul => ul.UserId); // Define primary key
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
+
         }
     }
 }

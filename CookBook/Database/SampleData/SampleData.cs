@@ -2,12 +2,34 @@
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace Database.SampleData
 {
     public static class SampleData
     {
-        public static List<IngredientDetails> GetIngredientDetailsSampleDataFromJson()
+        static readonly Random random = new();
+
+        #region IngredientDataSample
+        public static async Task SeedDatabaseWithIngredients(DatabaseContext dbContext, IQueryable<UserCookBook> users)
+        {
+            if (!dbContext.IngredientDetails.Any())
+            {
+                var ingredientDetailsList = GetIngredientDetailsSampleDataFromJson();
+                var userIds = await users.Select(u => u.Id).ToListAsync();
+
+                AssingIngredientsToUsersRandomly(ingredientDetailsList, userIds);
+
+                if (ingredientDetailsList != null)
+                {
+                    dbContext.IngredientDetails.AddRange(ingredientDetailsList);
+                }
+
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
+        private static List<IngredientDetails>? GetIngredientDetailsSampleDataFromJson()
         {
 
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -21,9 +43,22 @@ namespace Database.SampleData
             var result = JsonConvert.DeserializeObject<List<IngredientDetails>>(seedData);
 
             return result;
-
-            // Seed data from JSON file
         }
+        private static void AssingIngredientsToUsersRandomly(List<IngredientDetails>? ingredientDetailsList, List<string> userIds)
+        {
+            if (ingredientDetailsList != null)
+            {
+                foreach (var ingredient in ingredientDetailsList)
+                {
+                    var randomUserIdIndex = random.Next(0, userIds.Count);
+                    ingredient.UserCookBookId = userIds[randomUserIdIndex];
+                }
+            }
+        }
+
+        #endregion IngredientDataSample
+
+
         public static async Task<string> GetAdminUserIdAsync(UserManager<IdentityUser> userManager)
         {
             var user = await userManager.FindByNameAsync("admin");
@@ -37,22 +72,37 @@ namespace Database.SampleData
                 return null;
             }
         }
-        public static List<UserCookBook> GetUserCookBookSampleDataFromJson()
+
+
+        public static async Task SeedDatabaseWithRecipes(DatabaseContext dbContext, IQueryable<UserCookBook> users)
         {
+            if (!dbContext.RecipeDetails.Any())
+            {
+                var recipeDetailsList = GetRecipeDetailsSampleDataFromJson();
+                var userIds = await users.Select(u => u.Id).ToListAsync();
 
-            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                AssingRecipesToUsersRandomly(recipeDetailsList, userIds);
 
-            // Połącz ścieżkę katalogu z nazwą pliku
-            string filePath = Path.Combine(basePath, "UserCookBookSeed-data.json");
-
-            // Odczytaj zawartość pliku
-            string seedData = File.ReadAllText(filePath);
-
-
-            return JsonConvert.DeserializeObject<List<UserCookBook>>(seedData);
-
-            // Seed data from JSON file
+                if (recipeDetailsList != null)
+                {
+                    dbContext.RecipeDetails.AddRange(recipeDetailsList);
+                }
+                await dbContext.SaveChangesAsync();
+            }
         }
+
+        private static void AssingRecipesToUsersRandomly(List<RecipeDetails> recipeDetailsList, List<string> userIds)
+        {
+            if (recipeDetailsList != null)
+            {
+                foreach (var recipe in recipeDetailsList)
+                {
+                    var randomUserIdIndex = random.Next(0, userIds.Count);
+                    recipe.UserCookBookId = userIds[randomUserIdIndex];
+                }
+            }
+        }
+
         public static List<RecipeDetails> GetRecipeDetailsSampleDataFromJson()
         {
 
