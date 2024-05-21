@@ -4,7 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>253e7e18-1ac8-49dd-8966-e6a20a8b7a5f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,7 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CookBook.BuisnesLogic\CookBook.BuisnesLogic.csproj" />
-
     <ProjectReference Include="..\Database\Database.csproj" />
   </ItemGroup>
 
