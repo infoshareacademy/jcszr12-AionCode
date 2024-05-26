@@ -38,6 +38,88 @@ namespace AionCodeMVC.Controllers
             var model = await _getRecipeService.GetRecipeByDetails(id);
             return View(model);
         }
+        public ActionResult Create()
+        { 
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(RecipeDetailsDTO model)
+        {
+            try 
+            {
+                if (!ModelState.IsValid) 
+                {
+                    return View(model);
+                }
+                await _creaRecipeService.CreateRecipe(model);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();  
+            }
+        }
+
+        public async Task<ActionResult> Edit(int id) 
+        {
+            var model = await _getRecipeService.GetRecipeByDetails(id);
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int id, RecipeEditDTO model)
+        {
+            try
+            {
+                await _editRecipeService.EditRecipe(model);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            var model = await _getRecipeService.GetRecipeByDetails(id);
+            return View(model);
+        }
+
+        // POST: Movies/Delete/name
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            try
+            {
+                await _deleteRecipeService.DeleteRecipe(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Upload(IFormFile file, int id)
+        {
+            try
+            {
+                await _uploadRecipePhotoService.AddRecipePhoto(file, id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
     }
 }

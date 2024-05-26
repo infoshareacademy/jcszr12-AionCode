@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace Database.Entities
 {
-    public class UserCookBook
+    public class UserCookBook : IdentityDbContext 
     {
         public int Id { get; set; }
         public virtual ICollection<MealDay> MealDays { get; set; }
