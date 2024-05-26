@@ -397,6 +397,9 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+bin/
+obj/
+
 !CookBook/AionCodeMVC/bin/Debug/net8.0/users.json
 !CookBook/AionCodeMVC/bin/Debug/net8.0/IngredientDetailsSeed-data.json
 !CookBook/AionCodeMVC/bin/Debug/net8.0/RecipeDetailsSeed-data.json
