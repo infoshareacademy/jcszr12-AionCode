@@ -5,51 +5,71 @@
     int Lp = 0;
 }
 
+<head>
+    <style>
+        .btn {
+            color: black;
+            background: #FFC107;
+        }
+            .btn:hover {
+                color: black;
+                background: orange;
+            }
+        .ingredient {
+            color: peru;
+        }
+    </style>
+</head>
+
 
 
 <div class="container">
    <div class="row mb-3 justify-content-center">
     <div class="col-12">
-        <div class="btn-group" role="group" aria-label="Ingredient types">
+            <div class="btn-group" role="group" aria-label="Ingredient types">
+            <form class="mx-2" asp-action="Index" method="get">
+                <input type="hidden"/>
+                    <button type="submit" class="btn btn-primary">Wszystko</button>
+            </form>
             <form class="mx-2" asp-action="Index" method="get">
                 <input type="hidden" name="Type" value="Warzywa" />
-                <button type="submit" class="btn btn-primary">Warzywa</button>
+                    <button type="submit" class="btn btn-primary">Warzywa</button>
             </form>
             <form class="mx-2" asp-action="Index" method="get">
                 <input type="hidden" name="Type" value="Owoce" />
-                <button type="submit" class="btn btn-primary">Owoce</button>
+                    <button type="submit" class="btn btn-primary">Owoce</button>
             </form>
             <form class="mx-2" asp-action="Index" method="get">
                 <input type="hidden" name="Type" value="Pieczywo" />
-                <button type="submit" class="btn btn-primary">Pieczywo</button>
+                    <button type="submit" class="btn btn-primary">Pieczywo</button>
             </form>
             <form class="mx-2" asp-action="Index" method="get">
                 <input type="hidden" name="Type" value="Ryby" />
-                <button type="submit" class="btn btn-primary">Ryby</button>
+                    <button type="submit" class="btn btn-primary">Ryby</button>
             </form>
             <form class="mx-2" asp-action="Index" method="get">
                 <input type="hidden" name="Type" value="Mięsa" />
-                <button type="submit" class="btn btn-primary">Mięsa</button>
+                    <button type="submit" class="btn btn-primary">Mięsa</button>
             </form>
             <form class="mx-2" asp-action="Index" method="get">
                 <input type="hidden" name="Type" value="Grzyby" />
-                <button type="submit" class="btn btn-primary">Grzyby</button>
+                    <button type="submit" class="btn btn-primary">Grzyby</button>
             </form>
             <form class="mx-2" asp-action="Index" method="get">
                 <input type="hidden" name="Type" value="Napoje" />
-                <button type="submit" class="btn btn-primary">Napoje</button>
+                    <button type="submit" class="btn btn-primary">Napoje</button>
             </form>
             <form class="mx-2" asp-action="Index" method="get">
                 <input type="hidden" name="Type" value="Nabiał" />
-                <button type="submit" class="btn btn-primary">Nabiał</button>
+                    <button type="submit" class="btn btn-primary">Nabiał</button>
             </form>
             <form class="mx-2" asp-action="Index" method="get">
                 <input type="hidden" name="Type" value="Przyprawy" />
-                <button type="submit" class="btn btn-primary">Przyprawy</button>
+                    <button type="submit" class="btn btn-primary">Przyprawy</button>
             </form>
             <form class="mx-2" asp-action="Index" method="get">
                 <input type="hidden" name="Type" value="Inne" />
-                <button type="submit" class="btn btn-primary">Inne</button>
+                    <button type="submit" class="btn btn-primary">Inne</button>
             </form>
         </div>
     </div>
@@ -89,21 +109,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model) 
                     {
                         Lp++;
                         <tr>
-                            <td>@Lp</td>
-                            <td>@Html.ActionLink(item.Name, "Details", new { id = item.Id })</td>
+                            <td>@Lp.</td>
+                            <td>@Html.ActionLink(item.Name, "Details", new { id = item.Id, type = @ViewBag.Type }, new {@class ="ingredient" })</td>
                             <td>@Html.DisplayFor(modelItem => item.Calories)</td>
                             <td>@Html.DisplayFor(modelItem => item.Proteins)</td>
                             <td>@Html.DisplayFor(modelItem => item.Fats)</td>
                             <td>@Html.DisplayFor(modelItem => item.Carbohydrates)</td>
                             <td>
-                                @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }) |
-                                @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }) |
-                                @Html.ActionLink("Usuń", "Delete", new { id = item.Id }) |
-                                @Html.ActionLink("Załącz obraz", "Upload", new { id = item.Id })
+                                @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }, new { @class = "ingredient" }) |
+                                @Html.ActionLink("Szczegóły", "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" }) |
+                                @Html.ActionLink("Usuń", "Delete", new { id = item.Id }, new { @class = "ingredient" }) |
+                                @Html.ActionLink("Załącz obraz", "Upload", new { id = item.Id }, new { @class = "ingredient" })
                             </td>
                         </tr>
                     }
