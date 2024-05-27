@@ -25,8 +25,7 @@ namespace Database.Entities
         [ForeignKey("UserCookBook")]
         public string? UserCookBookId { get; set; }
         public virtual UserCookBook UserCookBook { get; set; }
-
         public virtual ICollection<IngredientUsed> IngredientsUsed { get; set; }
-
+        public virtual ICollection<IngredientComment> Comments { get; set; }  
     }
 }

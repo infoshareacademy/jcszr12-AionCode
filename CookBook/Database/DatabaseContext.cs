@@ -15,7 +15,10 @@ namespace Database
         public DbSet<RecipeUsed> RecipeUsed { get; set; }
         public DbSet<Database.Entities.UserCookBook> UserCookBook { get; set; }
 
+        public DbSet<MyFridge> MyFridge { get; set; }
+        public DbSet<MyFridgeIngredient> MyFridgeIngredient { get; set; }
 
+        public DbSet<IngredientComment> IngredientComment { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
@@ -28,7 +31,7 @@ namespace Database
             modelBuilder.Entity<IngredientDetails>().HasKey(ingridient=>ingridient.Id);
             modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.Type).HasConversion<string>();
-            modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.AddDate).HasColumnType("smalldatetime");
+            //modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.AddDate).HasColumnType("smalldatetime");
 
 
             //RecipeDetails
@@ -38,27 +41,27 @@ namespace Database
             modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.Category).ValueGeneratedOnAdd();
             modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.Description).ValueGeneratedOnAdd();
             modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.ImagePath).ValueGeneratedOnAdd();
-            modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.AddDate).HasColumnType("smalldatetime");
+            //modelBuilder.Entity<RecipeDetails>().Property(recipeDetails => recipeDetails.AddDate).HasColumnType("smalldatetime");
 
 
             //IngridientUsed
             modelBuilder.Entity<IngredientUsed>().HasKey(ingridientUsed => ingridientUsed.Id);
             modelBuilder.Entity<IngredientUsed>().Property(ingridientUsed => ingridientUsed.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<IngredientUsed>().Property(ingridientUsed => ingridientUsed.AddDate).HasColumnType("smalldatetime");
+            //modelBuilder.Entity<IngredientUsed>().Property(ingridientUsed => ingridientUsed.AddDate).HasColumnType("smalldatetime");
 
             //MealDay
             modelBuilder.Entity<MealDay>().HasKey(mealDay=>mealDay.Id);
             modelBuilder.Entity<MealDay>().Property(mealDay=>mealDay.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.AddDate).HasColumnType("smalldatetime");
-            modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.Day).HasColumnType("smalldatetime");
+            //modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.AddDate).HasColumnType("smalldatetime");
+            //modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.Day).HasColumnType("smalldatetime");
 
             //RecipeUsed
             modelBuilder.Entity<RecipeUsed>().HasKey(recipeUsed => recipeUsed.Id);
             modelBuilder.Entity<RecipeUsed>().Property(recipeUsed => recipeUsed.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<RecipeUsed>().Property(recipeUsed => recipeUsed.AddDate).HasColumnType("smalldatetime");
+            //modelBuilder.Entity<RecipeUsed>().Property(recipeUsed => recipeUsed.AddDate).HasColumnType("smalldatetime");
            
             //UserCookBook
-            modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.AddDate).HasColumnType("smalldatetime");
+            //modelBuilder.Entity<UserCookBook>().Property(userCookBook => userCookBook.AddDate).HasColumnType("smalldatetime");
 
             modelBuilder.Entity<UserCookBook>().ToTable("UserCookBook");
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");

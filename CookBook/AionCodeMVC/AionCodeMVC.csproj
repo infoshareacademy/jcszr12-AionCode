@@ -33,7 +33,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CookBook.BuisnesLogic\CookBook.BuisnesLogic.csproj" />
-    <ProjectReference Include="..\CookBook.UI\CookBook.UI.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
   </ItemGroup>
 
