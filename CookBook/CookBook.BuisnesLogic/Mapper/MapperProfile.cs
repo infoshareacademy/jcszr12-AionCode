@@ -22,6 +22,11 @@ namespace CookBook.BuisnesLogic.Mapper
             CreateMap<RecipeDetails, RecipeDetailsDTO>().ReverseMap();
             CreateMap<RecipeDetails, RecipeEditDTO>().ReverseMap();
 
+            CreateMap<MyFridgeIngredient, MyFridgeIngredientDTO>().ReverseMap();
+            CreateMap<MyFridge, MyFridgeDTO>().ReverseMap();
+            CreateMap<IngredientComment, IngredientCommentDTO>().ReverseMap();
+
+
             CreateMap<UserCookBook, UserCookBookDto>();
         }
     }
