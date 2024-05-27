@@ -1,5 +1,5 @@
 ﻿@model CookBook.BuisnesLogic.DTO.IngredientDetailedDTO;
-
+@using Microsoft.AspNetCore.Mvc.Rendering
 @{
     ViewData["Title"] = "Szczegółowe informacje";
 }
@@ -57,11 +57,12 @@
                         <button type="submit" class="btn btn-primary">Powrót</button>
                     </form>
                 </div>
+
                 <div class="row justify-content-center mt-4">
                     <div class="col-md-6">
                         <div class="card p-3 shadow">
                             @if (Model.Comments != null && Model.Comments.Any())
-                                {
+                            {
                                 <h3 class="text-center mb-3">Komentarze</h3>
                                 <ul class="list-group">
                                     @foreach (var comment in Model.Comments)
@@ -72,8 +73,23 @@
                                         </li>
                                     }
                                 </ul>
-                                }
-                        </div>
+                            }
+                            @if (User.Identity.IsAuthenticated) // jezeli user jest zalogowany pokazuje formularz
+                            {
+                                <!-- Formularz dodawania komentarza -->
+                                <form method="post" asp-controller="Ingredient" asp-action="AddComment">
+                                    <input type="hidden" name="ingredientId" value="@Model.Id" />
+                                    <div class="form-group">
+                                        <label for="author">Autor:</label>
+                                        <input type="text" class="form-control" id="author" name="author" value="@User.Identity.Name" readonly />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="text">Treść:</label>
+                                        <textarea class="form-control" id="text" name="text" rows="3" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                                </form>
+                            }
                     </div>
                 </div>
         </div>

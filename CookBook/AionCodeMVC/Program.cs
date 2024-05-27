@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Identity;
 using CookBook.BuisnesLogic.Models;
 using Database.SampleData;
 using Microsoft.Extensions.DependencyInjection;
+using CookBook.BuisnesLogic.Services.IngredientCommentServices;
 
 namespace AionCodeMVC
 {
@@ -76,6 +77,7 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IDeleteIngredientService, DeleteIngredientService>();
             builder.Services.AddScoped<IEditIngredientService, EditIngredientService>();
             builder.Services.AddScoped<IUploadIngredientPhotoService, UploadIngredientPhotoService>();
+            builder.Services.AddScoped<IAddCommentService, AddCommentService>();
 
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IGetUserService, GetUserService>();

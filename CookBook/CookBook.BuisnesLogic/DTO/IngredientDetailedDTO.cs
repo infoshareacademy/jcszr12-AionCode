@@ -42,7 +42,7 @@ namespace CookBook.BuisnesLogic.DTO
         [Required(ErrorMessage = "Wpisz liczbę.")]
         public int GI { get; set; }
 
-        public IEnumerable<IngredientCommentDTO> Comments { get; set; }
+        public IEnumerable<IngredientCommentDTO>? Comments { get; set; }
 
 
     }

@@ -3,6 +3,8 @@ using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
+using CookBook.BuisnesLogic.Services.IngredientCommentServices;
+using Database.Entities;
 
 namespace AionCodeMVC.Controllers
 {
@@ -13,14 +15,16 @@ namespace AionCodeMVC.Controllers
         private readonly IDeleteIngredientService _deleteIngredientService;
         private readonly IEditIngredientService _editIngredientService;
         private readonly IUploadIngredientPhotoService _uploadIngredientPhotoService;
+        private readonly IAddCommentService _addCommentService;
 
-        public IngredientController(IGetIngredientService getIngredientService, ICreateIngredientService createIngredientService, IDeleteIngredientService deleteIngredientService, IEditIngredientService editIngredientService, IUploadIngredientPhotoService uploadIngredientPhotoService)
+        public IngredientController(IGetIngredientService getIngredientService, ICreateIngredientService createIngredientService, IDeleteIngredientService deleteIngredientService, IEditIngredientService editIngredientService, IUploadIngredientPhotoService uploadIngredientPhotoService, IAddCommentService addCommentService)
         {
             _getIngredientService = getIngredientService;
             _createIngredientService = createIngredientService;
             _deleteIngredientService = deleteIngredientService;
             _editIngredientService = editIngredientService;
             _uploadIngredientPhotoService = uploadIngredientPhotoService;
+            _addCommentService = addCommentService;
         }
 
         // GET: IngredientController
@@ -147,5 +151,34 @@ namespace AionCodeMVC.Controllers
                 return View();
             }
         }
+
+        // POST: IngredientController/AddComment
+        [Authorize(Policy = "StdUser")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddComment(int ingredientId, string text)
+        {
+            try
+            {
+                var userName = User.Identity.Name;
+
+                var commentDTO = new IngredientCommentDTO
+                {
+                    Author = userName,
+                    Text = text,
+                    Date = DateTime.Now,
+                    IngredientDetailsId = ingredientId
+                };
+
+                await _addCommentService.AddComment(commentDTO);
+
+                return RedirectToAction(nameof(Details), new { id = ingredientId });
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Details), new { id = ingredientId, error = "Failed to add comment" });
+            }
+        }
+
     }
 }
