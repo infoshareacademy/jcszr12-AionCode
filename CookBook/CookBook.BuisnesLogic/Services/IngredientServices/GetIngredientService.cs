@@ -52,6 +52,11 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
             ingredientDetailedDTO.ImagePath = $"{_azureStorage.BlobContainerClientIngredientFiles.Uri}/{ingredientDetailedDTO.ImagePath}";
 
+
+            if (ingredient != null)
+            {
+                ingredientDetailedDTO.Comments = await GetCommentsForIngredient(ingredient.Id);
+            }
             return ingredientDetailedDTO;
         }
         public async Task<IngredientDetailedDTO> GetByIdIngredientDetailedDTO(int id)
@@ -65,6 +70,10 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
             }
             ingredientDetailedDTO.ImagePath = $"{_azureStorage.BlobContainerClientIngredientFiles.Uri}/{ingredientDetailedDTO.ImagePath}";
 
+            if (ingredient!=null)
+            {
+                ingredientDetailedDTO.Comments = await GetCommentsForIngredient(ingredient.Id);
+            }
             return ingredientDetailedDTO;
         }
         public async Task<IngredientEditDTO> GetByIdIngredientEditedDTO(int id)
@@ -74,5 +83,18 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
             return ingredientEditDTO;
         }
+
+        public async Task<IEnumerable<IngredientCommentDTO>> GetCommentsForIngredient(int ingredientId)
+        {
+            var ingredientComments = await _dbContext.IngredientComment
+                                            .Where(comment => comment.IngredientDetailsId == ingredientId)
+                                            .ToListAsync();
+
+            var ingredientCommentsDTO = _mapper.Map<List<IngredientCommentDTO>>(ingredientComments);
+
+            return ingredientCommentsDTO;
+        }
+
+
     }
 }
