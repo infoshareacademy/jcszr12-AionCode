@@ -16,8 +16,9 @@ namespace AionCodeMVC.Controllers
         private readonly IEditIngredientService _editIngredientService;
         private readonly IUploadIngredientPhotoService _uploadIngredientPhotoService;
         private readonly IAddCommentService _addCommentService;
+        private readonly IDeleteCommentService _deleteCommentService;
 
-        public IngredientController(IGetIngredientService getIngredientService, ICreateIngredientService createIngredientService, IDeleteIngredientService deleteIngredientService, IEditIngredientService editIngredientService, IUploadIngredientPhotoService uploadIngredientPhotoService, IAddCommentService addCommentService)
+        public IngredientController(IGetIngredientService getIngredientService, ICreateIngredientService createIngredientService, IDeleteIngredientService deleteIngredientService, IEditIngredientService editIngredientService, IUploadIngredientPhotoService uploadIngredientPhotoService, IAddCommentService addCommentService, IDeleteCommentService deleteCommentService)
         {
             _getIngredientService = getIngredientService;
             _createIngredientService = createIngredientService;
@@ -25,6 +26,7 @@ namespace AionCodeMVC.Controllers
             _editIngredientService = editIngredientService;
             _uploadIngredientPhotoService = uploadIngredientPhotoService;
             _addCommentService = addCommentService;
+            _deleteCommentService = deleteCommentService;
         }
 
         // GET: IngredientController
@@ -177,6 +179,42 @@ namespace AionCodeMVC.Controllers
             catch
             {
                 return RedirectToAction(nameof(Details), new { id = ingredientId, error = "Failed to add comment" });
+            }
+        }
+
+
+        [Authorize(Policy = "StdUser")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteComment(int commentId, int ingredientId)
+        {
+            try
+            {
+                var userName = User.Identity.Name;
+
+                // Pobierz komentarz na podstawie jego identyfikatora
+                var comment = await _deleteCommentService.GetCommentById(commentId);
+
+                if (comment == null)
+                {
+                    return RedirectToAction(nameof(Details), new { id = ingredientId, error = "Comment not found" });
+                }
+
+                // Sprawdź, czy zalogowany użytkownik jest autorem komentarza
+                if (comment.Author != userName)
+                {
+                    return RedirectToAction(nameof(Details), new { id = ingredientId, error = "Unauthorized action" });
+                }
+
+                // Usuń komentarz
+                await _deleteCommentService.DeleteComment(commentId);
+
+                return RedirectToAction(nameof(Details), new { id = ingredientId });
+            }
+            catch
+            {
+                // Obsługa błędu
+                return RedirectToAction(nameof(Details), new { id = ingredientId, error = "Failed to delete comment" });
             }
         }
 

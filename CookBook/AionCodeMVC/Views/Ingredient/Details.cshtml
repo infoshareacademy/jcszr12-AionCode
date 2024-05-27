@@ -10,6 +10,7 @@
             color: black;
             background: #FFC107;
         }
+
             .btn:hover {
                 color: black;
                 background: orange;
@@ -53,13 +54,13 @@
                 </dl>
                 <div class="text-center mt-3">
                     <form class="mx-2" asp-action="Index" method="get">
-                        <input type="hidden" name="type" value="@ViewBag.Type"/>
+                        <input type="hidden" name="type" value="@ViewBag.Type" />
                         <button type="submit" class="btn btn-primary">Powrót</button>
                     </form>
                 </div>
 
                 <div class="row justify-content-center mt-4">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card p-3 shadow">
                             @if (Model.Comments != null && Model.Comments.Any())
                             {
@@ -68,30 +69,48 @@
                                     @foreach (var comment in Model.Comments)
                                     {
                                         <li class="list-group-item">
-                                            <strong>@comment.Author</strong> - @comment.Date.ToShortDateString()<br />
-                                            @comment.Text
+                                            <div class="comment-item">
+                                                <div class="comment-header">
+                                                    <strong>@comment.Author</strong> - <span class="comment-date">@comment.Date.ToShortDateString() @comment.Date.ToShortTimeString()</span>
+                                                </div>
+                                                <div class="comment-text">
+                                                    @comment.Text
+                                                </div>
+                                                @if (User.Identity.Name == comment.Author)
+                                                {
+                                                    <form method="post" asp-controller="Ingredient" asp-action="DeleteComment">
+                                                        <input type="hidden" name="commentId" value="@comment.Id" />
+                                                        <input type="hidden" name="ingredientId" value="@Model.Id" />
+                                                        <button type="submit" class="btn btn-danger">Usuń</button>
+                                                    </form>
+                                                }
+                                            </div>
                                         </li>
                                     }
                                 </ul>
                             }
-                            @if (User.Identity.IsAuthenticated) // jezeli user jest zalogowany pokazuje formularz
+                            @if (User.Identity.IsAuthenticated)
                             {
-                                <!-- Formularz dodawania komentarza -->
-                                <form method="post" asp-controller="Ingredient" asp-action="AddComment">
-                                    <input type="hidden" name="ingredientId" value="@Model.Id" />
-                                    <div class="form-group">
-                                        <label for="author">Autor:</label>
-                                        <input type="text" class="form-control" id="author" name="author" value="@User.Identity.Name" readonly />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="text">Treść:</label>
-                                        <textarea class="form-control" id="text" name="text" rows="3" required></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
-                                </form>
+                                <div class="comment-form">
+                                    <h3 class="text-center mb-3">Dodaj komentarz</h3>
+                                    <form method="post" asp-controller="Ingredient" asp-action="AddComment">
+                                        <input type="hidden" name="ingredientId" value="@Model.Id" />
+                                        <div class="form-group">
+                                            <label for="author">Autor:</label>
+                                            <input type="text" class="form-control" id="author" name="author" value="@User.Identity.Name" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="text">Treść:</label>
+                                            <textarea class="form-control" id="text" name="text" rows="3" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                                    </form>
+                                </div>
                             }
+                        </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 </div>
