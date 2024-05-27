@@ -18,6 +18,8 @@ namespace Database
         public DbSet<MyFridge> MyFridge { get; set; }
         public DbSet<MyFridgeIngredient> MyFridgeIngredient { get; set; }
 
+        public DbSet<IngredientComment> IngredientComment { get; set; }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
