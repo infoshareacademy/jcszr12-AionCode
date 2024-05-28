@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CookBook.BuisnesLogic.DTO
 {
-    internal class MyFridgeIngredientDTO
+    public class MyFridgeIngredientDTO
     {
             public int Id { get; set; }
             public int MyFridgeId { get; set; }
