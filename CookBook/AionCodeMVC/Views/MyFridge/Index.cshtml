@@ -4,7 +4,6 @@
     ViewData["Title"] = "My Fridge";
 }
 
-
 <head>
     <style>
         .btn {
@@ -23,19 +22,25 @@
     </style>
 </head>
 
+<h1>Moje lodówki</h1>
 
-h1>Moje lodówki</h1>
+<!-- Formularz dodawania nowej lodówki -->
+<form asp-action="Create" method="post">
+    <label>Nazwa lodówki:</label>
+    <input type="text" name="name" required />
+    <button type="submit" class="btn">Dodaj lodówkę</button>
+</form>
 
 <!-- Sprawdzenie, czy lista lodówek nie jest pusta -->
-@if (Model.Any()) 
+@if (Model.Any())
 {
     <h2>Składniki w lodówkach:</h2>
     <!-- Pętla po wszystkich lodówkach w modelu -->
-    @foreach (var fridge in Model) 
+    @foreach (var fridge in Model)
     {
         <h3>@fridge.Name</h3>
         <!-- Sprawdzenie, czy lodówka ma jakieś składniki -->
-        @if (fridge.MyFridgeIngredients.Any()) 
+        @if (fridge.MyFridgeIngredients.Any())
         {
             <ul>
                 <!-- Pętla po wszystkich składnikach w lodówce -->
@@ -58,118 +63,3 @@ else
 {
     <p>Brak lodówek do wyświetlenia.</p>
 }
-
-
-
-
-
-@* <div class="container">
-    <div class="row mb-3 justify-content-center">
-        <div class="col-12">
-            <div class="btn-group" role="group" aria-label="Ingredient types">
-                <form class="mx-2" asp-action="Index" method="get">
-                    <input type="hidden" />
-                    <button type="submit" class="btn btn-primary">Wszystko</button>
-                </form>
-                <form class="mx-2" asp-action="Index" method="get">
-                    <input type="hidden" name="Type" value="Warzywa" />
-                    <button type="submit" class="btn btn-primary">Warzywa</button>
-                </form>
-                <form class="mx-2" asp-action="Index" method="get">
-                    <input type="hidden" name="Type" value="Owoce" />
-                    <button type="submit" class="btn btn-primary">Owoce</button>
-                </form>
-                <form class="mx-2" asp-action="Index" method="get">
-                    <input type="hidden" name="Type" value="Pieczywo" />
-                    <button type="submit" class="btn btn-primary">Pieczywo</button>
-                </form>
-                <form class="mx-2" asp-action="Index" method="get">
-                    <input type="hidden" name="Type" value="Ryby" />
-                    <button type="submit" class="btn btn-primary">Ryby</button>
-                </form>
-                <form class="mx-2" asp-action="Index" method="get">
-                    <input type="hidden" name="Type" value="Mięsa" />
-                    <button type="submit" class="btn btn-primary">Mięsa</button>
-                </form>
-                <form class="mx-2" asp-action="Index" method="get">
-                    <input type="hidden" name="Type" value="Grzyby" />
-                    <button type="submit" class="btn btn-primary">Grzyby</button>
-                </form>
-                <form class="mx-2" asp-action="Index" method="get">
-                    <input type="hidden" name="Type" value="Napoje" />
-                    <button type="submit" class="btn btn-primary">Napoje</button>
-                </form>
-                <form class="mx-2" asp-action="Index" method="get">
-                    <input type="hidden" name="Type" value="Nabiał" />
-                    <button type="submit" class="btn btn-primary">Nabiał</button>
-                </form>
-                <form class="mx-2" asp-action="Index" method="get">
-                    <input type="hidden" name="Type" value="Przyprawy" />
-                    <button type="submit" class="btn btn-primary">Przyprawy</button>
-                </form>
-                <form class="mx-2" asp-action="Index" method="get">
-                    <input type="hidden" name="Type" value="Inne" />
-                    <button type="submit" class="btn btn-primary">Inne</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <h1 class="text-center">@ViewData["Title"]</h1>
-
-    <div class="row">
-        <div class="col-12 text-center">
-            <a class="btn btn-primary" asp-action="Create">Dodaj nowy składnik</a>
-        </div>
-    </div>
-
-    <div class="row mt-3">
-        <div class="col-12">
-            <form asp-action="Index" method="get">
-                <div class="form-group">
-                    <label for="SearchString">Wyszukaj</label>
-                    <input type="text" name="SearchString" value="@ViewData["IngredientFilter"]" class="form-control" style="width: 200px; height: 30px;" />
-                    <button type="submit" class="btn btn-primary mt-2">Szukaj</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="row mt-3">
-        <div class="col-12 bg-white rounded-2">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Lp.</th>
-                        <th>@Html.DisplayNameFor(model => model.Name)</th>
-                        <th>@Html.DisplayNameFor(model => model.Carbohydrates)</th>
-                        <th>@Html.DisplayNameFor(model => model.Proteins)</th>
-                        <th>@Html.DisplayNameFor(model => model.Fats)</th>
-                        <th>@Html.DisplayNameFor(model => model.Calories)</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        Lp++;
-                        <tr>
-                            <td>@Lp.</td>
-                            <td>@Html.ActionLink(item.Name, "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" })</td>
-                            <td>@Html.DisplayFor(modelItem => item.Calories)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Proteins)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Fats)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Carbohydrates)</td>
-                            <td>
-                                @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }, new { @class = "ingredient" }) |
-                                @Html.ActionLink("Szczegóły", "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" }) |
-                                @Html.ActionLink("Usuń", "Delete", new { id = item.Id }, new { @class = "ingredient" }) |
-                                @Html.ActionLink("Załącz obraz", "Upload", new { id = item.Id }, new { @class = "ingredient" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
- *@

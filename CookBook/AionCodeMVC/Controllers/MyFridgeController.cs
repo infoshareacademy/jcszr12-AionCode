@@ -1,99 +1,100 @@
 ﻿using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
-using Database.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AionCodeMVC.Controllers
 {
     public class MyFridgeController : Controller
     {
-
         private readonly IGetMyFridgeService _getMyFridgeService;
+        private readonly ICreateFridgeService _createFridgeService;
 
-        public MyFridgeController(IGetMyFridgeService getMyFridgeService)
+        public MyFridgeController(IGetMyFridgeService getMyFridgeService, ICreateFridgeService createFridgeService)
         {
             _getMyFridgeService = getMyFridgeService;
+            _createFridgeService = createFridgeService;
         }
-
 
         // GET: MyFridge
         public async Task<IActionResult> Index()
         {
             var myFridges = await _getMyFridgeService.GetAllMyFridges();
-
-            // Przekazanie lodówek do widoku
             return View(myFridges);
         }
 
-
-        // GET: MyFridge/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: MyFridge/Create
-        public ActionResult Create()
+        // GET: /MyFridge/Create
+        public IActionResult Create()
         {
             return View();
         }
 
-        // POST: MyFridge/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(string name)
         {
-            try
+            if (!string.IsNullOrWhiteSpace(name))
             {
+                try
+                {
+                    // Wywołanie serwisu do dodawania lodówki
+                    await _createFridgeService.AddFridge(new MyFridgeDTO { Name = name });
+                    return RedirectToAction(nameof(Index)); // Przekierowanie do akcji Index
+                }
+                catch (Exception ex)
+                {
+                    // Obsługa błędów - można zalogować błąd lub wyświetlić odpowiedni komunikat użytkownikowi
+                    ModelState.AddModelError("", "Wystąpił błąd podczas dodawania lodówki.");
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("name", "Nazwa lodówki jest wymagana.");
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+        }
+
+        // GET: MyFridge/Details/5
+        public IActionResult Details(int id)
+        {
+            // Wyszukaj szczegóły lodówki na podstawie ID i wyświetl widok
+            return View();
         }
 
         // GET: MyFridge/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
+            // Wyszukaj lodówkę do edycji na podstawie ID i wyświetl formularz edycji
             return View();
         }
 
         // POST: MyFridge/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(int id, MyFridgeDTO fridgeDTO)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            // Edytuj lodówkę na podstawie danych z formularza
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: MyFridge/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
+            // Wyszukaj lodówkę do usunięcia na podstawie ID i wyświetl formularz potwierdzenia usuwania
             return View();
         }
 
         // POST: MyFridge/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            // Usuń lodówkę na podstawie ID i przekieruj użytkownika do akcji Index
+            return RedirectToAction(nameof(Index));
         }
     }
 }

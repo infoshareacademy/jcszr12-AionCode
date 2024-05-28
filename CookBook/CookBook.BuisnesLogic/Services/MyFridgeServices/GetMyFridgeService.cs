@@ -33,7 +33,6 @@ namespace CookBook.BuisnesLogic.Services.MyFridgeServices
 
 
             var myFridges = await _dbContext.MyFridge
-                   .Include(f => f.UserCookBook)
                    .Include(f => f.MyFridgeIngredients).ThenInclude(f => f.IngredientDetails) // Załaduj IngredientDetails
                    .Where(f => f.UserCookBook.Id == userId) // Filtruj lodówki dla zalogowanego użytkownika
                    .ToListAsync();

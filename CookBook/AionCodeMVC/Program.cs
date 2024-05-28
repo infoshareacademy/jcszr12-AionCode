@@ -83,6 +83,8 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IDeleteCommentService, DeleteCommentService>();
 
             builder.Services.AddScoped<IGetMyFridgeService, GetMyFridgeService>();
+            builder.Services.AddScoped<ICreateFridgeService, CreateFridgeService>();
+
 
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IGetUserService, GetUserService>();
