@@ -38,7 +38,20 @@
     <!-- Pętla po wszystkich lodówkach w modelu -->
     @foreach (var fridge in Model)
     {
-        <h3>@fridge.Name</h3>
+        <div style="margin-bottom: 10px; display: flex; align-items: center;">
+            <h3 style="flex: 1;">@fridge.Name</h3>
+        </div>
+        <!-- Formularz dodawania składnika do lodówki -->
+        <div style="margin-bottom: 10px;">
+            <form asp-action="AddIngredient" method="post">
+                <input type="hidden" name="fridgeId" value="@fridge.Id" />
+                <div style="margin-bottom: 10px;">
+                    <input type="text" name="ingredientName" placeholder="Nazwa składnika" required />
+                    <input type="number" name="weight" placeholder="Waga (g)" required />
+                    <button type="submit" class="btn">Dodaj składnik</button>
+                </div>
+            </form>
+        </div>
         <!-- Sprawdzenie, czy lodówka ma jakieś składniki -->
         @if (fridge.MyFridgeIngredients.Any())
         {
@@ -47,7 +60,6 @@
                 @foreach (var ingredient in fridge.MyFridgeIngredients)
                 {
                     <li>
-                        @* Wyświetlenie nazwy składnika i wagi *@
                         @ingredient.IngredientDetails.Name - @ingredient.Weight g
                     </li>
                 }
@@ -57,9 +69,15 @@
         {
             <p>Brak składników w tej lodówce.</p>
         }
+        <!-- Formularz usuwania lodówki -->
+        <form asp-action="Delete" method="post" style="margin-top: 10px;">
+            <input type="hidden" name="id" value="@fridge.Id" />
+            <button type="submit" class="btn">Usuń lodówkę</button>
+        </form>
     }
 }
 else
 {
     <p>Brak lodówek do wyświetlenia.</p>
 }
+

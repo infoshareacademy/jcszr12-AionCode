@@ -39,8 +39,7 @@ namespace CookBook.BuisnesLogic.Services.MyFridgeServices
             }
             catch (Exception ex)
             {
-                // Obsługa błędów - można zalogować błąd lub wyświetlić komunikat użytkownikowi
-                throw ex; // lub inna obsługa błędów
+
             }
         }
     }
