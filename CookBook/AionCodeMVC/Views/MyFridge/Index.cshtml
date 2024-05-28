@@ -61,6 +61,15 @@
                 {
                     <li>
                         @ingredient.IngredientDetails.Name - @ingredient.Weight g
+                        <!-- Formularz usuwania składnika z lodówki -->
+                        <form asp-action="Delete" method="post" style="display: inline;" onsubmit="return confirm('Czy na pewno chcesz usunąć ten składnik?');">
+                            <input type="hidden" name="Id" value="@ingredient.Id" />
+                            <input type="hidden" name="MyFridgeId" value="@fridge.Id" />
+                            <input type="hidden" name="IngredientDetailsId" value="@ingredient.IngredientDetailsId" />
+                            <input type="hidden" name="AddDate" value="@ingredient.AddDate" />
+                            <input type="hidden" name="Weight" value="@ingredient.Weight" />
+                            <button type="submit" class="btn btn-danger">Usuń składnik</button>
+                        </form>
                     </li>
                 }
             </ul>
@@ -70,7 +79,7 @@
             <p>Brak składników w tej lodówce.</p>
         }
         <!-- Formularz usuwania lodówki -->
-        <form asp-action="Delete" method="post" style="margin-top: 10px;">
+        <form asp-action="DeleteFridge" method="post" style="margin-top: 10px;" onsubmit="return confirm('Czy na pewno chcesz usunąć tę lodówkę?');">
             <input type="hidden" name="id" value="@fridge.Id" />
             <button type="submit" class="btn">Usuń lodówkę</button>
         </form>
@@ -80,4 +89,3 @@ else
 {
     <p>Brak lodówek do wyświetlenia.</p>
 }
-

@@ -11,11 +11,13 @@ namespace AionCodeMVC.Controllers
     {
         private readonly IGetMyFridgeService _getMyFridgeService;
         private readonly ICreateFridgeService _createFridgeService;
+        private readonly IDeleteMyFridgeIngredientService  _deleteMyFridgeIngredientService;
 
-        public MyFridgeController(IGetMyFridgeService getMyFridgeService, ICreateFridgeService createFridgeService)
+        public MyFridgeController(IGetMyFridgeService getMyFridgeService, ICreateFridgeService createFridgeService, IDeleteMyFridgeIngredientService deleteMyFridgeIngredientService)
         {
             _getMyFridgeService = getMyFridgeService;
             _createFridgeService = createFridgeService;
+            _deleteMyFridgeIngredientService = deleteMyFridgeIngredientService;
         }
 
         // GET: MyFridge
@@ -58,6 +60,29 @@ namespace AionCodeMVC.Controllers
             }
         }
 
+        // GET: MyFridge/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(MyFridgeIngredientDTO myFridgeIngredientDTO)
+        {
+            try
+            {
+                await _deleteMyFridgeIngredientService.DeleteFridgeIngredient(myFridgeIngredientDTO);
+
+                // Przekieruj użytkownika po pomyślnym usunięciu
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                // Obsłuż błędy (np. wyświetl stronę błędu lub zaloguj)
+                // Tutaj przekierowujemy do akcji 'Error' z kontrolera domyślnego 'Home'
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
+            }
+        }
+
+
+
+
         // GET: MyFridge/Details/5
         public IActionResult Details(int id)
         {
@@ -81,12 +106,7 @@ namespace AionCodeMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: MyFridge/Delete/5
-        public IActionResult Delete(int id)
-        {
-            // Wyszukaj lodówkę do usunięcia na podstawie ID i wyświetl formularz potwierdzenia usuwania
-            return View();
-        }
+
 
         // POST: MyFridge/Delete/5
         [HttpPost]
