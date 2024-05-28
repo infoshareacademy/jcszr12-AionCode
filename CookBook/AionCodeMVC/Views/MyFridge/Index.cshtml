@@ -24,30 +24,40 @@
 </head>
 
 
-<h2>Moja lodówka</h2>
+h1>Moje lodówki</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>UserCookBookId</th>
-            <th>Ingredients</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var fridge in Model)
+<!-- Sprawdzenie, czy lista lodówek nie jest pusta -->
+@if (Model.Any()) 
+{
+    <h2>Składniki w lodówkach:</h2>
+    <!-- Pętla po wszystkich lodówkach w modelu -->
+    @foreach (var fridge in Model) 
+    {
+        <h3>@fridge.Name</h3>
+        <!-- Sprawdzenie, czy lodówka ma jakieś składniki -->
+        @if (fridge.MyFridgeIngredients.Any()) 
         {
-            <h3>@fridge.Name</h3>
             <ul>
+                <!-- Pętla po wszystkich składnikach w lodówce -->
                 @foreach (var ingredient in fridge.MyFridgeIngredients)
                 {
-                    <li>@ingredient.IngredientDetails.Name (Weight: @ingredient.Weight)</li>
+                    <li>
+                        @* Wyświetlenie nazwy składnika i wagi *@
+                        @ingredient.IngredientDetails.Name - @ingredient.Weight g
+                    </li>
                 }
             </ul>
         }
-    </tbody>
-</table>
+        else
+        {
+            <p>Brak składników w tej lodówce.</p>
+        }
+    }
+}
+else
+{
+    <p>Brak lodówek do wyświetlenia.</p>
+}
 
 
 

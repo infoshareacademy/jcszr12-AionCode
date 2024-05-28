@@ -1,4 +1,5 @@
 ﻿using CookBook.BuisnesLogic.DTO;
+using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
 using Database.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,38 +8,22 @@ namespace AionCodeMVC.Controllers
 {
     public class MyFridgeController : Controller
     {
-        // GET: MyFridge
-        public IActionResult Index()
-        {
-            // Przykładowa lista obiektów MyFridgeDTO z wypełnionymi składnikami i ich szczegółami
-            var myFridgeList = new List<MyFridgeDTO>
-            {
-                new MyFridgeDTO
-                {
-                    Id = 1,
-                    Name = "Fridge 2",
-                    UserCookBookId = "User2",
-                    MyFridgeIngredients = new List<MyFridgeIngredientDTO>
-                    {
-                        new MyFridgeIngredientDTO
-                        {
-                            Id = 3,
-                            IngredientDetails = new IngredientDetails { Id = 3, Name = "Butter", Description = "Organic Butter" },
-                            AddDate = DateTime.Now,
-                            Weight = 1.0m
-                        },
-                        new MyFridgeIngredientDTO
-                        {
-                            Id = 4,
-                            IngredientDetails = new IngredientDetails { Id = 4, Name = "Cheese", Description = "Cheddar Cheese" },
-                            AddDate = DateTime.Now,
-                            Weight = 0.5m
-                        }
-                    }
-                }
-            };
 
-            return View(myFridgeList);
+        private readonly IGetMyFridgeService _getMyFridgeService;
+
+        public MyFridgeController(IGetMyFridgeService getMyFridgeService)
+        {
+            _getMyFridgeService = getMyFridgeService;
+        }
+
+
+        // GET: MyFridge
+        public async Task<IActionResult> Index()
+        {
+            var myFridges = await _getMyFridgeService.GetAllMyFridges();
+
+            // Przekazanie lodówek do widoku
+            return View(myFridges);
         }
 
 

@@ -18,6 +18,8 @@ using CookBook.BuisnesLogic.Models;
 using Database.SampleData;
 using Microsoft.Extensions.DependencyInjection;
 using CookBook.BuisnesLogic.Services.IngredientCommentServices;
+using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
+using CookBook.BuisnesLogic.Services.MyFridgeServices;
 
 namespace AionCodeMVC
 {
@@ -79,6 +81,8 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IUploadIngredientPhotoService, UploadIngredientPhotoService>();
             builder.Services.AddScoped<IAddCommentService, AddCommentService>();
             builder.Services.AddScoped<IDeleteCommentService, DeleteCommentService>();
+
+            builder.Services.AddScoped<IGetMyFridgeService, GetMyFridgeService>();
 
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IGetUserService, GetUserService>();
