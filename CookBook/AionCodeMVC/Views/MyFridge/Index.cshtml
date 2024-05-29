@@ -45,11 +45,11 @@
         <!-- Formularz dodawania składnika do lodówki -->
         <div style="margin-bottom: 10px;">
             <form asp-action="AddIngredient" method="post">
-                <input type="hidden" name="fridgeId" value="@fridge.Id" />
                 <div style="margin-bottom: 10px;">
                     <label for="ingredientName">Wybierz lub wpisz nazwę składnika:</label>
                     <input type="text" id="ingredientName_@fridge.Id" name="ingredientName" placeholder="Nazwa składnika" required />
                     <input type="number" name="weight" placeholder="Waga (g)" required />
+                    <input type="hidden" name="MyFridgeId" value="@fridge.Id" />
                     <button type="submit" class="btn">Dodaj składnik</button>
                 </div>
             </form>

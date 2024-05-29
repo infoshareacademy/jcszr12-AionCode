@@ -15,13 +15,15 @@ namespace AionCodeMVC.Controllers
         private readonly ICreateFridgeService _createFridgeService;
         private readonly IDeleteMyFridgeIngredientService  _deleteMyFridgeIngredientService;
         private readonly IGetIngredientService _getIngredientService;
+        private readonly IAddFridgeIngredientService _addFridgeIngredientService;
 
-        public MyFridgeController(IGetMyFridgeService getMyFridgeService, ICreateFridgeService createFridgeService, IDeleteMyFridgeIngredientService deleteMyFridgeIngredientService, IGetIngredientService getIngredientService)
+        public MyFridgeController(IGetMyFridgeService getMyFridgeService, ICreateFridgeService createFridgeService, IDeleteMyFridgeIngredientService deleteMyFridgeIngredientService, IGetIngredientService getIngredientService, IAddFridgeIngredientService addFridgeIngredientService)
         {
             _getMyFridgeService = getMyFridgeService;
             _createFridgeService = createFridgeService;
             _deleteMyFridgeIngredientService = deleteMyFridgeIngredientService;
             _getIngredientService = getIngredientService;
+            _addFridgeIngredientService = addFridgeIngredientService;
         }
 
         // GET: MyFridge
@@ -89,6 +91,20 @@ namespace AionCodeMVC.Controllers
             var searchedIngredients = await _getIngredientService.GetIngredientsByTerm(term);
             return Json(searchedIngredients);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddIngredient(MyFridgeIngredientDTO myFridgeIngredientDTO, string ingredientName)
+        {
+            if (myFridgeIngredientDTO!=null)
+            {
+                await _addFridgeIngredientService.AddFridgeIngredien(myFridgeIngredientDTO, ingredientName);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
 
 
         // GET: MyFridge/Details/5
