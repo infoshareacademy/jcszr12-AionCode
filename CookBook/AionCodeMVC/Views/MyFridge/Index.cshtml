@@ -20,6 +20,7 @@
             color: peru;
         }
     </style>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
 <h1>Moje lodówki</h1>
@@ -46,7 +47,8 @@
             <form asp-action="AddIngredient" method="post">
                 <input type="hidden" name="fridgeId" value="@fridge.Id" />
                 <div style="margin-bottom: 10px;">
-                    <input type="text" name="ingredientName" placeholder="Nazwa składnika" required />
+                    <label for="ingredientName">Wybierz lub wpisz nazwę składnika:</label>
+                    <input type="text" id="ingredientName_@fridge.Id" name="ingredientName" placeholder="Nazwa składnika" required />
                     <input type="number" name="weight" placeholder="Waga (g)" required />
                     <button type="submit" class="btn">Dodaj składnik</button>
                 </div>
@@ -88,4 +90,36 @@
 else
 {
     <p>Brak lodówek do wyświetlenia.</p>
+}
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Inicjalizacja Autocomplete dla każdego pola nazwy składnika
+            $("input[name='ingredientName']").each(function () {
+                var fridgeId = $(this).attr("id").split("_")[1];
+                $(this).autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("SearchIngredients", "MyFridge")',
+                            data: { term: request.term },
+                            success: function (data) {
+                                response(data.map(function (item) {
+                                    return {
+                                        label: item.name,
+                                        value: item.name,
+                                        id: item.id
+                                    };
+                                }));
+                            }
+                        });
+                    },
+                    minLength: 2 // Minimalna liczba znaków do uruchomienia autouzupełniania
+                });
+            });
+        });
+    </script>
 }

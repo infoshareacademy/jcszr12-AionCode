@@ -1,6 +1,8 @@
 ﻿using CookBook.BuisnesLogic.DTO;
+using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,12 +14,14 @@ namespace AionCodeMVC.Controllers
         private readonly IGetMyFridgeService _getMyFridgeService;
         private readonly ICreateFridgeService _createFridgeService;
         private readonly IDeleteMyFridgeIngredientService  _deleteMyFridgeIngredientService;
+        private readonly IGetIngredientService _getIngredientService;
 
-        public MyFridgeController(IGetMyFridgeService getMyFridgeService, ICreateFridgeService createFridgeService, IDeleteMyFridgeIngredientService deleteMyFridgeIngredientService)
+        public MyFridgeController(IGetMyFridgeService getMyFridgeService, ICreateFridgeService createFridgeService, IDeleteMyFridgeIngredientService deleteMyFridgeIngredientService, IGetIngredientService getIngredientService)
         {
             _getMyFridgeService = getMyFridgeService;
             _createFridgeService = createFridgeService;
             _deleteMyFridgeIngredientService = deleteMyFridgeIngredientService;
+            _getIngredientService = getIngredientService;
         }
 
         // GET: MyFridge
@@ -80,7 +84,11 @@ namespace AionCodeMVC.Controllers
             }
         }
 
-
+        public async Task<JsonResult> SearchIngredients(string term)
+        {
+            var searchedIngredients = await _getIngredientService.GetIngredientsByTerm(term);
+            return Json(searchedIngredients);
+        }
 
 
         // GET: MyFridge/Details/5
