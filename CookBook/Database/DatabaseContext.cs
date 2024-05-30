@@ -50,7 +50,7 @@ namespace Database
             modelBuilder.Entity<MealDay>().HasKey(mealDay=>mealDay.Id);
             modelBuilder.Entity<MealDay>().Property(mealDay=>mealDay.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.AddDate).HasColumnType("smalldatetime");
-            modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.Day).HasColumnType("smalldatetime");
+            modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.AddDate).HasColumnType("smalldatetime");
 
             //RecipeUsed
             modelBuilder.Entity<RecipeUsed>().HasKey(recipeUsed => recipeUsed.Id);
