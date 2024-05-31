@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Database;
 using Database.Entities;
-using Database;
-using CookBook.BuisnesLogic.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AionCodeMVC.Controllers
 {
     public class MealDaysController : Controller
     {
-        private readonly DatabaseContext  _context;
+        private readonly DatabaseContext _context;
 
         public MealDaysController(DatabaseContext dbContext)
         {
@@ -49,31 +43,35 @@ namespace AionCodeMVC.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            //ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email");
+
+            var result = _context.UserCookBook  .Where(i => i.UserName == User.Identity.Name)
+                                                .Select(a => new { a.Id }).ToList();
+
+            ViewData["UserCookBook"] = result[0].Id;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Day,AddDate,UserCookBookId")] MealDayDTO mealDayDTO)
+        public async Task<IActionResult> Create([Bind("Day,UserCookBookId")] MealDayDTO mealDayDTO)
         {
-         
+
             var mealDay = new MealDay();
-            
+
 
             if (ModelState.IsValid)
             {
-              
+
                 mealDay.Day = mealDayDTO.Day;
-                mealDay.AddDate = mealDayDTO.AddDate;
+                mealDay.AddDate = DateTime.Now;
                 mealDay.UserCookBookId = mealDayDTO.UserCookBookId.ToString();
-               
+
 
                 _context.Add(mealDay);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserCookBookId"] = mealDay.UserCookBookId;
+            ViewData["UserCookBook"] = mealDay.UserCookBookId;
             return View(mealDay);
         }
 
@@ -90,7 +88,7 @@ namespace AionCodeMVC.Controllers
             {
                 return NotFound();
             }
-           // ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
+            // ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
             return View(mealDay);
         }
 
@@ -99,7 +97,7 @@ namespace AionCodeMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Day,AddDate,UserCookBookId")] MealDay mealDay)
+        public async Task<IActionResult> Edit(int id, [Bind("Day,AddDate,UserCookBookId")] MealDay mealDay)
         {
             if (id != mealDay.Id)
             {
@@ -108,6 +106,7 @@ namespace AionCodeMVC.Controllers
 
             if (ModelState.IsValid)
             {
+
                 try
                 {
                     _context.Update(mealDay);
@@ -126,7 +125,7 @@ namespace AionCodeMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
+            ViewData["UserCookBookId"] = mealDay.UserCookBookId;
             return View(mealDay);
         }
 
