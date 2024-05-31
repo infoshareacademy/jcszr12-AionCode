@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Database.Entities;
 using Database;
+using CookBook.BuisnesLogic.Models;
 
 namespace AionCodeMVC.Controllers
 {
@@ -45,27 +46,34 @@ namespace AionCodeMVC.Controllers
             return View(mealDay);
         }
 
-        // GET: MealDays/Create
+        [HttpGet]
         public IActionResult Create()
         {
-            ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email");
+            //ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email");
             return View();
         }
 
-        // POST: MealDays/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Day,AddDate,UserCookBookId")] MealDay mealDay)
+        public async Task<IActionResult> Create([Bind("Day,AddDate,UserCookBookId")] MealDayDTO mealDayDTO)
         {
+         
+            var mealDay = new MealDay();
+            
+
             if (ModelState.IsValid)
             {
+              
+                mealDay.Day = mealDayDTO.Day;
+                mealDay.AddDate = mealDayDTO.AddDate;
+                mealDay.UserCookBookId = mealDayDTO.UserCookBookId.ToString();
+               
+
                 _context.Add(mealDay);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
+            ViewData["UserCookBookId"] = mealDay.UserCookBookId;
             return View(mealDay);
         }
 
@@ -82,7 +90,7 @@ namespace AionCodeMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
+           // ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
             return View(mealDay);
         }
 
@@ -118,7 +126,7 @@ namespace AionCodeMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
+            //ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
             return View(mealDay);
         }
 

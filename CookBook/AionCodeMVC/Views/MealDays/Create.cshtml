@@ -6,7 +6,6 @@
 
 
     var user = User.Identity.Name;
-    var userId = "4bd32ece-6d64-495b-9a54-4661d9ef06a3";
     var AddDate = DateTime.Now;
  
 }
@@ -29,23 +28,23 @@
                 <input asp-for="@AddDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="form-control" />
                 <span asp-validation-for="@AddDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="text-danger"></span>
             </div>
-            <div class="form-group">
+             <div class="form-group">
                 <label asp-for="@user"  class="control-label"></label>
-                <input asp-for="@userId" class="form-control" />
+                <input asp-for="@Model.UserCookBookId" class="form-control" />
                 <span asp-validation-for="@Model.UserCookBookId"  class="text-danger"></span>
             </div>
 
-        @* <div class="form-group">
+        <div class="form-group">
                 <label asp-for="@user" class="control-label"></label>
                 <select asp-for="@user" class="form-control" asp-items="@ViewBag.UserCookBookId"></select>
-            </div>  *@
+            </div> 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-@{
+@* @{
     var dynamic = ViewBag.UserCookBookId;
     foreach(var item in dynamic)
     {
@@ -54,7 +53,7 @@
     }
 
 }
-
+ *@
 <div class="text-center">
     <a asp-action="Index">Back to List</a>
 </div>
