@@ -3,8 +3,12 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+
     var user = User.Identity.Name;
+    var userId = "4bd32ece-6d64-495b-9a54-4661d9ef06a3";
     var AddDate = DateTime.Now;
+ 
 }
 
 <h1>Create</h1>
@@ -16,25 +20,40 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Day" class="control-label"></label>
-                <input asp-for="Day" class="form-control" />
-                <span asp-validation-for="Day" class="text-danger"></span>
+                <label asp-for="Day" asp-format="{0:yyyy/MM/dd HH:mm}" class="control-label"></label>
+                <input asp-for="Day" asp-format="{0:yyyy/MM/dd HH:mm}" class="form-control" />
+                <span asp-validation-for="Day" asp-format="{0:yyyy/MM/dd HH:mm}" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label hidden asp-for="@AddDate" class="control-label"></label>
-                <input hidden asp-for="@AddDate" class="form-control" />
-                <span asp-validation-for="@AddDate" class="text-danger"></span>
+                <label asp-for="@AddDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="control-label"></label>
+                <input asp-for="@AddDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="form-control" />
+                <span asp-validation-for="@AddDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="@user"  class="control-label"></label>
+                <input asp-for="@userId" class="form-control" />
+                <span asp-validation-for="@Model.UserCookBookId"  class="text-danger"></span>
+            </div>
+
+        @* <div class="form-group">
                 <label asp-for="@user" class="control-label"></label>
-                <select asp-for="@user" class="form-control" asp-items="ViewBag.UserCookBookId"></select>
-            </div>
+                <select asp-for="@user" class="form-control" asp-items="@ViewBag.UserCookBookId"></select>
+            </div>  *@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+@{
+    var dynamic = ViewBag.UserCookBookId;
+    foreach(var item in dynamic)
+    {
+        @Html.DisplayFor(value => item);
+        
+    }
+
+}
 
 <div class="text-center">
     <a asp-action="Index">Back to List</a>
