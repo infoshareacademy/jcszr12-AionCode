@@ -50,7 +50,7 @@
                     <a asp-area="" asp-controller="Users" asp-action="Index" class="nav-link dropdown-toggle"
                    data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true">@User.Identity.Name</a>
                 <div class="dropdown-menu" aria-labelledby="submenu">
-                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="UserEdit">Moje dane</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="AboutMe">Moje dane</a>
                     @if (User.Identity.Name == "admin")
                     {
                         <div class="dropdown-divider"></div>
