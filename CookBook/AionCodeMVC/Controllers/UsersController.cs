@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace AionCodeMVC.Controllers
@@ -32,9 +33,18 @@ namespace AionCodeMVC.Controllers
         }
 
         [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchText)
         {
-            IEnumerable<UserCookBookDto>? model = await _getUserService.GetAll();
+            IEnumerable<UserCookBookDto>? model;
+            if (!searchText.IsNullOrEmpty())
+            {
+                ViewData["SearchText"] = searchText;
+                model = await _getUserService.GetUsersByText(searchText);
+            }
+            else
+            {
+                model = await _getUserService.GetAll();
+            }
             return View(model);
         }
 
@@ -162,6 +172,36 @@ namespace AionCodeMVC.Controllers
             {
                 return View();
             }
+        }
+
+        [Authorize(Policy = "StdUser")]
+        public async Task <ActionResult> AboutMe()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            if (userId != null)
+            {
+                var model = await _getUserService.AboutMe(userId);
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Policy = "StdUser")]
+        // POST: UsersController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task <ActionResult> AboutMe(UserCookBookDto user)
+        {
+            var userId = _userManager.GetUserId(User);
+
+            if (userId != null)
+            {
+                await _editUserService.EditMyself(userId, user);
+            }
+
+            return RedirectToAction(nameof(Index),"Home");
         }
     }
 }

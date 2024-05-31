@@ -11,5 +11,6 @@ namespace CookBook.BuisnesLogic.Interfaces.UserInterfaces
     public interface IEditUserService
     {
         public Task EditUser(UserCookBookDto user);
+        public Task EditMyself(string userId, UserCookBookDto user);
     }
 }

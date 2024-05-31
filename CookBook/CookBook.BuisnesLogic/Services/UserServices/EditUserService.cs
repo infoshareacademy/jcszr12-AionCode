@@ -75,6 +75,47 @@ namespace CookBook.BuisnesLogic.Services.UserServices
 
             }
         }
+        public async Task EditMyself(string userId, UserCookBookDto userDto)
+        {
+            var user = await _userManager.FindByIdAsync(userDto.Id);
+            if ((user != null) && (user.Id == userId))
+            {
+                user.Email = userDto.Email;
+                user.UserName = userDto.UserName;
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    // Zaktualizowano pomyślnie
+                }
+                else
+                {
+                    // Błęąd aktualizacji
+                }
 
+                var userRoles = await _userManager.GetRolesAsync(user);
+                if (!userRoles.Contains(userDto.Role.ToString()))
+                {
+                    // Usuwamy użytkownika z obecnej roli
+                    var resultRemoveFromRoles = await _userManager.RemoveFromRolesAsync(user, userRoles);
+                    if (resultRemoveFromRoles.Succeeded)
+                    {
+                        // Dodajemy użytkownika do nowej roli
+                        var resultAddToRole = await _userManager.AddToRoleAsync(user, userDto.Role.ToString());
+                        if (resultAddToRole.Succeeded)
+                        {
+                            // rola zaktualizowana
+                        }
+                        else
+                        {
+                            // rola nie zaktualizowana
+                        }
+                    }
+                    else
+                    {
+                        // rola nie zaktualizowana
+                    }
+                }
+            }
+        }
     }
 }

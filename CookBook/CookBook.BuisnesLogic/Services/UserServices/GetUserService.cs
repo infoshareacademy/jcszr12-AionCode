@@ -55,6 +55,30 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                 return users;
         }
 
+        public async Task<IEnumerable<UserCookBookDto>> GetUsersByText(string searchText)
+        {
+            List<Database.Entities.UserCookBook> usersDb = await _dbContext.Users.Where(user => user.UserName.Contains(searchText)).OrderBy(user => user.UserName).ToListAsync();
+
+            var users = new List<UserCookBookDto>();
+            foreach (var user in usersDb)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                var role = roles.FirstOrDefault();
+
+                var userToAdd = new UserCookBookDto
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Password = string.Empty,
+                    Role = (Roles)Enum.Parse(typeof(Roles), role),
+                    AddDate = user.AddDate
+                };
+                users.Add(userToAdd);
+            }
+            return users;
+        }
+
         public async Task<UserCookBookDto> GetByID(string id)
         {
             Database.Entities.UserCookBook userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
@@ -87,6 +111,25 @@ namespace CookBook.BuisnesLogic.Services.UserServices
             {
                 return null;
             }
+        }
+
+        public async Task<UserCookBookDto> AboutMe(string userId)
+        {
+            Database.Entities.UserCookBook userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            var roles = await _userManager.GetRolesAsync(userDb);
+            var role = roles.FirstOrDefault();
+
+            var user = new UserCookBookDto
+            {
+                Id = userDb.Id,
+                UserName = userDb.UserName,
+                Email = userDb.Email,
+                Password = string.Empty,
+                Role = (Roles)Enum.Parse(typeof(Roles), role),
+                AddDate = userDb.AddDate
+            };
+            return user;
         }
     }
 }

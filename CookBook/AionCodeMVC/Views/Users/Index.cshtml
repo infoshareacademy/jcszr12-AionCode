@@ -7,9 +7,24 @@
 <hr/>
 
 <div class="container mt-5">
-    <p>
-        <a asp-action="RegisterUser" class="btn btn-primary">Nowy uzytkownik</a>
-    </p>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <a asp-action="RegisterUser" class="btn btn-primary">Nowy uzytkownik</a>
+            </div>
+            <div class="col-md-6">
+                <form asp-action="Index" method="get">
+                    <div class="form-inline d-flex justify-content-end">
+                    <div class="form-group">
+                        <label for="SearchText">Wyszukaj</label>
+                        <input type="text" name="SearchText" value="@ViewData["SearchText"]" class="form-control" style="width: 200px; height: 30px;" />
+                        <button type="submit" class="btn btn-primary mt-2">Szukaj</button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark"
         <tr>
