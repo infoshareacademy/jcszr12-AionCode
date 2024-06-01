@@ -10,66 +10,74 @@
     var userId = ViewBag.UserCookBook;
     var user = User.Identity.Name;
     var addDate = DateTime.Now;
+    var recipeDetailsId = 0;
     var enumSelectList = new SelectList(Enum.GetValues(typeof(MealType)));
     
 }
+<head>
+    <script>
+        
+        function changeVariable(value) {
+            recipeDetailsId = value;
+            document.getElementById("var_recipeDetailsId").value = recipeDetailsId;
+        }
+    </script>
+</head>
 
-<h1 class="text-center">Create dla @user</h1>
-
+<h1 class="text-center">Utwórz dla @user</h1>
 <h4 class ="text-center">MealDay</h4>
 <hr />
-<div class="row">
-    <div class ="col-4 p-2"></div>
-    <div class="col-4 offset-2 p-2">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Day" asp-format="{0:yyyy/MM/dd HH:mm}" class="control-label"></label>
-                <input asp-for="Day" asp-format="{0:yyyy/MM/dd HH:mm}" class="form-control" />
-                <span asp-validation-for="@Model.Day" asp-format="{0:yyyy/MM/dd HH:mm}" class="text-danger"></span>
-            </div>
-            @* <div class="form-group">
-                <label asp-for="@Model.AddDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="control-label"></label>
-                <input asp-for="AddDate" value="@addDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="form-control" />
-                <span asp-validation-for="@Model.AddDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="text-danger"></span>
-            </div> *@
-            <div class="form-group">
-                <label asp-for="PartOfDay" class="control-label">Typ składnika</label>
-                <select asp-for="PartOfDay" asp-items="enumSelectList" class="form-control">
-                    <option value="">-- Wybierz z listy --</option>
-                </select>
-                <span asp-validation-for="PartOfDay" class="text-danger"></span>
-            
-            </div>
-                <div class="form-group">
-                <label hidden asp-for="@user"  class="control-label"></label>
-                <input hidden asp-for="@Model.UserCookBookId"  value="@userId" class="form-control" />
-                <span asp-validation-for="@Model.UserCookBookId"  class="text-danger"></span>
-            </div>
+<div class="container">
+        <div class = "row">
+            <div class ="col-4 p-2 m-3">
 
- @*        <div class="form-group">
-                <label asp-for="@user" class="control-label"></label>
-                <select asp-for="@user" class="form-control" asp-items="@ViewBag.UserCookBookId"></select>
-            </div>  *@
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary bg-warning" />
+            <div class="p-2 m-2"><button onclick="changeVariable(1)" class="bg-warning">Wybierz żarełko</button></div>
+            <div class="p-2 m-2"><button onclick="changeVariable(2)" class="bg-warning">Wybierz żarełko</button></div>
+            <div class="p-2 m-2"><button onclick="changeVariable(3)" class="bg-warning">Wybierz żarełko</button></div>
+            <div class="p-2 m-2"><button onclick="changeVariable(4)" class="bg-warning">Wybierz żarełko</button></div>
+
+        </div>
+      
+            <div class="col-4 offset-2 p-2">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Day" asp-format="{0:yyyy/MM/dd HH:mm}" class="control-label">Data planowanego jedzonka</label>
+                        <input asp-for="Day" asp-format="{0:yyyy/MM/dd HH:mm}" class="form-control" />
+                        <span asp-validation-for="@Model.Day" asp-format="{0:yyyy/MM/dd HH:mm}" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PartOfDay" class="control-label">Rodzaj posiłku</label>
+                        <select asp-for="PartOfDay" asp-items="enumSelectList" class="form-control">
+                            <option value="">-- Wybierz z listy --</option>
+                        </select>
+                        <span asp-validation-for="PartOfDay" class="text-danger"></span>
+                    </div>
+          
+                    <div class="form-group">
+                        <label hidden asp-for="@user"  class="control-label"></label>
+                        <input hidden asp-for="@Model.UserCookBookId"  value="@userId" class="form-control" />
+                        <span asp-validation-for="@Model.UserCookBookId"  class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                    <label asp-for="RecipeDetailsId" class="control-label">żarełko</label>
+                    <input asp-for="RecipeDetailsId" id="var_recipeDetailsId" class="form-check-label" />
+                    <span asp-validation-for="@Model.RecipeDetailsId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary bg-warning" />
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
+        </div>
 </div>
-@* @{
-    var dynamic = ViewBag.UserCookBookId;
-    foreach(var item in dynamic)
-    {
-        @Html.DisplayFor(value => item);
-        
-    }
-
-}
- *@
 <div class="text-center">
     <a asp-action="Index">Back to List</a>
 </div>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

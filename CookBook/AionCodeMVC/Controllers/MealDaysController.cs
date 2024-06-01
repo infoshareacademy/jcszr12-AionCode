@@ -1,4 +1,5 @@
-﻿using Database;
+﻿using CookBook.BuisnesLogic.DTO;
+using Database;
 using Database.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -53,11 +54,12 @@ namespace AionCodeMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Day,UserCookBookId")] MealDayDTO mealDayDTO)
+        public async Task<IActionResult> Create([Bind("Day, UserCookBookId, PartOfDay, RecipeDetailsId")] MealDayDTO mealDayDTO)
         {
 
             var mealDay = new MealDay();
-
+            var recipeUsed= new RecipeUsed();
+            int maxIdMealDay = _context.MealDay.Max(md => md.Id) + 1;
 
             if (ModelState.IsValid)
             {
@@ -66,8 +68,14 @@ namespace AionCodeMVC.Controllers
                 mealDay.AddDate = DateTime.Now;
                 mealDay.UserCookBookId = mealDayDTO.UserCookBookId.ToString();
 
+                recipeUsed.AddDate = DateTime.Now;
+                recipeUsed.MealDayId = maxIdMealDay;
+                recipeUsed.PartOfDay = mealDayDTO.PartOfDay;
+                recipeUsed.RecipeDetailsId = mealDayDTO.RecipeDetailsId;
+
 
                 _context.Add(mealDay);
+                _context.Add(recipeUsed);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
