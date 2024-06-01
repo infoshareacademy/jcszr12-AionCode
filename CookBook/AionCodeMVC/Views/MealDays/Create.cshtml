@@ -1,4 +1,7 @@
-﻿@model Database.Entities.MealDay
+﻿@using Database.EnumTypes
+@model CookBook.BuisnesLogic.DTO.MealDayDTO
+
+
 
 @{
     ViewData["Title"] = "Create";
@@ -7,7 +10,8 @@
     var userId = ViewBag.UserCookBook;
     var user = User.Identity.Name;
     var addDate = DateTime.Now;
- 
+    var enumSelectList = new SelectList(Enum.GetValues(typeof(MealType)));
+    
 }
 
 <h1 class="text-center">Create dla @user</h1>
@@ -29,8 +33,16 @@
                 <input asp-for="AddDate" value="@addDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="form-control" />
                 <span asp-validation-for="@Model.AddDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="text-danger"></span>
             </div> *@
-             <div class="form-group">
-                <label asp-for="@user"  class="control-label"></label>
+            <div class="form-group">
+                <label asp-for="PartOfDay" class="control-label">Typ składnika</label>
+                <select asp-for="PartOfDay" asp-items="enumSelectList" class="form-control">
+                    <option value="">-- Wybierz z listy --</option>
+                </select>
+                <span asp-validation-for="PartOfDay" class="text-danger"></span>
+            
+            </div>
+                <div class="form-group">
+                <label hidden asp-for="@user"  class="control-label"></label>
                 <input hidden asp-for="@Model.UserCookBookId"  value="@userId" class="form-control" />
                 <span asp-validation-for="@Model.UserCookBookId"  class="text-danger"></span>
             </div>

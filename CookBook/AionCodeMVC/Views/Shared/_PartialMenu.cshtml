@@ -23,9 +23,14 @@
 
                 <div class="dropdown-menu" aria-labelledby="submenu">
                     <a class="dropdown-item" asp-area="" asp-controller="Recipes" asp-action="Index">Wszystkie </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-area="" asp-controller="MealDays" asp-action="Index">Planowane danie</a>
-                    <div class="dropdown-divider"></div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-area="" asp-controller="MealDays" asp-action="Index">Planowane danie</a>
+                        <div class="dropdown-divider"></div>
+                    }
+                    
+                    
                     <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Obiady </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Kolacje </a>
