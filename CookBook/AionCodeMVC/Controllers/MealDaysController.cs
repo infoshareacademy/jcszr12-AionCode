@@ -42,19 +42,24 @@ namespace AionCodeMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int? str)
         {
 
             var result = _context.UserCookBook  .Where(i => i.UserName == User.Identity.Name)
                                                 .Select(a => new { a.Id }).ToList();
 
+            var resultRecipes = _context.RecipeDetails
+                                        .Select(i => new RecipesDetailsShortDTO 
+                                        { Id = i.Id, Name = i.Name, ImagePath = i.ImagePath }).ToList();
+            var mealDayDTO = new MealDayDTO { AddDate = DateTime.Now, DetailsShort = resultRecipes };
+            
             ViewData["UserCookBook"] = result[0].Id;
-            return View();
+            return View(mealDayDTO);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Day, UserCookBookId, PartOfDay, RecipeDetailsId")] MealDayDTO mealDayDTO)
+        public async Task<IActionResult> Create([Bind("Day, UserCookBookId, PartOfDay, RecipeDetailsId, DetailsShort")] MealDayDTO mealDayDTO)
         {
 
             var mealDay = new MealDay();
