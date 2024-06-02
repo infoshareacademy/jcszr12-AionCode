@@ -59,7 +59,7 @@ namespace AionCodeMVC.Controllers
 
             var mealDay = new MealDay();
             var recipeUsed= new RecipeUsed();
-            int maxIdMealDay = _context.MealDay.Max(md => md.Id) + 1;
+            
 
             if (ModelState.IsValid)
             {
@@ -68,15 +68,17 @@ namespace AionCodeMVC.Controllers
                 mealDay.AddDate = DateTime.Now;
                 mealDay.UserCookBookId = mealDayDTO.UserCookBookId.ToString();
 
+                _context.Add(mealDay);
+                await _context.SaveChangesAsync();
+
                 recipeUsed.AddDate = DateTime.Now;
-                recipeUsed.MealDayId = maxIdMealDay;
+                recipeUsed.MealDayId = _context.MealDay.Max(md => md.Id);
                 recipeUsed.PartOfDay = mealDayDTO.PartOfDay;
                 recipeUsed.RecipeDetailsId = mealDayDTO.RecipeDetailsId;
 
-
-                _context.Add(mealDay);
                 _context.Add(recipeUsed);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserCookBook"] = mealDay.UserCookBookId;
@@ -96,13 +98,9 @@ namespace AionCodeMVC.Controllers
             {
                 return NotFound();
             }
-            // ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
             return View(mealDay);
         }
 
-        // POST: MealDays/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Day,AddDate,UserCookBookId")] MealDay mealDay)
@@ -162,9 +160,13 @@ namespace AionCodeMVC.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var mealDay = await _context.MealDay.FindAsync(id);
-            if (mealDay != null)
+            var recipeUsed = await _context.RecipeUsed.FirstOrDefaultAsync(m => m.MealDayId == id);
+
+            if (mealDay != null && recipeUsed != null)
             {
+                _context.RecipeUsed.Remove(recipeUsed);
                 _context.MealDay.Remove(mealDay);
+              
             }
 
             await _context.SaveChangesAsync();
