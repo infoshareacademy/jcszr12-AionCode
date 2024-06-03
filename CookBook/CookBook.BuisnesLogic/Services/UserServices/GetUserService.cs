@@ -46,7 +46,6 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                     Id = user.Id,
                     UserName = user.UserName,
                     Email = user.Email,
-                    Password = string.Empty,
                     Role = (Roles)Enum.Parse(typeof(Roles), role),
                     AddDate = user.AddDate
                 };
@@ -70,7 +69,6 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                     Id = user.Id,
                     UserName = user.UserName,
                     Email = user.Email,
-                    Password = string.Empty,
                     Role = (Roles)Enum.Parse(typeof(Roles), role),
                     AddDate = user.AddDate
                 };
@@ -91,7 +89,6 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                     Id = userDb.Id,
                     UserName = userDb.UserName,
                     Email = userDb.Email,
-                    Password = string.Empty,
                     Role = (Roles)Enum.Parse(typeof(Roles), role),
                     AddDate = userDb.AddDate
                 };
@@ -125,7 +122,6 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                 Id = userDb.Id,
                 UserName = userDb.UserName,
                 Email = userDb.Email,
-                Password = string.Empty,
                 Role = (Roles)Enum.Parse(typeof(Roles), role),
                 AddDate = userDb.AddDate
             };

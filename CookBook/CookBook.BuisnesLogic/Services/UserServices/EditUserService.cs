@@ -20,7 +20,7 @@ namespace CookBook.BuisnesLogic.Services.UserServices
             _userManager = userManager;
         }
 
-        public async Task EditUser(UserCookBookDto userDto)
+        public async Task<IdentityResult> EditUser(UserCookBookDto userDto)
         {
             var user = await _userManager.FindByIdAsync(userDto.Id);
             if (user != null)
@@ -30,52 +30,30 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    // Zaktualizowano pomyślnie
+                    var userRoles = await _userManager.GetRolesAsync(user);
+                    if (!userRoles.Contains(userDto.Role.ToString()))
+                    {
+                        var resultRemoveFromRoles = await _userManager.RemoveFromRolesAsync(user, userRoles);
+                        if (resultRemoveFromRoles.Succeeded)
+                        {
+                            var resultAddToRole = await _userManager.AddToRoleAsync(user, userDto.Role.ToString());
+                            return resultAddToRole;
+                        }
+                        return resultRemoveFromRoles;
+                    }
+                    return result;
                 }
                 else
                 {
-                    // Błęąd aktualizacji
+                    return result;
                 }
-
-                var userRoles = await _userManager.GetRolesAsync(user);
-                if (!userRoles.Contains(userDto.Role.ToString()))
-                {
-                    // Usuwamy użytkownika z obecnej roli
-                    var resultRemoveFromRoles = await _userManager.RemoveFromRolesAsync(user, userRoles);
-                    if (resultRemoveFromRoles.Succeeded)
-                    {
-                        // Dodajemy użytkownika do nowej roli
-                        var resultAddToRole = await _userManager.AddToRoleAsync(user, userDto.Role.ToString());
-                        if (resultAddToRole.Succeeded)
-                        {
-                            // rola zaktualizowana
-                        }
-                        else
-                        {
-                            // rola nie zaktualizowana
-                        }
-                    }
-                    else
-                    {
-                        // rola nie zaktualizowana
-                    }
-                }
-
-                // Zmiana hasła na nowe - zrobic nowy Serwis
-//                var resultChangePassword = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
-//                if (resultChangePassword.Succeeded)
-//                {
-//                    // Hasło zmienione
-//                }
-//                else
-//                {
-//                    // Wyskoczył błąd
-//                }
-
-
+            }
+            else
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "Użytkownik nie istnieje" });
             }
         }
-        public async Task EditMyself(string userId, UserCookBookDto userDto)
+        public async Task<IdentityResult> EditMyself(string userId, UserCookBookDto userDto)
         {
             var user = await _userManager.FindByIdAsync(userDto.Id);
             if ((user != null) && (user.Id == userId))
@@ -85,37 +63,52 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    // Zaktualizowano pomyślnie
+                    var userRoles = await _userManager.GetRolesAsync(user);
+                    if (!userRoles.Contains(userDto.Role.ToString()))
+                    {
+                        var resultRemoveFromRoles = await _userManager.RemoveFromRolesAsync(user, userRoles);
+                        if (resultRemoveFromRoles.Succeeded)
+                        {
+                            var resultAddToRole = await _userManager.AddToRoleAsync(user, userDto.Role.ToString());
+                            
+                            return resultAddToRole;
+                        }
+                        return resultRemoveFromRoles;
+                    }
+                    return result;
                 }
                 else
                 {
-                    // Błęąd aktualizacji
-                }
-
-                var userRoles = await _userManager.GetRolesAsync(user);
-                if (!userRoles.Contains(userDto.Role.ToString()))
-                {
-                    // Usuwamy użytkownika z obecnej roli
-                    var resultRemoveFromRoles = await _userManager.RemoveFromRolesAsync(user, userRoles);
-                    if (resultRemoveFromRoles.Succeeded)
-                    {
-                        // Dodajemy użytkownika do nowej roli
-                        var resultAddToRole = await _userManager.AddToRoleAsync(user, userDto.Role.ToString());
-                        if (resultAddToRole.Succeeded)
-                        {
-                            // rola zaktualizowana
-                        }
-                        else
-                        {
-                            // rola nie zaktualizowana
-                        }
-                    }
-                    else
-                    {
-                        // rola nie zaktualizowana
-                    }
+                    return result;
                 }
             }
+            return IdentityResult.Failed(new IdentityError { Description = "Użytkownik nie istnieje" });
+        }
+        public async Task<IdentityResult> ChangeMyPassword(string id, ChangePasswordDto userDto)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                var resultChangePassword = await _userManager.ChangePasswordAsync(user, userDto.CurrentPassword, userDto.NewPassword);
+
+                return resultChangePassword;
+            }
+            return IdentityResult.Failed(new IdentityError { Description = "Użytkownik nie istnieje" });
+        }
+
+        public async Task<IdentityResult> ChangePassword(string id, ChangePasswordDto userDto)
+        {
+            var user = await _userManager.FindByIdAsync(userDto.Id);
+
+            if ((user != null) && (id == user.Id))
+            {
+               var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+               var resultChangePassword = await _userManager.ResetPasswordAsync(user, resetToken, userDto.NewPassword);
+
+               return resultChangePassword;
+            }
+            return IdentityResult.Failed(new IdentityError { Description = "Użytkownik nie istnieje" });
         }
     }
 }

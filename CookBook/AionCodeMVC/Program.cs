@@ -42,7 +42,8 @@ namespace AionCodeMVC
 
             //Add Identity
             builder.Services.AddIdentity<Database.Entities.UserCookBook, IdentityRole>()
-                .AddEntityFrameworkStores<DatabaseContext>();
+                .AddEntityFrameworkStores<DatabaseContext>()
+                .AddDefaultTokenProviders();
 
             builder.Services.ConfigureApplicationCookie(options =>
             {

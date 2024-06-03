@@ -20,25 +20,18 @@ namespace CookBook.BuisnesLogic.Services.UserServices
             _userManager = userManager;
         }
 
-        public async Task DeleteUser(string id)
+        public async Task<IdentityResult> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
 
             if (user != null)
             {
                 var result = await _userManager.DeleteAsync(user);
-                if (result.Succeeded)
-                {
-                    // Zaktualizowano pomyślnie
-                }
-                else
-                {
-                    // Obsłuż błędy aktualizacji
-                }
+                return result;
             }
             else
             {
-                throw new Exception("Uzytkownik nie istnieje");
+                return IdentityResult.Failed(new IdentityError { Description = "Użytkownik nie istnieje" });
             }
         }
 
