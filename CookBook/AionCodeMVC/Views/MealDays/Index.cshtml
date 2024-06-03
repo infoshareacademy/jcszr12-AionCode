@@ -4,88 +4,26 @@
     var title = User.Identity.Name.ToString();
 
     var ativeDay = DateTime.Now.Day;
-    var dayOfweek = DateTime.Now.DayOfWeek;
-    var month = new List<string> { "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień" };
+  
+    var month = new List<string> {  "Styczeń", "Luty", "Marzec", 
+                                    "Kwiecień", "Maj", "Czerwiec", 
+                                    "Lipiec", "Sierpień", "Wrzesień", 
+                                    "Październik", "Listopad", "Grudzień" };
+    var monthDays = new List<int>  {
+                                    31,29,31,30,31,30,31,31,30,31,30,31 };
+
     var actualMonth = month[DateTime.Now.Month - 1];
+    var selectMonth = DateTime.Now.Month;
     var actualYear = DateTime.Now.Year;
+
+    DateTime firstDayOfMonth = new DateTime(actualYear, selectMonth, 1);
+    var dayOfWeek = (int)firstDayOfMonth.DayOfWeek;
+
 
     ViewData["Title"] = @title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     //var item1 = Model.All(x => x.UserCookBook.UserName == User.Identity.Name);
 }
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    ul {
-        list-style-type: none;
-    }
-
-    
-    /* Nagłówek miesiąca */
-    .month {
-        padding: 50px 25px;
-        width: 100%;
-        background: orange;
-        text-align: center;
-    }
-        /* Lista miesięcy */
-        .month ul {
-            margin: 0;
-            padding: 0;
-        }
-
-            .month ul li {
-                color: white;
-                text-transform: uppercase;
-                letter-spacing: 3px;
-            }
-        /* Przycisk "Poprzedni" w nagłówku miesiąca */
-        .month .prev {
-            float: left;
-            padding-top: 5px;
-        }
-        /* Przycisk "Następny" */
-        .month .next {
-            float: right;
-            padding-top: 10px;
-        }
-    /* Dni tygodnia (Pon-Nd) */
-    .weekdays {
-        margin: 0;
-        padding: 2px 0;
-        background-color: #ddd;
-    }
-
-        .weekdays li {
-            display: inline-block;
-            width: 12%;
-            color: #666;
-            text-align: center;
-        }
-    /* Dni (1-31) */
-    .days {
-        padding: 10px 0;
-        background: #eee;
-        margin: 0;
-    }
-
-        .days li {
-            list-style-type: none;
-            display: inline-block;
-            width: 12%;
-            text-align: center;
-            margin-bottom: 5px;
-            color: #777;
-        }
-            /* Podświetlenie "aktualnego" dnia */
-            .days li .active {
-                padding: 5px;
-                background: orange;
-                color: white !important;
-            }
-</style>
 
 <h1 class="text-center">@title: planowane posiłki</h1>
 
@@ -94,6 +32,7 @@
 </p>
 
 <div class="row">
+    @* Kalendarz *@
     <div class="col-4 float-left p-2">
       
         <div class="month">
@@ -116,17 +55,25 @@
         </div>
         <div>
             <ul class="days" >
-            @{for(int i=1; i<=31; i++)
-                {
-                    if (i == @ativeDay)
+                @{
+                    for (int j = 0; j < dayOfWeek-1; j++)
                     {
-                            <li><span class="active">@i </span></li>
+                        <li> </li>
                     }
-                    else
+                    for (int i = 1 ; i <= monthDays[DateTime.Now.Month - 1]; i++)
                     {
-                        <li>@i</li>
+                      
+                            if (i == @ativeDay)
+                            {
+                            <li><a href="#"><span class="active">@i </span></a></li>
+                            }
+                            else
+                            {
+                            <li><a href="#"><span>@i</span></a></li>
+                            }
+                                
+                        
                     }
-                }
             }
             
           
