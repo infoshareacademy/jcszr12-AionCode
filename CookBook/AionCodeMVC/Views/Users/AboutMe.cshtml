@@ -3,19 +3,24 @@
 
 @{
     ViewData["Title"] = "About Me";
-
-    var userRoleList = new SelectList(Enum.GetValues(typeof(UserRole)));
-    var selectedValue = Model.Role.ToString();
-    var selectedItem = userRoleList.FirstOrDefault(x => x.Value == selectedValue);
-    if (selectedItem != null)
-    {
-        selectedItem.Selected = true;
-    }
 }
 
 <h1>Moje dane (edycja)</h1>
 
 <hr />
+
+@if (TempData["ErrorMessages"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessages"];
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"];
+    </div>
+}
 
 <div class="container">
     <div class="row justify-content-center">
@@ -38,13 +43,8 @@
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Password" class="control-label"></label>
-                    <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <label asp-for="Role" class="control-label"></label>
-                    <select asp-for="Role" asp-items="userRoleList" class="form-control"></select>
+                    <input asp-for="Role" class="form-control" readonly />
                     <span asp-validation-for="Role" class="text-danger"></span>
                 </div>
                 <div class="form-group">

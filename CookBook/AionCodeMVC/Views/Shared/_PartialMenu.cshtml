@@ -51,6 +51,8 @@
                    data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true">@User.Identity.Name</a>
                 <div class="dropdown-menu" aria-labelledby="submenu">
                     <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="AboutMe">Moje dane</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="ChangeMyPassword">Zmień hasło</a>
                     @if (User.Identity.Name == "admin")
                     {
                         <div class="dropdown-divider"></div>

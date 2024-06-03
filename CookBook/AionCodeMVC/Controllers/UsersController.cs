@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace AionCodeMVC.Controllers
@@ -20,8 +22,9 @@ namespace AionCodeMVC.Controllers
 
         private readonly SignInManager<Database.Entities.UserCookBook> _signInManager;
         private readonly UserManager<Database.Entities.UserCookBook> _userManager;
+        private readonly IMapper _mapper;
 
-        public UsersController(IRegisterUserService registerUserService, IGetUserService GetUserService, IDeleteUserService DeleteUserService, IEditUserService EditUserService, SignInManager<Database.Entities.UserCookBook> signInManager, UserManager<Database.Entities.UserCookBook> userManager)
+        public UsersController(IRegisterUserService registerUserService, IGetUserService GetUserService, IDeleteUserService DeleteUserService, IEditUserService EditUserService, SignInManager<Database.Entities.UserCookBook> signInManager, UserManager<Database.Entities.UserCookBook> userManager, IMapper mapper)
         {
             _registerUserService = registerUserService;
             _getUserService = GetUserService;
@@ -30,6 +33,8 @@ namespace AionCodeMVC.Controllers
 
             _signInManager = signInManager;
             _userManager = userManager;
+
+            _mapper = mapper;
         }
 
         [Authorize(Policy = "Admin")]
@@ -120,6 +125,11 @@ namespace AionCodeMVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
+
         // GET: UsersController/Edit/5
         [Authorize(Policy = "Admin")]
         public async Task<ActionResult> Edit(string id)
@@ -134,20 +144,81 @@ namespace AionCodeMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(string id, UserCookBookDto user)
         {
-            try
+            var result = await _editUserService.EditUser(user);
+            if (!result.Succeeded)
             {
-                if (!ModelState.IsValid)
+                foreach (var error in result.Errors)
                 {
-                    return View(user);
+                    TempData["ErrorMessages"] += error.Description;
                 }
-
-                await _editUserService.EditUser(user);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            TempData["SuccessMessage"] = "Aktualizacja danych użytkownika powiodła się";
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        [Authorize(Policy = "Admin")]
+        public async Task<ActionResult> ChangePassword(string id)
+        {
+            var user = await _getUserService.GetByID(id);
+            var model = _mapper.Map<ChangePasswordDto>(user);
+
+            return View(model);
+        }
+
+        [Authorize(Policy = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(string id, ChangePasswordDto user)
+        {
+            var result = await _editUserService.ChangePassword(id, user);
+            if (!result.Succeeded)
             {
+                foreach (var error in result.Errors)
+                {
+                    TempData["ErrorMessages"] += error.Description;
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            TempData["SuccessMessage"] = "Hasło zostało zmienione pomyślnie";
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Policy = "StdUser")]
+        public async Task<ActionResult> ChangeMyPassword()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            if (userId != null)
+            {
+                var user = await _getUserService.GetByID(userId);
+                var model = _mapper.Map<ChangePasswordDto>(user);
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(AccessDenied));
+        }
+
+        [Authorize(Policy = "StdUser")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeMyPassword(ChangePasswordDto user)
+        {
+            var id = _userManager.GetUserId(User);
+
+            var result = await _editUserService.ChangeMyPassword(id, user);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    TempData["ErrorMessages"] += error.Description;
+                }
+
                 return View();
             }
+            TempData["SuccessMessage"] = "Hasło zostało zmienione pomyślnie";
+            return View();
         }
 
         // GET: UsersController/Delete/5
@@ -163,15 +234,17 @@ namespace AionCodeMVC.Controllers
         [HttpPost]
         public async Task <ActionResult> Delete(string id, UserCookBookDto user)
         {
-            try
+            var result = await _deleteUserService.DeleteUser(id);
+            if (!result.Succeeded)
             {
-                await _deleteUserService.DeleteUser(id);
+                foreach (var error in result.Errors)
+                {
+                    TempData["ErrorMessages"] += error.Description;
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            TempData["SuccessMessage"] = "Uzytkownik został skasowany pomyślnie";
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(Policy = "StdUser")]
@@ -198,10 +271,19 @@ namespace AionCodeMVC.Controllers
 
             if (userId != null)
             {
-                await _editUserService.EditMyself(userId, user);
+                var result = await _editUserService.EditMyself(userId, user);
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        TempData["ErrorMessages"] += error.Description;
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                TempData["SuccessMessage"] = "Dane użytkownika zostały zaktualizowane pomyślnie";
+                return RedirectToAction(nameof(AboutMe));
             }
-
-            return RedirectToAction(nameof(Index),"Home");
+            return RedirectToAction(nameof(AccessDenied));
         }
     }
 }
