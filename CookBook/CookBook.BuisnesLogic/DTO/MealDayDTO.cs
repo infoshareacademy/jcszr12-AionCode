@@ -1,6 +1,8 @@
 ﻿using Database.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -16,7 +18,9 @@ namespace CookBook.BuisnesLogic.DTO
        public string? UserCookBookId { get; set; }
 
         //////////////
-        public int? RecipeDetailsId { get; set; }
+        
+        [Required(ErrorMessage = "Wybierz żarełko, bo w przeciwnym wypadku \"nici\" z planowania!")]
+        public int? RecipeDetailsId { get; set; } 
          public string PartOfDay { get; set; }
          public int? MealDayId { get; set; }
 

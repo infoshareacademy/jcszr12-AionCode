@@ -18,7 +18,8 @@ namespace AionCodeMVC.Controllers
         // GET: MealDays
         public async Task<IActionResult> Index()
         {
-            var aionCodeDatabase = _context.MealDay.Include(m => m.UserCookBook);
+            var result = _context.UserCookBook.Where(i => i.UserName == User.Identity.Name).First();
+            var aionCodeDatabase = _context.MealDay.Include(m => m.UserCookBook).Where(u=>u.UserCookBookId == result.Id).OrderBy(s=>s.Day);
             return View(await aionCodeDatabase.ToListAsync());
         }
 
@@ -87,7 +88,7 @@ namespace AionCodeMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserCookBook"] = mealDay.UserCookBookId;
-            return View(mealDay);
+            return View(mealDayDTO);
         }
 
         // GET: MealDays/Edit/5

@@ -22,10 +22,12 @@
 <hr />
 
 <div class="container">
+    
     <div class="row">
-
+        
         <div class="col-8 text-center overflow-auto" >
-            
+         
+   
                 @foreach (var item in Model.DetailsShort)
                 {
                     <div class="col-md-3 float-left m-2">
@@ -33,11 +35,11 @@
                         <a href="@Url.Action("Details", "Recipes", new { @id = item.Id })">
                         @if (System.IO.File.Exists("~/book-files/" + @item.ImagePath))
                         {
-                            <img src=~/book-files/@item.ImagePath class="img-fluid" style="max-width: 100% " alt="">
+                            <img src="~/book-files/@item.ImagePath" class="img-fluid" style="max-width: 100% " alt="@item.Name">
                         }
                         else
                         {
-                            <img src="~/img/recipes/null.png" class="img-fluid" style="max-width: 100% " alt="">
+                            <img src="~/img/recipes/null.png" class="img-fluid" style="max-width: 100% " alt="nie znaleziono: @item.Name">
                      
                         }
                             <figcaption class="text-center">@item.Name</figcaption>

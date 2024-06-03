@@ -2,22 +2,139 @@
 
 @{
     var title = User.Identity.Name.ToString();
+
+    var ativeDay = DateTime.Now.Day;
+    var dayOfweek = DateTime.Now.DayOfWeek;
+    var month = new List<string> { "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień" };
+    var actualMonth = month[DateTime.Now.Month - 1];
+    var actualYear = DateTime.Now.Year;
+
     ViewData["Title"] = @title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     //var item1 = Model.All(x => x.UserCookBook.UserName == User.Identity.Name);
 }
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-<h1 class ="text-center">@title: planowane posiłki</h1>
+    ul {
+        list-style-type: none;
+    }
+
+    
+    /* Nagłówek miesiąca */
+    .month {
+        padding: 50px 25px;
+        width: 100%;
+        background: orange;
+        text-align: center;
+    }
+        /* Lista miesięcy */
+        .month ul {
+            margin: 0;
+            padding: 0;
+        }
+
+            .month ul li {
+                color: white;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+            }
+        /* Przycisk "Poprzedni" w nagłówku miesiąca */
+        .month .prev {
+            float: left;
+            padding-top: 5px;
+        }
+        /* Przycisk "Następny" */
+        .month .next {
+            float: right;
+            padding-top: 10px;
+        }
+    /* Dni tygodnia (Pon-Nd) */
+    .weekdays {
+        margin: 0;
+        padding: 2px 0;
+        background-color: #ddd;
+    }
+
+        .weekdays li {
+            display: inline-block;
+            width: 12%;
+            color: #666;
+            text-align: center;
+        }
+    /* Dni (1-31) */
+    .days {
+        padding: 10px 0;
+        background: #eee;
+        margin: 0;
+    }
+
+        .days li {
+            list-style-type: none;
+            display: inline-block;
+            width: 12%;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #777;
+        }
+            /* Podświetlenie "aktualnego" dnia */
+            .days li .active {
+                padding: 5px;
+                background: orange;
+                color: white !important;
+            }
+</style>
+
+<h1 class="text-center">@title: planowane posiłki</h1>
 
 <p class="text-center">
     <a asp-action="Create">Create New</a>
 </p>
-<p>
-  
-</p>
-<div class="row"> 
-    <divclass ="col-2 p-2"></divclass>
-    <div class="col-6 offset-4 p-2">
+
+<div class="row">
+    <div class="col-4 float-left p-2">
+      
+        <div class="month">
+            <ul>
+                <li class="prev">❮</li>
+                <li class="next">❯</li>
+                <li>@actualMonth<br><span style="font-size: 18px;">@actualYear</span></li>
+            </ul>
+        </div>
+        <div>
+        <ul class="weekdays">
+            <li>Mo</li>
+            <li>Tu</li>
+            <li>We</li>
+            <li>Th</li>
+            <li>Fr</li>
+            <li>Sa</li>
+            <li>Su</li>
+        </ul>
+        </div>
+        <div>
+            <ul class="days" >
+            @{for(int i=1; i<=31; i++)
+                {
+                    if (i == @ativeDay)
+                    {
+                            <li><span class="active">@i </span></li>
+                    }
+                    else
+                    {
+                        <li>@i</li>
+                    }
+                }
+            }
+            
+          
+        </ul>
+        </div>
+    </div>
+
+    <div class="col-8 p-2">
         <table class="table">
             <thead>
                 <tr>
@@ -34,24 +151,25 @@
                 </tr>
             </thead>
             <tbody>
-        @foreach (var item in Model) {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Day)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AddDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserCookBook.Email)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-        }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Day)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AddDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserCookBook.Email)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
