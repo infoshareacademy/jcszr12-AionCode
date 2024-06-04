@@ -9,7 +9,9 @@ namespace CookBook.BuisnesLogic.DTO
 {
     public class MealDayViewDTO
     {
-   public List<MealDay> MealDaysList { get; set; }
-       
+        public DateTime DayMeal { get; set; }
+        public string RecipeMeal { get; set; }
+        public int MealDayId { get; set; }
+        public string? UserId { get; set; }
     }
 }

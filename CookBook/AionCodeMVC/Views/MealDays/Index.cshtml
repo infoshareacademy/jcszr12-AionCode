@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Database.Entities.MealDay>
+﻿@model IEnumerable<CookBook.BuisnesLogic.DTO.MealDayViewDTO>
 
 @{
     var title = User.Identity.Name.ToString();
@@ -71,12 +71,8 @@
                             {
                             <li><a href="#"><span>@i</span></a></li>
                             }
-                                
-                        
                     }
             }
-            
-          
         </ul>
         </div>
     </div>
@@ -86,13 +82,13 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Day)
+                        @Html.DisplayNameFor(model => model.DayMeal)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.AddDate)
+                        @Html.DisplayNameFor(model => model.RecipeMeal)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.UserCookBook)
+                        @Html.DisplayNameFor(model => model.UserId)
                     </th>
                     <th></th>
                 </tr>
@@ -102,18 +98,18 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Day)
+                            @Html.DisplayFor(modelItem => item.DayMeal)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.AddDate)
+                            @Html.DisplayFor(modelItem => item.RecipeMeal)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.UserCookBook.Email)
+                            @Html.DisplayFor(modelItem => item.UserId)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@item.MealDayId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.MealDayId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.MealDayId">Delete</a>
                         </td>
                     </tr>
                 }

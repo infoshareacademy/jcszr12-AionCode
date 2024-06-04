@@ -18,9 +18,20 @@ namespace AionCodeMVC.Controllers
         // GET: MealDays
         public async Task<IActionResult> Index()
         {
-            var result = _context.UserCookBook.Where(i => i.UserName == User.Identity.Name).First();
-            var aionCodeDatabase = _context.MealDay.Include(m => m.UserCookBook).Where(u=>u.UserCookBookId == result.Id).OrderBy(s=>s.Day);
-            return View(await aionCodeDatabase.ToListAsync());
+            var resultUserId = _context.UserCookBook.Where(i => i.UserName == User.Identity.Name).First();
+            var resultRecipeUsed = await _context.MealDay.Join(_context.RecipeUsed, t1=>t1.Id, t2=>t2.MealDayId, 
+                                    (t1, t2) =>new MealDayViewDTO
+                                    {
+                                        MealDayId = t1.Id,
+                                        UserId = t1.UserCookBookId,
+                                        DayMeal = t1.Day,
+                                        RecipeMeal = t2.PartOfDay
+                                    }
+                ).Where(u=>u.UserId == resultUserId.Id).ToListAsync();
+
+            //var result = _context.MealDay.Include(m => m.RecipesUsed).Where(u=>u.UserCookBookId == resultUserId.Id).OrderBy(s=>s.Day);
+
+            return View(resultRecipeUsed.OrderBy(x=>x.DayMeal));
         }
 
         // GET: MealDays/Details/5
