@@ -13,5 +13,6 @@ namespace CookBook.BuisnesLogic.DTO
         public string RecipeMeal { get; set; }
         public int MealDayId { get; set; }
         public string? UserId { get; set; }
+        public int? RecipeUsedId { get; set; }
     }
 }

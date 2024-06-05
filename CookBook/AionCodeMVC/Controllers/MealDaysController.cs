@@ -16,7 +16,7 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: MealDays
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? selectday)
         {
             var resultUserId = _context.UserCookBook.Where(i => i.UserName == User.Identity.Name).First();
             var resultRecipeUsed = await _context.MealDay.Join(_context.RecipeUsed, t1=>t1.Id, t2=>t2.MealDayId, 
@@ -25,12 +25,15 @@ namespace AionCodeMVC.Controllers
                                         MealDayId = t1.Id,
                                         UserId = t1.UserCookBookId,
                                         DayMeal = t1.Day,
-                                        RecipeMeal = t2.PartOfDay
+                                        RecipeMeal = t2.PartOfDay,
+                                        RecipeUsedId = t2.RecipeDetailsId
+                                       
                                     }
                 ).Where(u=>u.UserId == resultUserId.Id).ToListAsync();
 
             //var result = _context.MealDay.Include(m => m.RecipesUsed).Where(u=>u.UserCookBookId == resultUserId.Id).OrderBy(s=>s.Day);
-
+           if( selectday != null)  TempData["selectday"] = selectday;
+            
             return View(resultRecipeUsed.OrderBy(x=>x.DayMeal));
         }
 
