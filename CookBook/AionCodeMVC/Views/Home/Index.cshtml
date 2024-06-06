@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Database.Entities.RecipeDetails
+@{ 
     Layout = "_Layout";
     ViewData["Title"] = "Witamy w naszej kuchni";
 }
@@ -20,8 +21,14 @@
                             </header>
                         </div>
                         <aside class="col-lg-4 bg-warning p-4">
-                            
-                            ssssss
+            <h2 class="text-center">Potrawa dnia</h2>
+            <a href="@Url.Action("Details", "Recipes", new { Model.Id })">
+            <h5 class="text-center">@Model.Name</h5>
+                </a>
+            <img src="book-files/@Model.ImagePath" class="img-fluid" alt="" />
+                        <p class="text-justify">
+                            @Model.Description
+                        </p>
 
                         </aside>
 
