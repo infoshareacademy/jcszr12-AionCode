@@ -3,6 +3,7 @@ using Database;
 using Database.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IO.Hashing;
 
 namespace AionCodeMVC.Controllers
 {
@@ -19,17 +20,26 @@ namespace AionCodeMVC.Controllers
         public async Task<IActionResult> Index(int? selectday)
         {
             var resultUserId = _context.UserCookBook.Where(i => i.UserName == User.Identity.Name).First();
+            
             var resultRecipeUsed = await _context.MealDay.Join(_context.RecipeUsed, t1=>t1.Id, t2=>t2.MealDayId, 
-                                    (t1, t2) =>new MealDayViewDTO
+                                    (t1, t2) =>new 
                                     {
                                         MealDayId = t1.Id,
                                         UserId = t1.UserCookBookId,
                                         DayMeal = t1.Day,
                                         RecipeMeal = t2.PartOfDay,
                                         RecipeUsedId = t2.RecipeDetailsId
-                                       
                                     }
-                ).Where(u=>u.UserId == resultUserId.Id).ToListAsync();
+                ).Join(_context.RecipeDetails, x2=>x2.RecipeUsedId, x3 => x3.Id, (t,t3) => new MealDayViewDTO
+                {
+                    MealDayId = t.MealDayId,
+                    UserId = t.UserId,
+                    DayMeal = t.DayMeal,
+                    RecipeMeal = t.RecipeMeal,
+                    RecipeUsedId = t.RecipeUsedId,
+                    RecipeName = t3.Name
+
+                }).Where(u=>u.UserId == resultUserId.Id).ToListAsync();
 
             //var result = _context.MealDay.Include(m => m.RecipesUsed).Where(u=>u.UserCookBookId == resultUserId.Id).OrderBy(s=>s.Day);
            if( selectday != null)  TempData["selectday"] = selectday;

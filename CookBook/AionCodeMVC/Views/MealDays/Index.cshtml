@@ -88,7 +88,7 @@
                         @Html.DisplayNameFor(model => model.RecipeMeal)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.RecipeUsedId)
+                        @Html.DisplayNameFor(model => model.RecipeName)
                     </th>
                     <th></th>
                 </tr>
@@ -104,7 +104,7 @@
                             @Html.DisplayFor(modelItem => item.RecipeMeal)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.RecipeUsedId)
+                            @Html.DisplayFor(modelItem => item.RecipeName)
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.MealDayId">Edit</a> |
