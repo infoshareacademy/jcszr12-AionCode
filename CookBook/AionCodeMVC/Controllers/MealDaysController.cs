@@ -20,9 +20,9 @@ namespace AionCodeMVC.Controllers
         public async Task<IActionResult> Index(int? selectday)
         {
             var resultUserId = _context.UserCookBook.Where(i => i.UserName == User.Identity.Name).First();
-            
-            var resultRecipeUsed = await _context.MealDay.Join(_context.RecipeUsed, t1=>t1.Id, t2=>t2.MealDayId, 
-                                    (t1, t2) =>new 
+
+            var resultRecipeUsed = await _context.MealDay.Join(_context.RecipeUsed, t1 => t1.Id, t2 => t2.MealDayId,
+                                    (t1, t2) => new
                                     {
                                         MealDayId = t1.Id,
                                         UserId = t1.UserCookBookId,
@@ -30,7 +30,7 @@ namespace AionCodeMVC.Controllers
                                         RecipeMeal = t2.PartOfDay,
                                         RecipeUsedId = t2.RecipeDetailsId
                                     }
-                ).Join(_context.RecipeDetails, x2=>x2.RecipeUsedId, x3 => x3.Id, (t,t3) => new MealDayViewDTO
+                ).Join(_context.RecipeDetails, x2 => x2.RecipeUsedId, x3 => x3.Id, (t, t3) => new MealDayViewDTO
                 {
                     MealDayId = t.MealDayId,
                     UserId = t.UserId,
@@ -39,11 +39,17 @@ namespace AionCodeMVC.Controllers
                     RecipeUsedId = t.RecipeUsedId,
                     RecipeName = t3.Name
 
-                }).Where(u=>u.UserId == resultUserId.Id).ToListAsync();
+                }).ToListAsync();
 
-           if( selectday != null)  TempData["selectday"] = selectday;
-            
-            return View(resultRecipeUsed.OrderBy(x=>x.DayMeal));
+            if (selectday != null)
+            {
+                TempData["selectday"] = selectday;
+                return View(resultRecipeUsed.Where(u => u.UserId == resultUserId.Id && u.DayMeal.Day == selectday).OrderBy(x => x.DayMeal));
+            }
+            else
+            {
+                return View(resultRecipeUsed.Where(u => u.UserId == resultUserId.Id).OrderBy(x => x.DayMeal));
+            }
         }
 
         // GET: MealDays/Details/5
