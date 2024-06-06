@@ -41,7 +41,6 @@ namespace AionCodeMVC.Controllers
 
                 }).Where(u=>u.UserId == resultUserId.Id).ToListAsync();
 
-            //var result = _context.MealDay.Include(m => m.RecipesUsed).Where(u=>u.UserCookBookId == resultUserId.Id).OrderBy(s=>s.Day);
            if( selectday != null)  TempData["selectday"] = selectday;
             
             return View(resultRecipeUsed.OrderBy(x=>x.DayMeal));
