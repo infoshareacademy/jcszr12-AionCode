@@ -2,7 +2,7 @@
 
 @{
     var title = User.Identity.Name.ToString();
-    
+
     var ativeDay = (int)(TempData["selectday"] ?? DateTime.Now.Day);
 
     var month = new List<string> {  "Styczeń", "Luty", "Marzec", 
@@ -19,10 +19,12 @@
     DateTime firstDayOfMonth = new DateTime(actualYear, selectMonth, 1);
     var dayOfWeek = (int)firstDayOfMonth.DayOfWeek;
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    var Calories = 0;
 
     ViewData["Title"] = @title;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    //var item1 = Model.All(x => x.UserCookBook.UserName == User.Identity.Name);
+
 }
 
 <h1 class="text-center">@title: planowane posiłki</h1>
@@ -33,7 +35,7 @@
 
 <div class="row">
     @* Kalendarz *@
-    <div class="col-4 float-left p-2">
+    <div class="col-md-4 float-left p-2">
       
         <div class="month">
             <ul>
@@ -79,7 +81,7 @@
         <p class="text-center"><a asp-area="" asp-controller="MealDays" asp-action="Index">Pokaż wszystkie zaplanowane dni</a></p>
     </div>
 
-    <div class="col-8 p-2">
+    <div class="col-md-8 p-2">
         <table class="table">
             <thead>
                 <tr>
@@ -98,6 +100,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
+                   
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.DayMeal)
@@ -114,8 +117,40 @@
                             <a asp-action="Delete" asp-route-id="@item.MealDayId">Delete</a>
                         </td>
                     </tr>
+
+                    Calories  += (int)(item.MealDayId);
                 }
             </tbody>
         </table>
+        @if (Calories > 0)
+        {
+            <div class="text-left">
+                <p>Wybrane potrawy mają wartość energetyczną<span class="bg-warning p-2"><strong> @Calories </strong> cal </span></p>
+            </div>
+        }
     </div>
 </div>
+    <h4 class="text-center">Warto przemyleć, a jeszcze lepiej spróbować.</h4>
+    <div class="col-12 text-justify">
+    <p>
+        1 minuta stosunku spala około 40 kcal w przypadku obu płci. Emocjonująca, długa gra wstępna to około 50 kcal na minutę, jeżeli włączymy w nią namiętne pocałunki. Są to wartości uśrednione, które zwiększają się wraz ze wzrostem intensywności odczuwanych doznań.
+    </p>
+    <p>
+        Orgazm to kolejne kilkadziesiąt kalorii – średnio 60-100; w przypadku korzystania z gadżetów erotycznych możemy spalić dodatkowe kilkadziesiąt kalorii. Poniżej prezentujemy najbardziej odchudzające pozycje seksualne.</br>
+    </p>
+        <ol >
+            <li>
+                Pozycja, w której leżąca na plecach kobieta zakłada nogi na ramiona klęczącego mężczyzny</br>
+                Jest to zdecydowanie najbardziej odchudzająca i jednocześnie angażująca obie płcie pozycja seksualna, która pozwala spalić około 70 kcal w ciągu minuty współżycia. Jeszcze lepszy wynik spalania kalorii można uzyskać, kiedy zwiększymy tempo współżycia.
+            </li>
+            <li>
+                Pozycja na jeźdźca</br>
+                W tym przypadku lepsze efekty odchudzające zauważą kobiety, bo to one spalają około 60 kcal na minutę; mężczyzna podczas seksu w pozycji na jeźdźca spala około 45 kcal.
+            </li>
+            <li>
+                Pozycje na stojąco</br>
+                Seks na stojąco angażuje wiele partii mięśniowych, więc daje też dobre efekty odchudzające. Średnio w czasie seksu na stojąco można spalić 50-60 kcal.
+            </li>
+        </ol>
+    </div>
+           

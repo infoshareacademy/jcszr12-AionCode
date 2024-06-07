@@ -19,7 +19,7 @@ namespace AionCodeMVC.Controllers
 
         public IActionResult Index()
         {
-            var result = _context.RecipeDetails.Where(x => x.Id == 1).FirstOrDefault();
+            var result = _context.RecipeDetails.Where(x => x.Id == 3).FirstOrDefault();
             ViewBag.UserName = User.Identity.Name;
             
             return View(result);

@@ -33,9 +33,9 @@
                     <div class="col-md-3 float-left m-2">
 
                         <a href="@Url.Action("Details", "Recipes", new { @id = item.Id })">
-                        @if (System.IO.File.Exists("~/book-files/" + @item.ImagePath))
+                        @if (File.Exists("127.0.0.1:10000/devstoreaccount1/book-files/" + @item.ImagePath))
                         {
-                            <img src="~/book-files/@item.ImagePath" class="img-fluid" style="max-width: 100% " alt="@item.Name">
+                            <img src="http://127.0.0.1:10000/devstoreaccount1/book-files/@item.ImagePath" class="img-fluid" style="max-width: 100% " alt="@item.Name">
                         }
                         else
                         {
