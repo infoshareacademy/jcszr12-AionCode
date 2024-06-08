@@ -1,0 +1,125 @@
+﻿@model IEnumerable<CookBook.BuisnesLogic.DTO.MyFridgeDTO>
+
+@{
+    ViewData["Title"] = "My Fridge";
+}
+
+<head>
+    <style>
+        .btn {
+            color: black;
+            background: #FFC107;
+        }
+
+            .btn:hover {
+                color: black;
+                background: orange;
+            }
+
+        .ingredient {
+            color: peru;
+        }
+    </style>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<h1>Moje lodówki</h1>
+
+<!-- Formularz dodawania nowej lodówki -->
+<form asp-action="Create" method="post">
+    <label>Nazwa lodówki:</label>
+    <input type="text" name="name" required />
+    <button type="submit" class="btn">Dodaj lodówkę</button>
+</form>
+
+<!-- Sprawdzenie, czy lista lodówek nie jest pusta -->
+@if (Model.Any())
+{
+    <h2>Składniki w lodówkach:</h2>
+    <!-- Pętla po wszystkich lodówkach w modelu -->
+    @foreach (var fridge in Model)
+    {
+        <div style="margin-bottom: 10px; display: flex; align-items: center;">
+            <h3 style="flex: 1;">@fridge.Name</h3>
+        </div>
+        <!-- Formularz dodawania składnika do lodówki -->
+        <div style="margin-bottom: 10px;">
+            <form asp-action="AddIngredient" method="post">
+                <div style="margin-bottom: 10px;">
+                    <label for="ingredientName">Wybierz lub wpisz nazwę składnika:</label>
+                    <input type="text" id="ingredientName_@fridge.Id" name="ingredientName" placeholder="Nazwa składnika" required />
+                    <input type="number" name="weight" placeholder="Waga (g)" required />
+                    <input type="hidden" name="MyFridgeId" value="@fridge.Id" />
+                    <button type="submit" class="btn">Dodaj składnik</button>
+                </div>
+            </form>
+        </div>
+        <!-- Sprawdzenie, czy lodówka ma jakieś składniki -->
+        @if (fridge.MyFridgeIngredients.Any())
+        {
+            <ul>
+                <!-- Pętla po wszystkich składnikach w lodówce -->
+                @foreach (var ingredient in fridge.MyFridgeIngredients)
+                {
+                    <li>
+                        @ingredient.IngredientDetails.Name - @ingredient.Weight g
+                        <!-- Formularz usuwania składnika z lodówki -->
+                        <form asp-action="Delete" method="post" style="display: inline;" onsubmit="return confirm('Czy na pewno chcesz usunąć ten składnik?');">
+                            <input type="hidden" name="Id" value="@ingredient.Id" />
+                            <input type="hidden" name="MyFridgeId" value="@fridge.Id" />
+                            <input type="hidden" name="IngredientDetailsId" value="@ingredient.IngredientDetailsId" />
+                            <input type="hidden" name="AddDate" value="@ingredient.AddDate" />
+                            <input type="hidden" name="Weight" value="@ingredient.Weight" />
+                            <button type="submit" class="btn btn-danger">Usuń składnik</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>Brak składników w tej lodówce.</p>
+        }
+        <!-- Formularz usuwania lodówki -->
+        <form asp-action="DeleteFridge" method="post" style="margin-top: 10px;" onsubmit="return confirm('Czy na pewno chcesz usunąć tę lodówkę?');">
+            <input type="hidden" name="id" value="@fridge.Id" />
+            <button type="submit" class="btn">Usuń lodówkę</button>
+        </form>
+    }
+}
+else
+{
+    <p>Brak lodówek do wyświetlenia.</p>
+}
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Inicjalizacja Autocomplete dla każdego pola nazwy składnika
+            $("input[name='ingredientName']").each(function () {
+                var fridgeId = $(this).attr("id").split("_")[1];
+                $(this).autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("SearchIngredients", "MyFridge")',
+                            data: { term: request.term },
+                            success: function (data) {
+                                response(data.map(function (item) {
+                                    return {
+                                        label: item.name,
+                                        value: item.name,
+                                        id: item.id
+                                    };
+                                }));
+                            }
+                        });
+                    },
+                    minLength: 2 // Minimalna liczba znaków do uruchomienia autouzupełniania
+                });
+            });
+        });
+    </script>
+}
