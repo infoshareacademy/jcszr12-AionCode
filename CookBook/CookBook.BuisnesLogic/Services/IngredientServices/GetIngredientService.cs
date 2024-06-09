@@ -6,6 +6,8 @@ using Database;
 using Database.Entities;
 using Database.EnumTypes;
 using Microsoft.EntityFrameworkCore;
+using System.Web.Mvc;
+
 
 namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
@@ -52,6 +54,11 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
             ingredientDetailedDTO.ImagePath = $"{_azureStorage.BlobContainerClientIngredientFiles.Uri}/{ingredientDetailedDTO.ImagePath}";
 
+
+            if (ingredient != null)
+            {
+                ingredientDetailedDTO.Comments = await GetCommentsForIngredient(ingredient.Id);
+            }
             return ingredientDetailedDTO;
         }
         public async Task<IngredientDetailedDTO> GetByIdIngredientDetailedDTO(int id)
@@ -65,6 +72,10 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
             }
             ingredientDetailedDTO.ImagePath = $"{_azureStorage.BlobContainerClientIngredientFiles.Uri}/{ingredientDetailedDTO.ImagePath}";
 
+            if (ingredient!=null)
+            {
+                ingredientDetailedDTO.Comments = await GetCommentsForIngredient(ingredient.Id);
+            }
             return ingredientDetailedDTO;
         }
         public async Task<IngredientEditDTO> GetByIdIngredientEditedDTO(int id)
@@ -74,5 +85,30 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
             return ingredientEditDTO;
         }
+
+        public async Task<IEnumerable<IngredientCommentDTO>> GetCommentsForIngredient(int ingredientId)
+        {
+            var ingredientComments = await _dbContext.IngredientComment
+                                            .Where(comment => comment.IngredientDetailsId == ingredientId)
+                                            .ToListAsync();
+
+            var ingredientCommentsDTO = _mapper.Map<List<IngredientCommentDTO>>(ingredientComments);
+
+            return ingredientCommentsDTO;
+        }
+
+        public async Task<List<IngredientDTO>> GetIngredientsByTerm(string term)
+        {
+            var lowerTerm = term.ToLower(); // Przekształć termin na małe litery
+
+            var ingredients = await _dbContext.IngredientDetails
+                .Where(i => i.Name.ToLower().Contains(lowerTerm))
+                .Select(i => new IngredientDTO { Id = i.Id, Name = i.Name })
+                .ToListAsync();
+
+            return ingredients;
+        }
+
+
     }
 }

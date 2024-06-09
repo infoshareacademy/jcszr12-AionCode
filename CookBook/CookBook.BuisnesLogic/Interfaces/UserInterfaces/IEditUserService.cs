@@ -5,11 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace CookBook.BuisnesLogic.Interfaces.UserInterfaces
 {
     public interface IEditUserService
     {
-        public Task EditUser(UserCookBookDto user);
+        public Task<IdentityResult> EditUser(UserCookBookDto user);
+        public Task<IdentityResult> EditMyself(string userId, UserCookBookDto user);
+        public Task<IdentityResult> ChangeMyPassword(string id, ChangePasswordDto userDto);
+        public Task<IdentityResult> ChangePassword(string id, ChangePasswordDto userDto);
     }
 }

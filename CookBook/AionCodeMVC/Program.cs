@@ -17,6 +17,9 @@ using Microsoft.AspNetCore.Identity;
 using CookBook.BuisnesLogic.Models;
 using Database.SampleData;
 using Microsoft.Extensions.DependencyInjection;
+using CookBook.BuisnesLogic.Services.IngredientCommentServices;
+using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
+using CookBook.BuisnesLogic.Services.MyFridgeServices;
 
 namespace AionCodeMVC
 {
@@ -41,7 +44,8 @@ namespace AionCodeMVC
 
             //Add Identity
             builder.Services.AddIdentity<Database.Entities.UserCookBook, IdentityRole>()
-                .AddEntityFrameworkStores<DatabaseContext>();
+                .AddEntityFrameworkStores<DatabaseContext>()
+                .AddDefaultTokenProviders();
 
             builder.Services.ConfigureApplicationCookie(options =>
             {
@@ -76,6 +80,14 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IDeleteIngredientService, DeleteIngredientService>();
             builder.Services.AddScoped<IEditIngredientService, EditIngredientService>();
             builder.Services.AddScoped<IUploadIngredientPhotoService, UploadIngredientPhotoService>();
+            builder.Services.AddScoped<IAddCommentService, AddCommentService>();
+            builder.Services.AddScoped<IDeleteCommentService, DeleteCommentService>();
+
+            builder.Services.AddScoped<IGetMyFridgeService, GetMyFridgeService>();
+            builder.Services.AddScoped<ICreateFridgeService, CreateFridgeService>();
+            builder.Services.AddScoped<IDeleteMyFridgeIngredientService, DeleteMyFridgeIngredientService>();
+            builder.Services.AddScoped<IAddFridgeIngredientService, AddFridgeIngredientService>();
+
 
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IGetUserService, GetUserService>();
@@ -162,6 +174,29 @@ namespace AionCodeMVC
                         else
                         {
                             throw new Exception("Nie można utworzyć użytkownika admin.");
+                        }
+                    }
+
+                    // Create Admin user if not exists and assign Admin role
+                    var stdUser = await userManager.FindByNameAsync("standardowyUser");
+                    if (stdUser == null)
+                    {
+                        var stdUsr = new Database.Entities.UserCookBook
+                        {
+                            UserName = "standardowyUser",
+                            Email = "standardowyUser@admin.asd",
+                            AddDate = DateTime.Now
+                        };
+
+                        var result = await userManager.CreateAsync(stdUsr, "Qwerty123!");
+
+                        if (result.Succeeded)
+                        {
+                            await userManager.AddToRoleAsync(stdUsr, "StdUser");
+                        }
+                        else
+                        {
+                            throw new Exception("Nie można utworzyć użytkownika stdusera.");
                         }
                     }
 

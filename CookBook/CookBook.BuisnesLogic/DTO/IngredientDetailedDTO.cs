@@ -41,5 +41,9 @@ namespace CookBook.BuisnesLogic.DTO
         [DisplayName("Indeks Glikemiczny")]
         [Required(ErrorMessage = "Wpisz liczbę.")]
         public int GI { get; set; }
+
+        public IEnumerable<IngredientCommentDTO>? Comments { get; set; }
+
+
     }
 }

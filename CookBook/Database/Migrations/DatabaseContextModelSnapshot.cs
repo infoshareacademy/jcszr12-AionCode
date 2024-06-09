@@ -22,6 +22,35 @@ namespace Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Database.Entities.IngredientComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IngredientDetailsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IngredientDetailsId");
+
+                    b.ToTable("IngredientComment");
+                });
+
             modelBuilder.Entity("Database.Entities.IngredientDetails", b =>
                 {
                     b.Property<int>("Id")
@@ -31,7 +60,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Calories")
                         .HasColumnType("decimal(18,2)");
@@ -70,7 +99,7 @@ namespace Database.Migrations
 
                     b.HasIndex("UserCookBookId");
 
-                    b.ToTable("IngredientDetails", (string)null);
+                    b.ToTable("IngredientDetails");
                 });
 
             modelBuilder.Entity("Database.Entities.IngredientUsed", b =>
@@ -82,7 +111,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("IngredientDetailsId")
                         .HasColumnType("int");
@@ -99,7 +128,7 @@ namespace Database.Migrations
 
                     b.HasIndex("RecipeDetailsId");
 
-                    b.ToTable("IngredientUsed", (string)null);
+                    b.ToTable("IngredientUsed");
                 });
 
             modelBuilder.Entity("Database.Entities.MealDay", b =>
@@ -111,10 +140,10 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Day")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserCookBookId")
                         .HasColumnType("nvarchar(450)");
@@ -123,7 +152,59 @@ namespace Database.Migrations
 
                     b.HasIndex("UserCookBookId");
 
-                    b.ToTable("MealDay", (string)null);
+                    b.ToTable("MealDay");
+                });
+
+            modelBuilder.Entity("Database.Entities.MyFridge", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserCookBookId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserCookBookId");
+
+                    b.ToTable("MyFridge");
+                });
+
+            modelBuilder.Entity("Database.Entities.MyFridgeIngredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AddDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IngredientDetailsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MyFridgeId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IngredientDetailsId");
+
+                    b.HasIndex("MyFridgeId");
+
+                    b.ToTable("MyFridgeIngredient");
                 });
 
             modelBuilder.Entity("Database.Entities.RecipeDetails", b =>
@@ -135,7 +216,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -164,7 +245,7 @@ namespace Database.Migrations
 
                     b.HasIndex("UserCookBookId");
 
-                    b.ToTable("RecipeDetails", (string)null);
+                    b.ToTable("RecipeDetails");
                 });
 
             modelBuilder.Entity("Database.Entities.RecipeUsed", b =>
@@ -176,7 +257,7 @@ namespace Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("MealDayId")
                         .HasColumnType("int");
@@ -194,7 +275,7 @@ namespace Database.Migrations
 
                     b.HasIndex("RecipeDetailsId");
 
-                    b.ToTable("RecipeUsed", (string)null);
+                    b.ToTable("RecipeUsed");
                 });
 
             modelBuilder.Entity("Database.Entities.UserCookBook", b =>
@@ -206,7 +287,7 @@ namespace Database.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("AddDate")
-                        .HasColumnType("smalldatetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -395,6 +476,17 @@ namespace Database.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Database.Entities.IngredientComment", b =>
+                {
+                    b.HasOne("Database.Entities.IngredientDetails", "IngredientDetails")
+                        .WithMany("Comments")
+                        .HasForeignKey("IngredientDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IngredientDetails");
+                });
+
             modelBuilder.Entity("Database.Entities.IngredientDetails", b =>
                 {
                     b.HasOne("Database.Entities.UserCookBook", "UserCookBook")
@@ -426,6 +518,36 @@ namespace Database.Migrations
                         .HasForeignKey("UserCookBookId");
 
                     b.Navigation("UserCookBook");
+                });
+
+            modelBuilder.Entity("Database.Entities.MyFridge", b =>
+                {
+                    b.HasOne("Database.Entities.UserCookBook", "UserCookBook")
+                        .WithMany()
+                        .HasForeignKey("UserCookBookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserCookBook");
+                });
+
+            modelBuilder.Entity("Database.Entities.MyFridgeIngredient", b =>
+                {
+                    b.HasOne("Database.Entities.IngredientDetails", "IngredientDetails")
+                        .WithMany()
+                        .HasForeignKey("IngredientDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Database.Entities.MyFridge", "MyFridge")
+                        .WithMany("MyFridgeIngredients")
+                        .HasForeignKey("MyFridgeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IngredientDetails");
+
+                    b.Navigation("MyFridge");
                 });
 
             modelBuilder.Entity("Database.Entities.RecipeDetails", b =>
@@ -505,12 +627,19 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Database.Entities.IngredientDetails", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("IngredientsUsed");
                 });
 
             modelBuilder.Entity("Database.Entities.MealDay", b =>
                 {
                     b.Navigation("RecipesUsed");
+                });
+
+            modelBuilder.Entity("Database.Entities.MyFridge", b =>
+                {
+                    b.Navigation("MyFridgeIngredients");
                 });
 
             modelBuilder.Entity("Database.Entities.RecipeDetails", b =>
