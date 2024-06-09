@@ -36,7 +36,7 @@ namespace CookBook.BuisnesLogic.Services.RecipeServices
             {
                 recipeDetailsDTO.ImagePath = "NoImage.png";
             }
-            recipeDetailsDTO.ImagePath = $"{_azureStorage.BlobContainerClientIngredientFiles.Uri}/{recipeDetailsDTO.ImagePath}";
+            recipeDetailsDTO.ImagePath = $"{_azureStorage.BlobContainerClientRecipeFiles.Uri}/{recipeDetailsDTO.ImagePath}";
 
             return recipeDetailsDTO;
         }

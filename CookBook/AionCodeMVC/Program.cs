@@ -95,7 +95,7 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IEditUserService, EditUserService>();
             builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
 
-            builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+            
             builder.Services.AddScoped<ICreateRecipeService, CreateRecipeService>();
             builder.Services.AddScoped<IGetRecipeService, GetRecipeService>();
             builder.Services.AddScoped<IDeleteRecipeService, DeleteRecipeService>();
