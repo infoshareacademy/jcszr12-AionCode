@@ -14,6 +14,8 @@ namespace CookBook.BuisnesLogic.DTO
         [Required(ErrorMessage = "Wpisz opis.")]
         public string? Description { get; set; }
         public string? ImagePath { get; set; }
+        public virtual ICollection<IngredientUsed> IngredientUseds { get; set; }
+        
        
     }
 }
