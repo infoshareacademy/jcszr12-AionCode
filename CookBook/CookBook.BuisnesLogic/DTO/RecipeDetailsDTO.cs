@@ -1,4 +1,5 @@
 ﻿using Database.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CookBook.BuisnesLogic.DTO
@@ -6,10 +7,13 @@ namespace CookBook.BuisnesLogic.DTO
     public class RecipeDetailsDTO
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Category { get; set; }
-        public string Description { get; set; }
-        public string ImagePath { get; set; }
+        [Required(ErrorMessage = "Nazwę")]
+        public string? Name { get; set; }
+        [Required(ErrorMessage = "Wpisz kategorie.")]
+        public string? Category { get; set; }
+        [Required(ErrorMessage = "Wpisz opis.")]
+        public string? Description { get; set; }
+        public string? ImagePath { get; set; }
        
     }
 }

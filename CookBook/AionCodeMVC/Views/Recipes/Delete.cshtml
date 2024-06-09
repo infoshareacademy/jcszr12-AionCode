@@ -1,0 +1,48 @@
+﻿@model CookBook.BuisnesLogic.DTO.RecipeDetailsDTO
+
+
+@{
+    ViewData["Title"] = "Usuń";
+}
+
+<head>
+    <style>
+        .btn {
+            color: black;
+            background: #FFC107;
+        }
+            .btn:hover {
+                color: black;
+                background: orange;
+            }
+    </style>
+</head>
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h3 class="text-center">Czy na pewno chcesz usunąć ten przepis?</h3>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3">Nazwa:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+
+                <dt class="col-sm-3">Typ:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Category)</dd>
+
+                <dt class="col-sm-3">Kalorie:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
+
+                
+
+            <form asp-action="Delete" method="post">
+                <div class="text-center">
+                    <input type="submit" value="Usuń" class="btn btn-danger" />
+                    <a asp-action="Index" class="btn btn-secondary ml-2">Powrót</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

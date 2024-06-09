@@ -4,7 +4,7 @@ using Database;
 using Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CookBook.BuisnesLogic.Services.IngredientServices
+namespace CookBook.BuisnesLogic.Services.RecipeServices
 {
 
     public class DeleteRecipeService : IDeleteRecipeService
@@ -23,7 +23,12 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
             if (recipe != null)
             {
                 _dbContext.RecipeDetails.Remove(recipe);
-                if (recipe.ImagePath != null)
+                if (recipe.ImagePath == null || recipe.ImagePath == $"{_azureStorage.BlobContainerClientRecipeFiles.Uri}/null.jpg")
+                {
+                    _dbContext.SaveChanges();
+                    return;
+                }
+                else 
                 {
                     await _azureStorage.BlobContainerClientRecipeFiles.DeleteBlobIfExistsAsync(recipe.ImagePath, Azure.Storage.Blobs.Models.DeleteSnapshotsOption.IncludeSnapshots);
                 }
