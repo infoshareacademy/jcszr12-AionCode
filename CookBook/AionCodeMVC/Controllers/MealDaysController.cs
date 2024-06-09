@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Database.Entities;
+﻿using CookBook.BuisnesLogic.DTO;
 using Database;
+using Database.Entities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.IO.Hashing;
 
 namespace AionCodeMVC.Controllers
 {
     public class MealDaysController : Controller
     {
-        private readonly DatabaseContext  _context;
+        private readonly DatabaseContext _context;
 
         public MealDaysController(DatabaseContext dbContext)
         {
@@ -20,10 +17,39 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: MealDays
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? selectday)
         {
-            var aionCodeDatabase = _context.MealDay.Include(m => m.UserCookBook);
-            return View(await aionCodeDatabase.ToListAsync());
+            var resultUserId = _context.UserCookBook.Where(i => i.UserName == User.Identity.Name).First();
+
+            var resultRecipeUsed = await _context.MealDay.Join(_context.RecipeUsed, t1 => t1.Id, t2 => t2.MealDayId,
+                                    (t1, t2) => new
+                                    {
+                                        MealDayId = t1.Id,
+                                        UserId = t1.UserCookBookId,
+                                        DayMeal = t1.Day,
+                                        RecipeMeal = t2.PartOfDay,
+                                        RecipeUsedId = t2.RecipeDetailsId
+                                    }
+                ).Join(_context.RecipeDetails, x2 => x2.RecipeUsedId, x3 => x3.Id, (t, t3) => new MealDayViewDTO
+                {
+                    MealDayId = t.MealDayId,
+                    UserId = t.UserId,
+                    DayMeal = t.DayMeal,
+                    RecipeMeal = t.RecipeMeal,
+                    RecipeUsedId = t.RecipeUsedId,
+                    RecipeName = t3.Name
+
+                }).ToListAsync();
+
+            if (selectday != null)
+            {
+                TempData["selectday"] = selectday;
+                return View(resultRecipeUsed.Where(u => u.UserId == resultUserId.Id && u.DayMeal.Day == selectday).OrderBy(x => x.DayMeal));
+            }
+            else
+            {
+                return View(resultRecipeUsed.Where(u => u.UserId == resultUserId.Id).OrderBy(x => x.DayMeal));
+            }
         }
 
         // GET: MealDays/Details/5
@@ -45,28 +71,53 @@ namespace AionCodeMVC.Controllers
             return View(mealDay);
         }
 
-        // GET: MealDays/Create
-        public IActionResult Create()
+        [HttpGet]
+        public IActionResult Create(int? str)
         {
-            ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email");
-            return View();
+
+            var result = _context.UserCookBook  .Where(i => i.UserName == User.Identity.Name)
+                                                .Select(a => new { a.Id }).ToList();
+
+            var resultRecipes = _context.RecipeDetails
+                                        .Select(i => new RecipesDetailsShortDTO 
+                                        { Id = i.Id, Name = i.Name, ImagePath = i.ImagePath }).ToList();
+            var mealDayDTO = new MealDayDTO { AddDate = DateTime.Now, DetailsShort = resultRecipes };
+            
+            ViewData["UserCookBook"] = result[0].Id;
+            return View(mealDayDTO);
         }
 
-        // POST: MealDays/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Day,AddDate,UserCookBookId")] MealDay mealDay)
+        public async Task<IActionResult> Create([Bind("Day, UserCookBookId, PartOfDay, RecipeDetailsId, DetailsShort")] MealDayDTO mealDayDTO)
         {
+
+            var mealDay = new MealDay();
+            var recipeUsed= new RecipeUsed();
+            
+
             if (ModelState.IsValid)
             {
+
+                mealDay.Day = mealDayDTO.Day;
+                mealDay.AddDate = DateTime.Now;
+                mealDay.UserCookBookId = mealDayDTO.UserCookBookId.ToString();
+
                 _context.Add(mealDay);
                 await _context.SaveChangesAsync();
+
+                recipeUsed.AddDate = DateTime.Now;
+                recipeUsed.MealDayId = _context.MealDay.Max(md => md.Id);
+                recipeUsed.PartOfDay = mealDayDTO.PartOfDay;
+                recipeUsed.RecipeDetailsId = mealDayDTO.RecipeDetailsId;
+
+                _context.Add(recipeUsed);
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
-            return View(mealDay);
+            ViewData["UserCookBook"] = mealDay.UserCookBookId;
+            return View(mealDayDTO);
         }
 
         // GET: MealDays/Edit/5
@@ -82,16 +133,12 @@ namespace AionCodeMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
             return View(mealDay);
         }
 
-        // POST: MealDays/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Day,AddDate,UserCookBookId")] MealDay mealDay)
+        public async Task<IActionResult> Edit(int id, [Bind("Day,AddDate,UserCookBookId")] MealDay mealDay)
         {
             if (id != mealDay.Id)
             {
@@ -100,6 +147,7 @@ namespace AionCodeMVC.Controllers
 
             if (ModelState.IsValid)
             {
+
                 try
                 {
                     _context.Update(mealDay);
@@ -118,7 +166,7 @@ namespace AionCodeMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserCookBookId"] = new SelectList(_context.Set<UserCookBook>(), "Id", "Email", mealDay.UserCookBookId);
+            ViewData["UserCookBookId"] = mealDay.UserCookBookId;
             return View(mealDay);
         }
 
@@ -147,9 +195,13 @@ namespace AionCodeMVC.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var mealDay = await _context.MealDay.FindAsync(id);
-            if (mealDay != null)
+            var recipeUsed = await _context.RecipeUsed.FirstOrDefaultAsync(m => m.MealDayId == id);
+
+            if (mealDay != null && recipeUsed != null)
             {
+                _context.RecipeUsed.Remove(recipeUsed);
                 _context.MealDay.Remove(mealDay);
+              
             }
 
             await _context.SaveChangesAsync();
