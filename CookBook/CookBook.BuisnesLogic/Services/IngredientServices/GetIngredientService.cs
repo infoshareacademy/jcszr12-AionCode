@@ -6,6 +6,8 @@ using Database;
 using Database.Entities;
 using Database.EnumTypes;
 using Microsoft.EntityFrameworkCore;
+using System.Web.Mvc;
+
 
 namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
@@ -93,6 +95,18 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
             var ingredientCommentsDTO = _mapper.Map<List<IngredientCommentDTO>>(ingredientComments);
 
             return ingredientCommentsDTO;
+        }
+
+        public async Task<List<IngredientDTO>> GetIngredientsByTerm(string term)
+        {
+            var lowerTerm = term.ToLower(); // Przekształć termin na małe litery
+
+            var ingredients = await _dbContext.IngredientDetails
+                .Where(i => i.Name.ToLower().Contains(lowerTerm))
+                .Select(i => new IngredientDTO { Id = i.Id, Name = i.Name })
+                .ToListAsync();
+
+            return ingredients;
         }
 
 

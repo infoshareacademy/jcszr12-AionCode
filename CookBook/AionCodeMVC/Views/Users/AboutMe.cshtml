@@ -2,29 +2,34 @@
 @model CookBook.BuisnesLogic.DTO.UserCookBookDto
 
 @{
-    ViewData["Title"] = "Edit";
-
-    var userRoleList = new SelectList(Enum.GetValues(typeof(UserRole)));
-    var selectedValue = Model.Role.ToString();
-    var selectedItem = userRoleList.FirstOrDefault(x => x.Value == selectedValue);
-    if (selectedItem != null)
-    {
-        selectedItem.Selected = true;
-    }
+    ViewData["Title"] = "About Me";
 }
 
-<h1>Edycja danych uzytkonika</h1>
+<h1>Moje dane (edycja)</h1>
 
 <hr />
+
+@if (TempData["ErrorMessages"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessages"];
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"];
+    </div>
+}
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <form asp-action="Edit">
+            <form asp-action="AboutMe">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Id" class="control-label"></label>
-                    <input asp-for="Id" class="form-control" readonly/>
+                    <input asp-for="Id" class="form-control" readonly />
                     <span asp-validation-for="Id" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -39,7 +44,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Role" class="control-label"></label>
-                    <select asp-for="Role" asp-items="userRoleList" class="form-control"></select>
+                    <input asp-for="Role" class="form-control" readonly />
                     <span asp-validation-for="Role" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -51,9 +56,11 @@
 </div>
 
 <div class="text-center">
-    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Anuluj</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

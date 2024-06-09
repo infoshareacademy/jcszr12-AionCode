@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace CookBook.BuisnesLogic.DTO
 {
-    internal class MyFridgeIngredientDTO
+    public class MyFridgeIngredientDTO
     {
             public int Id { get; set; }
             public int MyFridgeId { get; set; }
             public virtual MyFridge MyFridge { get; set; }
             public int IngredientDetailsId { get; set; }
-            public virtual IngredientDetails IngredientDetails { get; set; }
+            public virtual IngredientDetailedDTO IngredientDetails { get; set; }
             public DateTime AddDate { get; set; }
             public decimal Weight { get; set; }
     }

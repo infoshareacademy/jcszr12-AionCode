@@ -26,9 +26,14 @@
 
                 <div class="dropdown-menu" aria-labelledby="submenu">
                     <a class="dropdown-item" asp-area="" asp-controller="Recipes" asp-action="Index">Wszystkie </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-area="" asp-controller="MealDays" asp-action="Index">Planowane danie</a>
-                    <div class="dropdown-divider"></div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-area="" asp-controller="MealDays" asp-action="Index">Planowane dania</a>
+                        <div class="dropdown-divider"></div>
+                    }
+                    
+                    
                     <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Obiady </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Kolacje </a>
@@ -36,6 +41,9 @@
             </li>
             <li class="nav-item">
                 <a asp-area="" asp-controller="Ingredient" asp-action="Index" class="nav-link">Składniki</a>
+            </li>
+            <li class="nav-item">
+                <a asp-area="" asp-controller="MyFridge" asp-action="Index" class="nav-link">Moja lodówka</a>
             </li>
             <li class="nav-item">
                 <a asp-area="" asp-controller="Users" asp-action="Login" class="nav-link">Logowanie</a>
@@ -50,9 +58,12 @@
                     <a asp-area="" asp-controller="Users" asp-action="Index" class="nav-link dropdown-toggle"
                    data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true">@User.Identity.Name</a>
                 <div class="dropdown-menu" aria-labelledby="submenu">
-                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="UserEdit">Moje dane</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="AboutMe">Moje dane</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="ChangeMyPassword">Zmień hasło</a>
                     @if (User.Identity.Name == "admin")
                     {
+                        
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index">Użytkownicy - admin</a>
                     }
