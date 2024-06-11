@@ -34,9 +34,9 @@
                     <button onclick="changeVariable(@item.Id)" class="btn-check bg-warning text-center" style="width: 100%">Wybierz<strong> @item.Id</strong></button>
 
                         <a href="@Url.Action("Details", "Recipes", new { @id = item.Id })">
-                       @if (File.Exists("127.0.0.1:10000/devstoreaccount1/book-files/" + @item.ImagePath))
+                       @if (File.Exists(@item.ImagePath))
                         {
-                            <img src="http://127.0.0.1:10000/devstoreaccount1/book-files/@item.ImagePath" class="figure-img img-fluid rounded" style="max-width: 100% " alt="@item.Name">
+                            <img src="@item.ImagePath" class="figure-img img-fluid rounded" style="max-width: 100% " alt="@item.Name">
                         }
                         else
                         {

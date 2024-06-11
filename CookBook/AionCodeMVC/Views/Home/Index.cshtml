@@ -26,12 +26,12 @@
             <a href="@Url.Action("Details", "Recipes", new { Model.Id })">
                 <h5 class="text-center">@Model.Name</h5>
                 <div class="text-center" >
-                    <img src="http://127.0.0.1:10000/devstoreaccount1/book-files/@Model.ImagePath" class="rounded border border-dark shadow" style="max-width: 100%" alt="" />
+                    <img src="@Model.ImagePath" class="rounded border border-dark" style="max-width: 100%" alt="" />
                 </div>
             </a>
 
-            <p class="text-justify">
-                @Model.Description
+            <p class="text-center">
+                @Model.Category
             </p>
 
         </aside>
