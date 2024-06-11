@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using AutoMapper;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
 
 namespace AionCodeMVC.Controllers
@@ -24,7 +25,9 @@ namespace AionCodeMVC.Controllers
         private readonly UserManager<Database.Entities.UserCookBook> _userManager;
         private readonly IMapper _mapper;
 
-        public UsersController(IRegisterUserService registerUserService, IGetUserService GetUserService, IDeleteUserService DeleteUserService, IEditUserService EditUserService, SignInManager<Database.Entities.UserCookBook> signInManager, UserManager<Database.Entities.UserCookBook> userManager, IMapper mapper)
+        private readonly EmailService _emailService;
+
+        public UsersController(IRegisterUserService registerUserService, IGetUserService GetUserService, IDeleteUserService DeleteUserService, IEditUserService EditUserService, SignInManager<Database.Entities.UserCookBook> signInManager, UserManager<Database.Entities.UserCookBook> userManager, IMapper mapper, EmailService emailService)
         {
             _registerUserService = registerUserService;
             _getUserService = GetUserService;
@@ -35,6 +38,8 @@ namespace AionCodeMVC.Controllers
             _userManager = userManager;
 
             _mapper = mapper;
+            
+            _emailService = emailService;
         }
 
         [Authorize(Policy = "Admin")]
@@ -110,7 +115,7 @@ namespace AionCodeMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterUser(RegisterDto user)
-         {
+        {
             var result = await _registerUserService.RegisterUser(user);
 
             if (!result.Succeeded)
@@ -122,6 +127,16 @@ namespace AionCodeMVC.Controllers
                     ViewBag.Message += " ";
                 }
             }
+
+            var userId = _userManager.GetUserId(User);
+
+            var userDb = await _userManager.FindByIdAsync(userId);
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(userDb);
+            var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = userDb.Email }, Request.Scheme);
+            await _emailService.SendEmailAsync(user.Email, "Confirm your email", confirmationLink);
+
+
             return RedirectToAction("Index", "Home");
         }
 

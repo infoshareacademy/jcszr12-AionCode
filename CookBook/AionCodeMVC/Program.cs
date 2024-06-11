@@ -36,7 +36,6 @@ namespace AionCodeMVC
             builder.Services.AddAzureClients(clientBuilder => clientBuilder.AddBlobServiceClient(builder.Configuration["AzureStorage:BlolbConnectionString"]));
             builder.Services.AddScoped<IAzureStorage, AzureStorageService>();
 
-
             //Add automapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -50,6 +49,8 @@ namespace AionCodeMVC
                 options.LoginPath = "/Users/Login";
                 options.AccessDeniedPath = "/Users/AccessDenied";
             });
+
+            builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection(nameof(SmtpSettings)));
 
             builder.Services.Configure<IdentityOptions>(options =>
             {
@@ -86,6 +87,7 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
             builder.Services.AddScoped<IEditUserService, EditUserService>();
             builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
+            builder.Services.AddTransient<EmailService>();
 
             builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
             builder.Services.AddScoped<ICreateRecipeService, CreateRecipeService>();
