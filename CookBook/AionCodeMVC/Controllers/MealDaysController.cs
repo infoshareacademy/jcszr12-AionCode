@@ -3,6 +3,7 @@ using Database;
 using Database.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using System.IO.Hashing;
 
 namespace AionCodeMVC.Controllers
@@ -10,6 +11,7 @@ namespace AionCodeMVC.Controllers
     public class MealDaysController : Controller
     {
         private readonly DatabaseContext _context;
+        private UserCookBook _resultUserId;
 
         public MealDaysController(DatabaseContext dbContext)
         {
@@ -19,7 +21,16 @@ namespace AionCodeMVC.Controllers
         // GET: MealDays
         public async Task<IActionResult> Index(int? selectday)
         {
-            var resultUserId = _context.UserCookBook.Where(i => i.UserName == User.Identity.Name).First();
+            
+            try
+            {
+            _resultUserId = _context.UserCookBook.Where(i => i.UserName == User.Identity.Name).First();
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Login), "Users");
+            }
+            
 
             var resultRecipeUsed = await _context.MealDay.Join(_context.RecipeUsed, t1 => t1.Id, t2 => t2.MealDayId,
                                     (t1, t2) => new
@@ -44,11 +55,11 @@ namespace AionCodeMVC.Controllers
             if (selectday != null)
             {
                 TempData["selectday"] = selectday;
-                return View(resultRecipeUsed.Where(u => u.UserId == resultUserId.Id && u.DayMeal.Day == selectday).OrderBy(x => x.DayMeal));
+                return View(resultRecipeUsed.Where(u => u.UserId == _resultUserId.Id && u.DayMeal.Day == selectday).OrderBy(x => x.DayMeal));
             }
             else
             {
-                return View(resultRecipeUsed.Where(u => u.UserId == resultUserId.Id).OrderBy(x => x.DayMeal));
+                return View(resultRecipeUsed.Where(u => u.UserId == _resultUserId.Id).OrderBy(x => x.DayMeal));
             }
         }
 
