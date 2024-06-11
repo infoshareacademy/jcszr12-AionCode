@@ -8,6 +8,7 @@ using MailKit.Security;
 using MimeKit;
 using Microsoft.Extensions.Options;
 using CookBook.BuisnesLogic.Models;
+using MailKit;
 
 namespace CookBook.BuisnesLogic.Services.UserServices
 {
@@ -28,19 +29,24 @@ namespace CookBook.BuisnesLogic.Services.UserServices
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart("plain") { Text = message };
 
-            using var client = new SmtpClient();
+            using var client = new SmtpClient(new ProtocolLogger(Console.OpenStandardOutput()));
             try
             {
-                await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, SecureSocketOptions.SslOnConnect);
+                await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, SecureSocketOptions.StartTls);
+                //await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, SecureSocketOptions.SslOnConnect);
+                // client.AuthenticationMechanisms.Remove("XOAUTH2");
+                await client.AuthenticateAsync(_smtpSettings.Username, _smtpSettings.Password);
+                await client.SendAsync(emailMessage);
+                await client.DisconnectAsync(true);
+            }
+            catch (AuthenticationException ex)
+            {
+                Console.WriteLine($"Authentication failed: {ex.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Failed to send email: {ex.Message}");
             }
-            await client.AuthenticateAsync(_smtpSettings.Username, _smtpSettings.Password);
-            await client.SendAsync(emailMessage);
-            await client.DisconnectAsync(true);
         }
-
-    }
+     }
 }
