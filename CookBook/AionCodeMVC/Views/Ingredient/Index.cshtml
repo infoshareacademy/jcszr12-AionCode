@@ -6,74 +6,119 @@
 }
 
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
         .btn {
             color: black;
             background: #FFC107;
         }
+
             .btn:hover {
                 color: black;
                 background: orange;
             }
+
         .ingredient {
             color: peru;
         }
+
+        .btn-img {
+            width: 40px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+        .btn-fixed {
+            width: 130px; 
+            height: 40px; 
+        }
+
+        th, td {
+            font-size: 0.85em; /* Smaller font size for table cells */
+        }
+
+        .header-border {
+            border: 2px solid black;
+        }
+
+
     </style>
 </head>
 
-
-
 <div class="container">
-   <div class="row mb-3 justify-content-center">
-    <div class="col-12">
-            <div class="btn-group" role="group" aria-label="Ingredient types">
-            <form class="mx-2" asp-action="Index" method="get">
-                <input type="hidden"/>
-                    <button type="submit" class="btn btn-primary">Wszystko</button>
-            </form>
-            <form class="mx-2" asp-action="Index" method="get">
-                <input type="hidden" name="Type" value="Warzywa" />
-                    <button type="submit" class="btn btn-primary">Warzywa</button>
-            </form>
-            <form class="mx-2" asp-action="Index" method="get">
-                <input type="hidden" name="Type" value="Owoce" />
-                    <button type="submit" class="btn btn-primary">Owoce</button>
-            </form>
-            <form class="mx-2" asp-action="Index" method="get">
-                <input type="hidden" name="Type" value="Pieczywo" />
-                    <button type="submit" class="btn btn-primary">Pieczywo</button>
-            </form>
-            <form class="mx-2" asp-action="Index" method="get">
-                <input type="hidden" name="Type" value="Ryby" />
-                    <button type="submit" class="btn btn-primary">Ryby</button>
-            </form>
-            <form class="mx-2" asp-action="Index" method="get">
-                <input type="hidden" name="Type" value="Mięsa" />
-                    <button type="submit" class="btn btn-primary">Mięsa</button>
-            </form>
-            <form class="mx-2" asp-action="Index" method="get">
-                <input type="hidden" name="Type" value="Grzyby" />
-                    <button type="submit" class="btn btn-primary">Grzyby</button>
-            </form>
-            <form class="mx-2" asp-action="Index" method="get">
-                <input type="hidden" name="Type" value="Napoje" />
-                    <button type="submit" class="btn btn-primary">Napoje</button>
-            </form>
-            <form class="mx-2" asp-action="Index" method="get">
-                <input type="hidden" name="Type" value="Nabiał" />
-                    <button type="submit" class="btn btn-primary">Nabiał</button>
-            </form>
-            <form class="mx-2" asp-action="Index" method="get">
-                <input type="hidden" name="Type" value="Przyprawy" />
-                    <button type="submit" class="btn btn-primary">Przyprawy</button>
-            </form>
-            <form class="mx-2" asp-action="Index" method="get">
-                <input type="hidden" name="Type" value="Inne" />
-                    <button type="submit" class="btn btn-primary">Inne</button>
-            </form>
+    <div class="row mb-3 justify-content-center">
+        <div class="col-12">
+            <div class="d-flex flex-wrap" role="group" aria-label="Ingredient types">
+                <form class="mx-2 mb-2" asp-action="Index" method="get">
+                    <input type="hidden" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/All.png" alt="Wszystko" class="btn-img" />Wszystko
+                    </button>
+                </form>
+                <form class="mx-2 mb-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Warzywa" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Vegetables.png" alt="Warzywa" class="btn-img" />Warzywa
+                    </button>
+                </form>
+                <form class="mx-2 mb-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Owoce" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/fruit.png" alt="Owoce" class="btn-img" />Owoce
+                    </button>
+                </form>
+                <form class="mx-2 mb-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Pieczywo" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/bread.png" alt="Pieczywo" class="btn-img" />Pieczywo
+                    </button>
+                </form>
+                <form class="mx-2 mb-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Ryby" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/fish.png" alt="Ryby" class="btn-img" />Ryby
+                    </button>
+                </form>
+                <form class="mx-2 mb-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Mięsa" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Meat.png" alt="Mięso" class="btn-img" />Mięsa
+                    </button>
+                </form>
+                <form class="mx-2 mb-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Grzyby" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Mushroom.png" alt="Grzyby" class="btn-img" />Grzyby
+                    </button>
+                </form>
+                <form class="mx-2 mb-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Napoje" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Drinks.png" alt="Napoje" class="btn-img" />Napoje
+                    </button>
+                </form>
+                <form class="mx-2 mb-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Nabiał" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Dairy.png" alt="Nabiał" class="btn-img" />Nabiał
+                    </button>
+                </form>
+                <form class="mx-2 mb-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Przyprawy" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Spices.png" alt="Przyprawy" class="btn-img" />Przyprawy
+                    </button>
+                </form>
+                <form class="mx-2 mb-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Inne" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Other.png" alt="Inne" class="btn-img" />Inne
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+
     <h1 class="text-center">@ViewData["Title"]</h1>
 
     <div class="row">
@@ -84,37 +129,38 @@
 
     <div class="row mt-3">
         <div class="col-12">
-            <form asp-action="Index" method="get">
-                <div class="form-group">
-                    <label for="SearchString">Wyszukaj</label>
-                    <input type="text" name="SearchString" value="@ViewData["IngredientFilter"]" class="form-control" style="width: 200px; height: 30px;" />
-                    <button type="submit" class="btn btn-primary mt-2">Szukaj</button>
+            <form class="form-inline d-flex flex-wrap" asp-action="Index" method="get">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="SearchString" class="sr-only">Wyszukaj</label>
+                    <input type="text" name="SearchString" value="@ViewData["IngredientFilter"]" class="form-control" placeholder="Wyszukaj" />
                 </div>
+                <button type="submit" class="btn btn-primary mb-2">Szukaj</button>
             </form>
         </div>
     </div>
 
     <div class="row mt-3">
         <div class="col-12 bg-white rounded-2">
-            <table class="table">
+            <table class="table" style="border: 2px solid black;">
                 <thead>
-                    <tr>
-                        <th>Lp.</th>
-                        <th>@Html.DisplayNameFor(model => model.Name)</th>
-                        <th>@Html.DisplayNameFor(model => model.Carbohydrates)</th>
-                        <th>@Html.DisplayNameFor(model => model.Proteins)</th>
-                        <th>@Html.DisplayNameFor(model => model.Fats)</th>
-                        <th>@Html.DisplayNameFor(model => model.Calories)</th>
-                        <th></th>
+                    <tr style="line-height: 0.5">
+                        <th class="header-border">Lp.</th>
+                        <th class="header-border">@Html.DisplayNameFor(model => model.Name)</th>
+                        <th class="header-border">@Html.DisplayNameFor(model => model.Carbohydrates)</th>
+                        <th class="header-border">@Html.DisplayNameFor(model => model.Proteins)</th>
+                        <th class="header-border">@Html.DisplayNameFor(model => model.Fats)</th>
+                        <th class="header-border">@Html.DisplayNameFor(model => model.Calories)</th>
+                        <th class="header-border">Zarządzaj</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model) 
+                    <tr class="header-border">
+                    @foreach (var item in Model)
                     {
                         Lp++;
-                        <tr>
+                        <tr style="line-height: 0.5">
                             <td>@Lp.</td>
-                            <td>@Html.ActionLink(item.Name, "Details", new { id = item.Id, type = @ViewBag.Type }, new {@class ="ingredient" })</td>
+                            <td>@Html.ActionLink(item.Name, "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" })</td>
                             <td>@Html.DisplayFor(modelItem => item.Calories)</td>
                             <td>@Html.DisplayFor(modelItem => item.Proteins)</td>
                             <td>@Html.DisplayFor(modelItem => item.Fats)</td>
@@ -132,3 +178,7 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
