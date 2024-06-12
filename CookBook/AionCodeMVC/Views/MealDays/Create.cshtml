@@ -21,34 +21,36 @@
 <h4 class="text-center">MealDay</h4>
 <hr />
 
+
+
 <div class="container ">
-    
     <div class="row  ">
-        
         <div class="col-8 text-center ">
-         
-   
+            <ul class="pagination justify-content-center">
+                <li class="page-item" class="active"><a asp-action="Create" asp-route-p="1" class="page-link">1</a></li>
+                <li class="page-item"><a asp-action="Create" asp-route-p="2" class="page-link">2</a></li>
+                <li class="page-item"><a asp-action="Create" asp-route-p="3" class="page-link">3</a></li>
+                <li class="page-item"><a asp-action="Create" asp-route-p="4" class="page-link">4</a></li>
+                <li class="page-item"><a asp-action="Create" asp-route-p="5" class="page-link">5</a></li>
+            </ul>
                 @foreach (var item in Model.DetailsShort)
                 {
-                <div class="col-md-3 float-left p-2 m-1 border border-dark" style=" height: 210px">
+                <div class="col-md-3 float-left p-2 m-1 border border-dark" style=" height: 230px">
                     <button onclick="changeVariable(@item.Id)" class="btn-check bg-warning text-center" style="width: 100%">Wybierz<strong> @item.Id</strong></button>
 
                         <a href="@Url.Action("Details", "Recipes", new { @id = item.Id })">
-                       @if (File.Exists(@item.ImagePath))
+                        @if (!string.IsNullOrEmpty(@item.ImagePath))
                         {
                             <img src="@item.ImagePath" class="figure-img img-fluid rounded" style="max-width: 100% " alt="@item.Name">
                         }
                         else
-                        {
+                            {
                             <img src="~/img/recipes/null.png" class="figure-img img-fluid rounded" style="max-width: 100% " alt="nie znaleziono: @item.Name">
-
-                      } 
-                         <figcaption class="text-center">@item.Name</figcaption>
+                            } 
+                            <figcaption class="text-center">@item.Name</figcaption>
                         </a>
-
                 </div>
                 }
-           
         </div>
 
         <div class="col-4 p-2">
