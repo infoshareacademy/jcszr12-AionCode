@@ -5,7 +5,8 @@
     var enumSelectList = new SelectList(Enum.GetValues(typeof(MealType)));
     var user = User.Identity.Name;
     var userId = ViewBag.UserCookBook;
-    
+    var activePage = (int)(TempData["page"] ?? 1);
+    var longList = (int)(TempData["longList"] ?? 5);
     ViewData["Title"] = "Create";
 }
 <script>
@@ -17,22 +18,30 @@
 </script>
 
 
-<h1 class="text-center">Utwórz dla <strong>@user</strong> </h1>
+<h1 id="pageLists" class="text-center">Utwórz dla <strong>@user</strong> </h1>
 <h4 class="text-center">MealDay</h4>
-<hr />
+<hr  />
 
 
 
 <div class="container ">
     <div class="row  ">
-        <div class="col-8 text-center ">
+        <div  class="col-8 text-center ">
             <ul class="pagination justify-content-center">
-                <li class="page-item" class="active"><a asp-action="Create" asp-route-p="1" class="page-link">1</a></li>
-                <li class="page-item"><a asp-action="Create" asp-route-p="2" class="page-link">2</a></li>
-                <li class="page-item"><a asp-action="Create" asp-route-p="3" class="page-link">3</a></li>
-                <li class="page-item"><a asp-action="Create" asp-route-p="4" class="page-link">4</a></li>
-                <li class="page-item"><a asp-action="Create" asp-route-p="5" class="page-link">5</a></li>
+                @for (int i = 1; i <= longList + 1; i++)
+                {
+                    @if (i == activePage)
+                    {
+                        <li class="page-item active"><a asp-action="Create" asp-route-p="@i" class="page-link bg-warning">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a asp-action="Create"  asp-route-p="@i" class="page-link">@i</a></li>
+                    }
+                }
+
             </ul>
+            <span ></span>
                 @foreach (var item in Model.DetailsShort)
                 {
                 <div class="col-md-3 float-left p-2 m-1 border border-dark" style=" height: 230px">
@@ -41,7 +50,7 @@
                         <a href="@Url.Action("Details", "Recipes", new { @id = item.Id })">
                         @if (!string.IsNullOrEmpty(@item.ImagePath))
                         {
-                            <img src="@item.ImagePath" class="figure-img img-fluid rounded" style="max-width: 100% " alt="@item.Name">
+                            <img src="@item.ImagePath" class="figure-img img-fluid rounded" style="max-height: 100px" alt="@item.Name">
                         }
                         else
                             {
@@ -51,7 +60,9 @@
                         </a>
                 </div>
                 }
+           
         </div>
+       
 
         <div class="col-4 p-2">
             <form asp-action="Create">

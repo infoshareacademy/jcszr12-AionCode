@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using System.IO.Hashing;
+using System.Linq;
 
 namespace AionCodeMVC.Controllers
 {
@@ -12,7 +13,7 @@ namespace AionCodeMVC.Controllers
     {
         private readonly DatabaseContext _context;
         private UserCookBook _resultUserId;
-
+        private int _pageSize = 9;
         public MealDaysController(DatabaseContext dbContext)
         {
             _context = dbContext;
@@ -83,18 +84,23 @@ namespace AionCodeMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create(int? str)
+        public IActionResult Create(int? p)
         {
+
+            int page = (int)((p == null) ? 1 : p);
 
             var result = _context.UserCookBook  .Where(i => i.UserName == User.Identity.Name)
                                                 .Select(a => new { a.Id }).ToList();
 
             var resultRecipes = _context.RecipeDetails
-                                        .Select(i => new RecipesDetailsShortDTO 
-                                        { Id = i.Id, Name = i.Name, ImagePath = i.ImagePath }).ToList();
+                                        .Select(i => new RecipesDetailsShortDTO
+                                        { Id = i.Id, Name = i.Name, ImagePath = i.ImagePath }).Skip((page - 1) * _pageSize).Take(_pageSize).ToList(); 
             var mealDayDTO = new MealDayDTO { AddDate = DateTime.Now, DetailsShort = resultRecipes };
             
             ViewData["UserCookBook"] = result[0].Id;
+            TempData["page"] = page;
+            TempData["longList"] = _context.RecipeDetails.Count() / _pageSize;
+
             return View(mealDayDTO);
         }
 
