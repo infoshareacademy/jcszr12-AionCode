@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<CookBook.BuisnesLogic.DTO.IngredientDTO>
 
 @{
-    ViewData["Title"] = "Spis składników";
     int Lp = 0;
+    var firstItem = Model.FirstOrDefault();
 }
 
 <head>
@@ -147,58 +147,71 @@
 
     <div style="border: 1px  groove black;" class="mt-1 mt-3 mb-3"></div>
 
+    @if (@ViewData["IngredientFilter"] != null && Model.Count() == 0)
+    {
+        ViewData["IngredientFilter"] = $"Nie znaleziono: \"{ViewData["IngredientFilter"]}\"";
+    }
+
+
     @if (@ViewData["IngredientFilter"]==null)
     {
-        var firstItem = Model.FirstOrDefault();
         if (firstItem != null)
         {
             ViewData["IngredientFilter"] = firstItem.Type.ToString();
         }
         else
         {
-            ViewData["IngredientFilter"] = "Nie znaleziono takiego składnika";
+            ViewData["IngredientFilter"] = "Brak składników.";
         }
+
     }
+
     <h2 class="text-center">@ViewData["IngredientFilter"]</h2>
 
-    <div class="row mt-3">
-        <div class="col-12 bg-transparent rounded-2">
-            <table class="table" style="border: 2px solid black;">
-                <thead>
-                    <tr style="line-height: 0.5">
-                        <th class="header-border">Lp.</th>
-                        <th class="header-border">@Html.DisplayNameFor(model => model.Name)</th>
-                        <th class="header-border">@Html.DisplayNameFor(model => model.Carbohydrates)</th>
-                        <th class="header-border">@Html.DisplayNameFor(model => model.Proteins)</th>
-                        <th class="header-border">@Html.DisplayNameFor(model => model.Fats)</th>
-                        <th class="header-border">@Html.DisplayNameFor(model => model.Calories)</th>
-                        <th class="header-border">Zarządzaj</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="header-border">
-                    @foreach (var item in Model)
-                    {
-                        Lp++;
+
+
+    @if (firstItem!=null)
+    {
+        <div class="row mt-3">
+            <div class="col-12 bg-transparent rounded-2">
+                <table class="table" style="border: 2px solid black;">
+                    <thead>
                         <tr style="line-height: 0.5">
-                            <td style="border: 1px solid black;">@Lp.</td>
-                            <td>@Html.ActionLink(item.Name, "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" })</td>
-                            <td>@Html.DisplayFor(modelItem => item.Calories)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Proteins)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Fats)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Carbohydrates)</td>
-                            <td>
-                                @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }, new { @class = "ingredient" }) |
-                                @Html.ActionLink("Szczegóły", "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" }) |
-                                @Html.ActionLink("Usuń", "Delete", new { id = item.Id }, new { @class = "ingredient" }) |
-                                @Html.ActionLink("Załącz obraz", "Upload", new { id = item.Id }, new { @class = "ingredient" })
-                            </td>
+                            <th class="header-border">Lp.</th>
+                            <th class="header-border">@Html.DisplayNameFor(model => model.Name)</th>
+                            <th class="header-border">@Html.DisplayNameFor(model => model.Carbohydrates)</th>
+                            <th class="header-border">@Html.DisplayNameFor(model => model.Proteins)</th>
+                            <th class="header-border">@Html.DisplayNameFor(model => model.Fats)</th>
+                            <th class="header-border">@Html.DisplayNameFor(model => model.Calories)</th>
+                            <th class="header-border">Zarządzaj</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <tr class="header-border">
+                            @foreach (var item in Model)
+                            {
+                                Lp++;
+                            <tr style="line-height: 0.5">
+                                <td style="border: 1px solid black;">@Lp.</td>
+                                <td>@Html.ActionLink(item.Name, "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" })</td>
+                                <td>@Html.DisplayFor(modelItem => item.Calories)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Proteins)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Fats)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Carbohydrates)</td>
+                                <td>
+                                        @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }, new { @class = "ingredient" }) |
+                                        @Html.ActionLink("Szczegóły", "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" }) |
+                                        @Html.ActionLink("Usuń", "Delete", new { id = item.Id }, new { @class = "ingredient" }) |
+                                        @Html.ActionLink("Załącz obraz", "Upload", new { id = item.Id }, new { @class = "ingredient" })
+                                </td>
+                            </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    }
+    
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

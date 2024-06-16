@@ -1,100 +1,207 @@
 ﻿@model IEnumerable<CookBook.BuisnesLogic.DTO.MyFridgeDTO>
 
 @{
-    ViewData["Title"] = "My Fridge";
+    ViewData["Title"] = "Moja Lodówka";
+    int Lp = 0;
+    var firstFridge = Model.FirstOrDefault();
 }
 
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Urbanist">
     <style>
         .btn {
             color: black;
             background: #FFC107;
+            border: 1px solid black;
+/*             font-family: 'Urbanist', sans-serif; /* Przykładowa czcionka z Google Fonts */ */
+            font-weight: bold;
         }
 
             .btn:hover {
                 color: black;
                 background: orange;
+                border: 1px solid black;
             }
 
         .ingredient {
-            color: peru;
+            color: firebrick;
         }
+
+        .btn-img {
+            width: 40px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+        .btn-fixed {
+            width: 130px;
+            height: 40px;
+        }
+
+        th, td {
+            font-size: 0.85em; /* Smaller font size for table cells */
+            border: 1px solid black;
+        }
+
+        .header-border {
+            border: 2px solid black;
+        }
+
+        input.form-control:focus {
+            box-shadow: none;
+            border: 1px solid black;
+        }
+
+        h1, h2, h3, h4{
+            color: #333; /* Kolor tekstu */
+            font-family: 'Urbanist', sans-serif; /* Rodzina czcionek */
+/*             font-size: 2.5rem; /* Rozmiar czcionki */ */
+            text-align: center; /* Wyrównanie tekstu */
+            margin-bottom: 20px; /* Margines na dole */
+            text-transform: uppercase; /* Przekształcenie tekstu na wielkie litery */
+            letter-spacing: 1px; /* Odstępy między literami */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Cień tekstu */
+            background: linear-gradient(to right, #ff9966, orange); /* Gradient tła */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; /* Kolor tekstu jako transparentny */
+            /* font-family: 'Klee One', sans-serif; /* Przykładowa czcionka z Google Fonts */ */
+        }
+
+        p {
+/*             color: black;
+            font-family: 'Urbanist', sans-serif;
+            text-align: justify;
+            line-height: 1.6; /* Zwiększenie odstępów między wierszami dla lepszej czytelności */ */
+            text-shadow: none; /* Usunięcie cienia tekstu */
+            margin-bottom: 15px; /* Dodanie odstępu na dole paragrafu */
+            font-size: 16px; /* Przykładowa większa wielkość czcionki */
+        } 
+
+
+
+
     </style>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
-<h1>Moje lodówki</h1>
-
-<!-- Formularz dodawania nowej lodówki -->
-<form asp-action="Create" method="post">
-    <label>Nazwa lodówki:</label>
-    <input type="text" name="name" required />
-    <button type="submit" class="btn">Dodaj lodówkę</button>
-</form>
-
-<!-- Sprawdzenie, czy lista lodówek nie jest pusta -->
-@if (Model.Any())
-{
-    <h2>Składniki w lodówkach:</h2>
-    <!-- Pętla po wszystkich lodówkach w modelu -->
-    @foreach (var fridge in Model)
-    {
-        <div style="margin-bottom: 10px; display: flex; align-items: center;">
-            <h3 style="flex: 1;">@fridge.Name</h3>
-        </div>
-        <!-- Formularz dodawania składnika do lodówki -->
-        <div style="margin-bottom: 10px;">
-            <form asp-action="AddIngredient" method="post">
-                <div style="margin-bottom: 10px;">
-                    <label for="ingredientName">Wybierz lub wpisz nazwę składnika:</label>
-                    <input type="text" id="ingredientName_@fridge.Id" name="ingredientName" placeholder="Nazwa składnika" required />
-                    <input type="number" name="weight" placeholder="Waga (g)" required />
-                    <input type="hidden" name="MyFridgeId" value="@fridge.Id" />
-                    <button type="submit" class="btn">Dodaj składnik</button>
+<div class="container">
+    <h1 class="text-center mt-3">@ViewData["Title"]</h1>
+    <p>Wirtualna lodówka umożliwia efektywne zarządzanie zapasami żywności oraz monitorowanie dat ważności produktów.
+        Dzięki niej możesz śledzić zawartość lodówki w czasie rzeczywistym i planować posiłki na podstawie dostępnych składników i
+        przypomina o zbliżających się terminach ważności produktów, co pozwala unikać marnotrawstwa.
+        Dodatkowo, wirtualna lodówka sugeruje potrawy kulinarnie, które można przygotować na podstawie dostępnych składników, wspierając zdrowe i zrównoważone odżywianie.
+        Aby rozpocząć korzystanie z tej funkcjonalności należy "dodać lodówkę" za pomocą odpowiedniego przycisku a następnie uzupełnićjej zawartość używając przycisku "dodaj składnik". 
+        Powodzenia!
+    </p>    
+        <!-- Formularz dodawania nowej lodówki -->
+    <div class="row mb-3 justify-content-center">
+        <div class="col-12">
+            <form asp-action="Create" method="post" class="form-inline d-flex flex-wrap">
+                <div class="form-group mb-2">
+                    <label for="fridgeName" class="mr-2">Nazwa lodówki:</label>
+                    <input type="text" name="name" id="fridgeName" class="form-control mr-2" required />
                 </div>
+                <button type="submit" class="btn btn-primary mb-2">Dodaj lodówkę</button>
             </form>
         </div>
-        <!-- Sprawdzenie, czy lodówka ma jakieś składniki -->
-        @if (fridge.MyFridgeIngredients.Any())
+    </div>
+
+@*     <div style="border: 1px  groove black;" class="mt-1 mb-3"></div> *@
+
+    <!-- Sprawdzenie, czy lista lodówek nie jest pusta -->
+    @if (Model.Any())
+    {
+        <h2 class="text-center mt-5">Składniki w lodówkach:</h2>
+        <!-- Pętla po wszystkich lodówkach w modelu -->
+        @foreach (var fridge in Model)
         {
-            <ul>
-                <!-- Pętla po wszystkich składnikach w lodówce -->
-                @foreach (var ingredient in fridge.MyFridgeIngredients)
-                {
-                    <li>
-                        @ingredient.IngredientDetails.Name - @ingredient.Weight g
-                        <!-- Formularz usuwania składnika z lodówki -->
-                        <form asp-action="Delete" method="post" style="display: inline;" onsubmit="return confirm('Czy na pewno chcesz usunąć ten składnik?');">
-                            <input type="hidden" name="Id" value="@ingredient.Id" />
+            <div class="row mb-3">
+                <div class="col-12 bg-transparent rounded-2">
+                    <h4>Nazwa lodówki: @fridge.Name</h4>
+                    <!-- Formularz dodawania składnika do lodówki -->
+                    <form asp-action="AddIngredient" method="post" class="form-inline d-flex flex-wrap mb-2">
+                        <div class="form-group mb-2 mr-2">
+                            <label for="ingredientName_@fridge.Id" class="mr-2">Wybierz lub wpisz nazwę składnika:</label>
+                            <input type="text" id="ingredientName_@fridge.Id" name="ingredientName" class="form-control mr-2" placeholder="Nazwa składnika" required />
+                        </div>
+                        <div class="form-group mb-2 mr-2">
+                            <input type="number" name="weight" class="form-control mr-2" placeholder="Waga (g)" required />
                             <input type="hidden" name="MyFridgeId" value="@fridge.Id" />
-                            <input type="hidden" name="IngredientDetailsId" value="@ingredient.IngredientDetailsId" />
-                            <input type="hidden" name="AddDate" value="@ingredient.AddDate" />
-                            <input type="hidden" name="Weight" value="@ingredient.Weight" />
-                            <button type="submit" class="btn btn-danger">Usuń składnik</button>
-                        </form>
-                    </li>
-                }
-            </ul>
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2">Dodaj składnik</button>
+                    </form>
+
+                    <!-- Sprawdzenie, czy lodówka ma jakieś składniki -->
+                    @if (fridge.MyFridgeIngredients.Any())
+                    {
+                        <div class="row mt-3">
+                            <div class="col-12 bg-transparent rounded-2">
+                                <table class="table" style="border: 2px solid black;">
+                                    <thead>
+                                        <tr style="line-height: 0.5">
+                                            <th class="header-border">Lp.</th>
+                                            <th class="header-border">Składnik</th>
+                                            <th class="header-border">Waga (g)</th>
+                                            <th class="header-border">Zarządzaj</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="header-border">
+                                        @foreach (var ingredient in fridge.MyFridgeIngredients)
+                                        {
+                                            Lp++;
+                                            <tr style="line-height: 0.5">
+                                                <td style="border: 1px solid black;">@Lp</td>
+                                                <td class="ingredient">
+                                                        @Html.ActionLink(ingredient.IngredientDetails.Name, "RedirectToIngredientDetails", "Ingredient", new { name = ingredient.IngredientDetails.Name }, new { @class = "ingredient" })
+                                                </td>
+                                                <td>@ingredient.Weight</td>
+                                                <td>
+                                                    <!-- Formularz usuwania składnika z lodówki -->
+                                                    <form asp-action="Delete" method="post" style="display: inline;" onsubmit="return confirm('Czy na pewno chcesz usunąć ten składnik?');">
+                                                        <input type="hidden" name="Id" value="@ingredient.Id" />
+                                                        <input type="hidden" name="MyFridgeId" value="@fridge.Id" />
+                                                        <input type="hidden" name="IngredientDetailsId" value="@ingredient.IngredientDetailsId" />
+                                                        <input type="hidden" name="AddDate" value="@ingredient.AddDate" />
+                                                        <input type="hidden" name="Weight" value="@ingredient.Weight" />
+                                                        <button type="submit" class="text-danger" style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">Usuń</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Brak składników w tej lodówce.</p>
+                    }
+
+                    <!-- Formularz usuwania lodówki -->
+                    <form asp-action="DeleteFridge" method="post" class="form-inline d-flex flex-wrap mt-2" onsubmit="return confirm('Czy na pewno chcesz usunąć tę lodówkę?');">
+                        <input type="hidden" name="id" value="@fridge.Id" />
+                        <button type="submit" class="btn btn-danger">Usuń lodówkę</button>
+                    </form>
+
+                </div>
+
+            </div>
+@*             <div style="border: 1px  groove black;" class="mt-1 mb-3"></div> *@
         }
-        else
-        {
-            <p>Brak składników w tej lodówce.</p>
-        }
-        <!-- Formularz usuwania lodówki -->
-        <form asp-action="DeleteFridge" method="post" style="margin-top: 10px;" onsubmit="return confirm('Czy na pewno chcesz usunąć tę lodówkę?');">
-            <input type="hidden" name="id" value="@fridge.Id" />
-            <button type="submit" class="btn">Usuń lodówkę</button>
-        </form>
     }
-}
-else
-{
-    <p>Brak lodówek do wyświetlenia.</p>
-}
+    else
+    {
+        <p class="text-center">Brak lodówek do wyświetlenia.</p>
+    }
+</div>
 
 @section scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <script>
         $(document).ready(function () {
