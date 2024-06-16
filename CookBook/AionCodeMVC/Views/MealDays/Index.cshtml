@@ -23,7 +23,7 @@
     var Calories = 0;
 
     ViewData["Title"] = @title;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutMealDay.cshtml";
 
 }
 
@@ -109,11 +109,11 @@
                             @Html.DisplayFor(modelItem => item.RecipeMeal)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.RecipeName)
+                            <a href="@Url.Action("Details", "Recipes", new { @id = item.RecipeUsedId })">  @Html.DisplayFor(modelItem => item.RecipeName)</a>
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.MealDayId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.MealDayId">Details</a> |
+                            @* <a asp-action="Edit" asp-route-id="@item.MealDayId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.MealDayId">Details</a> | *@
                             <a asp-action="Delete" asp-route-id="@item.MealDayId">Delete</a>
                         </td>
                     </tr>
@@ -125,7 +125,7 @@
         @if (Calories > 0)
         {
             <div class="text-left">
-                <p>Wybrane potrawy mają wartość energetyczną<span class="bg-warning p-2"><strong> @Calories </strong> cal </span></p>
+                <p>Wybrane potrawy mają wartość energetyczną<span class="bg-warning p-2"><strong> @Calories </strong> kcal </span></p>
             </div>
         }
     </div>

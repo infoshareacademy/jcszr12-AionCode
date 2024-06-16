@@ -5,7 +5,8 @@
     var enumSelectList = new SelectList(Enum.GetValues(typeof(MealType)));
     var user = User.Identity.Name;
     var userId = ViewBag.UserCookBook;
-    
+    var activePage = (int)(TempData["page"] ?? 1);
+    var longList = (int)(TempData["longList"] ?? 5);
     ViewData["Title"] = "Create";
 }
 <script>
@@ -17,39 +18,51 @@
 </script>
 
 
-<h1 class="text-center">Utwórz dla <strong>@user</strong> </h1>
+<h1 id="pageLists" class="text-center">Utwórz dla <strong>@user</strong> </h1>
 <h4 class="text-center">MealDay</h4>
-<hr />
+<hr  />
 
-<div class="container">
-    
-    <div class="row">
-        
-        <div class="col-8 text-center overflow-auto" >
-         
-   
+
+
+<div class="container ">
+    <div class="row  ">
+        <div  class="col-8 text-center ">
+            <ul class="pagination justify-content-center">
+                @for (int i = 1; i <= longList + 1; i++)
+                {
+                    @if (i == activePage)
+                    {
+                        <li class="page-item active"><a asp-action="Create" asp-route-p="@i" class="page-link bg-warning">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a asp-action="Create"  asp-route-p="@i" class="page-link">@i</a></li>
+                    }
+                }
+
+            </ul>
+            <span ></span>
                 @foreach (var item in Model.DetailsShort)
                 {
-                    <div class="col-md-3 float-left m-2">
+                <div class="col-md-3 float-left p-2 m-1 border border-dark" style=" height: 230px">
+                    <button onclick="changeVariable(@item.Id)" class="btn-check bg-warning text-center" style="width: 100%">Wybierz<strong> @item.Id</strong></button>
 
                         <a href="@Url.Action("Details", "Recipes", new { @id = item.Id })">
-                        @if (File.Exists("127.0.0.1:10000/devstoreaccount1/book-files/" + @item.ImagePath))
+                        @if (!string.IsNullOrEmpty(@item.ImagePath))
                         {
-                            <img src="http://127.0.0.1:10000/devstoreaccount1/book-files/@item.ImagePath" class="img-fluid" style="max-width: 100% " alt="@item.Name">
+                            <img src="@item.ImagePath" class="figure-img img-fluid rounded" style="max-height: 100px" alt="@item.Name">
                         }
                         else
-                        {
-                            <img src="~/img/recipes/null.png" class="img-fluid" style="max-width: 100% " alt="nie znaleziono: @item.Name">
-                     
-                        }
+                            {
+                            <img src="~/img/recipes/null.png" class="figure-img img-fluid rounded" style="max-width: 100% " alt="nie znaleziono: @item.Name">
+                            } 
                             <figcaption class="text-center">@item.Name</figcaption>
                         </a>
-
-                    <button onclick="changeVariable(@item.Id)" class="btn-check bg-warning text-center">Wybierz<strong> @item.Id</strong></button>
                 </div>
                 }
            
         </div>
+       
 
         <div class="col-4 p-2">
             <form asp-action="Create">
