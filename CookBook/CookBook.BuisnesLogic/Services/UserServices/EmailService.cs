@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MailKit.Net.Smtp;
-using MailKit.Security;
-using MimeKit;
+﻿using CookBook.BuisnesLogic.Models;
 using Microsoft.Extensions.Options;
-using CookBook.BuisnesLogic.Models;
-using MailKit;
+using System.Net;
+using System.Net.Mail;
 
 namespace CookBook.BuisnesLogic.Services.UserServices
 {
@@ -23,30 +16,26 @@ namespace CookBook.BuisnesLogic.Services.UserServices
 
         public async Task SendEmailAsync(string email, string subject, string message)
         {
-            var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(_smtpSettings.SenderName, _smtpSettings.SenderEmail));
-            emailMessage.To.Add(new MailboxAddress("", email));
+            var emailMessage = new MailMessage();
+            emailMessage.From = new MailAddress(_smtpSettings.SenderEmail);
+            emailMessage.To.Add(new MailAddress(email));
             emailMessage.Subject = subject;
-            emailMessage.Body = new TextPart("plain") { Text = message };
+            emailMessage.Body = message;
 
-            using var client = new SmtpClient(new ProtocolLogger(Console.OpenStandardOutput()));
+            using var client = new SmtpClient(_smtpSettings.Server)
+            {
+                EnableSsl = true,
+                Credentials = new NetworkCredential(_smtpSettings.SenderEmail, _smtpSettings.Password),
+                Port = 587
+            };            
             try
             {
-                await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, SecureSocketOptions.StartTls);
-                //await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, SecureSocketOptions.SslOnConnect);
-                // client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_smtpSettings.Username, _smtpSettings.Password);
-                await client.SendAsync(emailMessage);
-                await client.DisconnectAsync(true);
-            }
-            catch (AuthenticationException ex)
-            {
-                Console.WriteLine($"Authentication failed: {ex.Message}");
+                client.Send(emailMessage);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to send email: {ex.Message}");
             }
         }
-     }
+    }
 }
