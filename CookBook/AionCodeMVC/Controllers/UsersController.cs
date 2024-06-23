@@ -10,6 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using AutoMapper;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using System.Security.Cryptography;
+using System.Text;
 
 
 namespace AionCodeMVC.Controllers
@@ -25,9 +27,7 @@ namespace AionCodeMVC.Controllers
         private readonly UserManager<Database.Entities.UserCookBook> _userManager;
         private readonly IMapper _mapper;
 
-        private readonly EmailService _emailService;
-
-        public UsersController(IRegisterUserService registerUserService, IGetUserService GetUserService, IDeleteUserService DeleteUserService, IEditUserService EditUserService, SignInManager<Database.Entities.UserCookBook> signInManager, UserManager<Database.Entities.UserCookBook> userManager, IMapper mapper, EmailService emailService)
+        public UsersController(IRegisterUserService registerUserService, IGetUserService GetUserService, IDeleteUserService DeleteUserService, IEditUserService EditUserService, SignInManager<Database.Entities.UserCookBook> signInManager, UserManager<Database.Entities.UserCookBook> userManager, IMapper mapper)
         {
             _registerUserService = registerUserService;
             _getUserService = GetUserService;
@@ -38,8 +38,6 @@ namespace AionCodeMVC.Controllers
             _userManager = userManager;
 
             _mapper = mapper;
-            
-            _emailService = emailService;
         }
 
         [Authorize(Policy = "Admin")]
@@ -122,21 +120,14 @@ namespace AionCodeMVC.Controllers
             {
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error.Description);
-                    ViewBag.Message += error.Description;
-                    ViewBag.Message += " ";
+                    TempData["ErrorMessages"] += error.Description;
+                    return RedirectToAction("RegisterUser", "Users");
                 }
             }
-
-            var userId = _userManager.GetUserId(User);
-
-            var userDb = await _userManager.FindByIdAsync(userId);
-
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(userDb);
-            var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = userDb.Email }, Request.Scheme);
-            await _emailService.SendEmailAsync(user.Email, "Confirm your email", confirmationLink);
-
-
+            else
+            {
+                TempData["SuccessMessage"] = "Sprawdź swoją pocztę email w celu potwierdzenia adresu.";
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -299,6 +290,33 @@ namespace AionCodeMVC.Controllers
                 return RedirectToAction(nameof(AboutMe));
             }
             return RedirectToAction(nameof(AccessDenied));
+        }
+
+        public async Task<ActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                TempData["ErrorMessages"] += "Autoryzacja nie powiodła się";
+                return RedirectToAction("Index", "Home");
+            }
+
+             var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = "Dziękujemy za potwierdzenie adresu mailowego. Możesz zalogować sie na swoje konto.";
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                TempData["ErrorMessages"] += "Autoryzacja nie powiodła się";
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

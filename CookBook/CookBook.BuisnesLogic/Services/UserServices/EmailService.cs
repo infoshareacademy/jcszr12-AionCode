@@ -9,10 +9,11 @@ using MimeKit;
 using Microsoft.Extensions.Options;
 using CookBook.BuisnesLogic.Models;
 using MailKit;
+using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 
 namespace CookBook.BuisnesLogic.Services.UserServices
 {
-    public class EmailService
+    public class EmailService : IEmailService
     {
         private readonly SmtpSettings _smtpSettings;
 
@@ -32,9 +33,9 @@ namespace CookBook.BuisnesLogic.Services.UserServices
             using var client = new SmtpClient(new ProtocolLogger(Console.OpenStandardOutput()));
             try
             {
-                await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, SecureSocketOptions.StartTls);
-                //await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, SecureSocketOptions.SslOnConnect);
-                // client.AuthenticationMechanisms.Remove("XOAUTH2");
+                client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
+                //await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, SecureSocketOptions.StartTls);
+                await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, SecureSocketOptions.SslOnConnect);
                 await client.AuthenticateAsync(_smtpSettings.Username, _smtpSettings.Password);
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);

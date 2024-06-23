@@ -18,6 +18,7 @@ using CookBook.BuisnesLogic.Models;
 using Database.SampleData;
 using Microsoft.Extensions.DependencyInjection;
 using CookBook.BuisnesLogic.Services.IngredientCommentServices;
+using NuGet.Common;
 
 namespace AionCodeMVC
 {
@@ -57,6 +58,7 @@ namespace AionCodeMVC
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 3;
                 options.Password.RequireNonAlphanumeric = true;
+                options.SignIn.RequireConfirmedAccount = true;
             });
 
             builder.Services.AddAuthorization(options =>
@@ -87,7 +89,7 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
             builder.Services.AddScoped<IEditUserService, EditUserService>();
             builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
-            builder.Services.AddTransient<EmailService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
             builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
             builder.Services.AddScoped<ICreateRecipeService, CreateRecipeService>();
@@ -164,6 +166,8 @@ namespace AionCodeMVC
                         if (result.Succeeded)
                         {
                             await userManager.AddToRoleAsync(admin, "Admin");
+                            var token = await userManager.GenerateEmailConfirmationTokenAsync(admin);
+                            await userManager.ConfirmEmailAsync(admin, token);
                         }
                         else
                         {
@@ -187,6 +191,8 @@ namespace AionCodeMVC
                         if (result.Succeeded)
                         {
                             await userManager.AddToRoleAsync(stdUsr, "StdUser");
+                            var token = await userManager.GenerateEmailConfirmationTokenAsync(stdUsr);
+                            await userManager.ConfirmEmailAsync(stdUsr, token);
                         }
                         else
                         {
