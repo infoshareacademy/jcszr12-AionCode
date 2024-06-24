@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace CookBook.BuisnesLogic.Services.MyFridgeServices
 {
-    public class DeleteMyFridgeIngredientService : IDeleteMyFridgeIngredientService
+    public class DeleteMyFridgeService : IDeleteMyFridgeService
     {
         private readonly DatabaseContext _dbContext;
         private readonly IGetUserService _getUserService;
 
-        public DeleteMyFridgeIngredientService(DatabaseContext dbContext, IGetUserService getUserService)
+        public DeleteMyFridgeService(DatabaseContext dbContext, IGetUserService getUserService)
         {
             _dbContext = dbContext;
             _getUserService = getUserService;
@@ -52,6 +52,28 @@ namespace CookBook.BuisnesLogic.Services.MyFridgeServices
                 await _dbContext.SaveChangesAsync();
 
 
+            }
+        }
+
+        public async Task DeleteFridge(int id)
+        {
+            var fridgeIngredientsToDelete = await _dbContext.MyFridgeIngredient
+                .Where(i => i.MyFridgeId == id)
+                .ToListAsync();
+
+            var fridgeToDelete = await _dbContext.MyFridge
+                .FirstOrDefaultAsync(f => f.Id == id);
+
+            if (fridgeToDelete != null)
+            {
+                if (fridgeIngredientsToDelete.Count > 0)
+                {
+                    _dbContext.MyFridgeIngredient.RemoveRange(fridgeIngredientsToDelete);
+                }
+
+                _dbContext.MyFridge.Remove(fridgeToDelete);
+
+                await _dbContext.SaveChangesAsync();
             }
         }
     }

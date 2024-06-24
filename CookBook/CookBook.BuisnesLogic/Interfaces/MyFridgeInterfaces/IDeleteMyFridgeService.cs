@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces
 {
-    public interface IDeleteMyFridgeIngredientService
+    public interface IDeleteMyFridgeService
     {
         Task DeleteFridgeIngredient(MyFridgeIngredientDTO myFridgeIngredientDTO);
+        Task DeleteFridge(int id);
     }
 }
