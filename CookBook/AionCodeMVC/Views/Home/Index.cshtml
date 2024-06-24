@@ -4,6 +4,19 @@
     ViewData["Title"] = "Witamy w naszej kuchni";
 }
 
+@if (TempData["ErrorMessages"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessages"];
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"];
+    </div>
+}
+
 <h1 class="col-12 text-center  bg-transparent">@ViewData["Title"]</h1>
 <h3 class="col-12 text-center font-weight-light">Dzisiejszy temat to "Afrodyzjaki"</h3>
 

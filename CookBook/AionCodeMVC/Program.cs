@@ -18,6 +18,7 @@ using CookBook.BuisnesLogic.Models;
 using Database.SampleData;
 using Microsoft.Extensions.DependencyInjection;
 using CookBook.BuisnesLogic.Services.IngredientCommentServices;
+using NuGet.Common;
 using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
 using CookBook.BuisnesLogic.Services.MyFridgeServices;
 
@@ -38,12 +39,14 @@ namespace AionCodeMVC
             builder.Services.AddAzureClients(clientBuilder => clientBuilder.AddBlobServiceClient(builder.Configuration["AzureStorage:BlolbConnectionString"]));
             builder.Services.AddScoped<IAzureStorage, AzureStorageService>();
 
-
             //Add automapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //Add Identity
-            builder.Services.AddIdentity<Database.Entities.UserCookBook, IdentityRole>()
+            builder.Services.AddIdentity<Database.Entities.UserCookBook, IdentityRole>(options =>
+            {
+                options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+            })
                 .AddEntityFrameworkStores<DatabaseContext>()
                 .AddDefaultTokenProviders();
 
@@ -53,11 +56,14 @@ namespace AionCodeMVC
                 options.AccessDeniedPath = "/Users/AccessDenied";
             });
 
+            builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection(nameof(SmtpSettings)));
+
             builder.Services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 3;
                 options.Password.RequireNonAlphanumeric = true;
+                options.SignIn.RequireConfirmedAccount = true;
             });
 
             builder.Services.AddAuthorization(options =>
@@ -94,6 +100,7 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
             builder.Services.AddScoped<IEditUserService, EditUserService>();
             builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
             builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
             builder.Services.AddScoped<ICreateRecipeService, CreateRecipeService>();
@@ -170,6 +177,8 @@ namespace AionCodeMVC
                         if (result.Succeeded)
                         {
                             await userManager.AddToRoleAsync(admin, "Admin");
+                            var token = await userManager.GenerateEmailConfirmationTokenAsync(admin);
+                            await userManager.ConfirmEmailAsync(admin, token);
                         }
                         else
                         {
@@ -193,6 +202,8 @@ namespace AionCodeMVC
                         if (result.Succeeded)
                         {
                             await userManager.AddToRoleAsync(stdUsr, "StdUser");
+                            var token = await userManager.GenerateEmailConfirmationTokenAsync(stdUsr);
+                            await userManager.ConfirmEmailAsync(stdUsr, token);
                         }
                         else
                         {

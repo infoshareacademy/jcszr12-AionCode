@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using AutoMapper;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using System.Security.Cryptography;
+using System.Text;
 
 
 namespace AionCodeMVC.Controllers
@@ -110,17 +113,20 @@ namespace AionCodeMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterUser(RegisterDto user)
-         {
+        {
             var result = await _registerUserService.RegisterUser(user);
 
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error.Description);
-                    ViewBag.Message += error.Description;
-                    ViewBag.Message += " ";
+                    TempData["ErrorMessages"] += error.Description;
+                    return RedirectToAction("RegisterUser", "Users");
                 }
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "Sprawdź swoją pocztę email w celu potwierdzenia adresu.";
             }
             return RedirectToAction("Index", "Home");
         }
@@ -284,6 +290,33 @@ namespace AionCodeMVC.Controllers
                 return RedirectToAction(nameof(AboutMe));
             }
             return RedirectToAction(nameof(AccessDenied));
+        }
+
+        public async Task<ActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                TempData["ErrorMessages"] += "Autoryzacja nie powiodła się";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = "Dziękujemy za potwierdzenie adresu mailowego. Możesz zalogować sie na swoje konto.";
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                TempData["ErrorMessages"] += "Autoryzacja nie powiodła się";
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

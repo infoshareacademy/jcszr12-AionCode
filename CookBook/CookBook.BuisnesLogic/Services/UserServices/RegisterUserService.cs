@@ -1,7 +1,13 @@
 ﻿using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using Microsoft.AspNetCore.Identity;
-using System.Web.Mvc;
+using System.Security.Policy;
+using CookBook.BuisnesLogic.Models;
+using CookBook.BuisnesLogic.Services.UserServices;
+
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http;
 
 namespace CookBook.BuisnesLogic.Services.UserServices
 {
@@ -10,12 +16,14 @@ namespace CookBook.BuisnesLogic.Services.UserServices
         private IUsersRepository _repository;
         private readonly UserManager<Database.Entities.UserCookBook> _userManager;
         private readonly SignInManager<Database.Entities.UserCookBook> _signInManager;
+        private readonly IEmailService _emailService;
 
-        public RegisterUserService(IUsersRepository repository, UserManager<Database.Entities.UserCookBook> userManager, SignInManager<Database.Entities.UserCookBook> signInManager)
+        public RegisterUserService(IUsersRepository repository, UserManager<Database.Entities.UserCookBook> userManager, SignInManager<Database.Entities.UserCookBook> signInManager, IEmailService emailService)
         {
             _repository = repository;
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailService = emailService;
         }
 
         public async Task<IdentityResult> RegisterUser(RegisterDto user)
@@ -31,9 +39,11 @@ namespace CookBook.BuisnesLogic.Services.UserServices
 
             if (result.Succeeded)
             {
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(userDb);
                 await _userManager.AddToRoleAsync(userDb, "StdUser");
 
-                await _signInManager.SignInAsync(userDb, false);
+                var confirmationLink = $"https://localhost:7063/Users/ConfirmEmail?userId={userDb.Id}&token={token}";
+                await _emailService.SendEmailAsync(userDb.Email, "CookBook AC - Potwierdz swoj email", confirmationLink);
             }
             return result;
         }
