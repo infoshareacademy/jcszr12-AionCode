@@ -81,6 +81,7 @@
 
 
 
+
     </style>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
@@ -199,10 +200,16 @@
     <div class="row mb-3">
         <div class="col-12 bg-transparent rounded-2">
             <h4>Propozycje potraw uwzgledniające składniki w lodówce</h4>
-            @foreach (var recipe in Model.MyProposedRecipes)
+            @foreach (var recipeTuple in Model.MyProposedRecipes)
             {
+                var recipe = recipeTuple.Item1; // Item1 is the RecipeDTO
+                var ownedIngredients = recipeTuple.Item2; // Item2 is the list of owned ingredient IDs
+                var neededIngredients = recipeTuple.Item3; // Item3 is the list of needed ingredient IDs
+
                 <div>
                     @Html.ActionLink(recipe.Name, "Details", "Recipes", new { id = recipe.Id }, new { @class = "ingredient" })
+                    <p>Posiadane składniki (IDs): @string.Join(", ", ownedIngredients)</p>
+                    <p>Potrzebne składniki (IDs): @string.Join(", ", neededIngredients)</p>
                 </div>
             }
         </div>
