@@ -43,12 +43,7 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                 await _userManager.AddToRoleAsync(userDb, "StdUser");
 
                 var confirmationLink = $"https://localhost:7063/Users/ConfirmEmail?userId={userDb.Id}&token={token}";
-                //var confirmationLink = Url.Action("ConfirmEmail", "Users", new { userId = userDb.Id, token }, Request.Scheme);
-                //var confirmationLink = $"https://localhost:7063/Users/ConfirmEmail?userId={userDb.Id}&token={token}";
-                //var confirmationLink = Url.Action(nameof(ConfirmEmail), "Users", new { userId = userDb.Id, token = token }, Request.Scheme);
                 await _emailService.SendEmailAsync(userDb.Email, "CookBook AC - Potwierdz swoj email", confirmationLink);
-
-                //await _signInManager.SignInAsync(userDb, false);
             }
             return result;
         }

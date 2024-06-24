@@ -41,7 +41,10 @@ namespace AionCodeMVC
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //Add Identity
-            builder.Services.AddIdentity<Database.Entities.UserCookBook, IdentityRole>()
+            builder.Services.AddIdentity<Database.Entities.UserCookBook, IdentityRole>(options =>
+            {
+                options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+            })
                 .AddEntityFrameworkStores<DatabaseContext>()
                 .AddDefaultTokenProviders();
 

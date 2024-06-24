@@ -34,7 +34,6 @@ namespace CookBook.BuisnesLogic.Services.UserServices
             try
             {
                 client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
-                //await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, SecureSocketOptions.StartTls);
                 await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, SecureSocketOptions.SslOnConnect);
                 await client.AuthenticateAsync(_smtpSettings.Username, _smtpSettings.Password);
                 await client.SendAsync(emailMessage);

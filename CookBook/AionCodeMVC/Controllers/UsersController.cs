@@ -306,7 +306,7 @@ namespace AionCodeMVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-             var result = await _userManager.ConfirmEmailAsync(user, token);
+            var result = await _userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
                 TempData["SuccessMessage"] = "Dziękujemy za potwierdzenie adresu mailowego. Możesz zalogować sie na swoje konto.";
