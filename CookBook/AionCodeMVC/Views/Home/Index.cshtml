@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Database.Entities.RecipeDetails
+@{
     Layout = "_Layout";
     ViewData["Title"] = "Witamy w naszej kuchni";
 }
@@ -19,31 +20,50 @@
 <h1 class="col-12 text-center  bg-transparent">@ViewData["Title"]</h1>
 <h3 class="col-12 text-center font-weight-light">Dzisiejszy temat to "Afrodyzjaki"</h3>
 
-                <div class="container">
-                    <div class="row">
-                        <aside class="col-12 text-center">
-                            <img src="~/img/start1.png" class="img-fluid" alt="" />
-                        </aside>
-                        <div class="col-lg-8 bg-white text-body p-4 wpis">
-                            <header>
-                                <h3 class=" h5 font-weight-bold ">Marzysz o magicznej nocy pełnej uniesień?<br /> Przygotuj kolację pełną afrodyzjaków.</h3>
-                                <p class="text-justify">
-                                    Afrodyzjaki już od najdawniejszych czasów rozpalały serca i zmysły, a wiara w ich magiczna moc przetrwała do dziś. Wanilia, cynamon, goździki, lubczyk, czekolada, szampan, chilli, krewetki, ostrygi to tylko kilka z produktów poprawiających libido a nawet wpływających na potencję. Warto więc wykorzystać je do skomponowania romantycznej kolacji. Wybierzcie produkty uważane za afrodyzjaki i skomponujcie wyjątkową kolację. Taka kolacja, bogatsza o pobudzające substancje może dostarczyć jeszcze wspanialszych doznań.
-                                </p>
-                            </header>
-                        </div>
-                        <aside class="col-lg-4 bg-warning p-4">
-                            
-                            ssssss
-
-                        </aside>
-
-                        <aside class="col-12 text-body p-4 wpis ">
-                            <h2>Author Name</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                        </aside>
-                    </div>
+<div class="container">
+    <div class="row">
+        <aside class="col-12 text-center">
+            <img src="~/img/start1.png" class="img-fluid" alt="" />
+        </aside>
+        <div class="col-lg-8 bg-white text-body p-4 wpis">
+            <header>
+                <h3 class=" h5 font-weight-bold ">Marzysz o magicznej nocy pełnej uniesień?<br /> Przygotuj kolację pełną afrodyzjaków.</h3>
+               </br>
+               <p class="text-justify">
+                    Afrodyzjaki już od najdawniejszych czasów rozpalały serca i zmysły, a wiara w ich magiczna moc przetrwała do dziś. Wanilia, cynamon, goździki, lubczyk, czekolada, szampan, chilli, krewetki, ostrygi to tylko kilka z produktów poprawiających libido a nawet wpływających na potencję. Warto więc wykorzystać je do skomponowania romantycznej kolacji. Wybierzcie produkty uważane za afrodyzjaki i skomponujcie wyjątkową kolację. Taka kolacja, bogatsza o pobudzające substancje może dostarczyć jeszcze wspanialszych doznań.
+                </p>
+            </header>
+        </div>
+        <aside class="col-lg-4 bg-warning p-4">
+            <h2 class="text-center">Potrawa dnia</h2>
+            <a href="@Url.Action("Details", "Recipes", new { Model.Id })">
+                <h5 class="text-center">@Model.Name</h5>
+                <div class="text-center" >
+                    <img src="@Model.ImagePath" class="rounded border border-dark" style="max-width: 100%" alt="" />
                 </div>
+            </a>
+
+            <p class="text-center">
+                @Model.Category
+            </p>
+
+        </aside>
+
+        <aside class="col-12 text-body p-4 wpis ">
+            <h2>Od Redakcji</h2>
+            <p>
+                Odkryj nowe, inspirujące przepisy kulinarne z CookBook - dostępnych jest wiele unikalnych i kreatywnych propozycji dań, których nie znajdziesz w tradycyjnych książkach kucharskich.
+
+                Skorzystaj z funkcji wyszukiwania, aby szybko znaleźć przepis na danie, które chcesz przygotować - wpisz tylko składniki, które masz w lodówce, a CookBook pokaże Ci dostępne opcje.
+
+                Korzystaj z możliwości tworzenia listy ulubionych przepisów i planowania posiłków - dzięki temu zawsze będziesz mieć pod ręką propozycje dań na każdą okazję i pomysł na codzienne posiłki.
+
+                Przeglądaj opinie i komentarze innych użytkowników, którzy już wypróbowali przepisy z CookBook - to doskonały sposób na znalezienie wysoko ocenianych dań i zyskanie dodatkowej pewności przygotowywanych potraw.
+                ZAPRASZAMY!
+            </p>
+        </aside>
+    </div>
+</div>
 
 
 
