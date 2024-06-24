@@ -1,9 +1,9 @@
-﻿@model IEnumerable<CookBook.BuisnesLogic.DTO.MyFridgeDTO>
+﻿@model MyFridgeViewModel
 
 @{
     ViewData["Title"] = "Moja Lodówka";
     int Lp = 0;
-    var firstFridge = Model.FirstOrDefault();
+    //var firstFridge = Model.FirstOrDefault();
 }
 
 <head>
@@ -110,11 +110,11 @@
 @*     <div style="border: 1px  groove black;" class="mt-1 mb-3"></div> *@
 
     <!-- Sprawdzenie, czy lista lodówek nie jest pusta -->
-    @if (Model.Any())
+    @if (Model.MyFridges.Any())
     {
         <h2 class="text-center mt-5">Składniki w lodówkach:</h2>
         <!-- Pętla po wszystkich lodówkach w modelu -->
-        @foreach (var fridge in Model)
+        @foreach (var fridge in Model.MyFridges)
         {
             <div class="row mb-3">
                 <div class="col-12 bg-transparent rounded-2">
@@ -196,7 +196,20 @@
     {
         <p class="text-center">Brak lodówek do wyświetlenia.</p>
     }
+    <div class="row mb-3">
+        <div class="col-12 bg-transparent rounded-2">
+            <h4>Propozycje potraw uwzgledniające składniki w lodówce</h4>
+            @foreach (var recipe in Model.MyProposedRecipes)
+            {
+                <div>
+                    @Html.ActionLink(recipe.Name, "Details", "Recipes", new { id = recipe.Id }, new { @class = "ingredient" })
+                </div>
+            }
+        </div>
+    </div>
 </div>
+
+
 
 @section scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

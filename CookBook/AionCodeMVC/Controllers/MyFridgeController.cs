@@ -1,4 +1,5 @@
-﻿using CookBook.BuisnesLogic.DTO;
+﻿using AionCodeMVC.Models;
+using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,16 @@ namespace AionCodeMVC.Controllers
         public async Task<IActionResult> Index()
         {
             var myFridges = await _getMyFridgeService.GetAllMyFridges();
-            return View(myFridges);
+            var myProposedRecipes = await _getMyFridgeService.GetProposedRecipes(myFridges);
+
+            var model = new MyFridgeViewModel
+            {
+                MyFridges = myFridges,
+                MyProposedRecipes = myProposedRecipes
+            };
+
+            return View(model);
+            //return View(myFridges);
         }
 
         // GET: MyFridge/Create
