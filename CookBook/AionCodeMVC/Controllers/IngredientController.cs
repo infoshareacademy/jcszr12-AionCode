@@ -58,6 +58,13 @@ namespace AionCodeMVC.Controllers
             return View(model);
         }
 
+        public async Task<ActionResult> RedirectToIngredientDetails(string name)
+        {
+            var ingredientByName = await _getIngredientService.GetByNameIngredientDetailedDTO(name);
+
+            return RedirectToAction("Details", new { id = ingredientByName.Id });
+        }
+
         // GET: IngredientController/Create
         [Authorize(Policy = "StdUser")]
         public ActionResult Create()

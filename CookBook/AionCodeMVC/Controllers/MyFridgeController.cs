@@ -1,4 +1,5 @@
-﻿using CookBook.BuisnesLogic.DTO;
+﻿using AionCodeMVC.Models;
+using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,11 @@ namespace AionCodeMVC.Controllers
     {
         private readonly IGetMyFridgeService _getMyFridgeService;
         private readonly ICreateFridgeService _createFridgeService;
-        private readonly IDeleteMyFridgeIngredientService  _deleteMyFridgeIngredientService;
+        private readonly IDeleteMyFridgeService  _deleteMyFridgeIngredientService;
         private readonly IGetIngredientService _getIngredientService;
         private readonly IAddFridgeIngredientService _addFridgeIngredientService;
 
-        public MyFridgeController(IGetMyFridgeService getMyFridgeService, ICreateFridgeService createFridgeService, IDeleteMyFridgeIngredientService deleteMyFridgeIngredientService, IGetIngredientService getIngredientService, IAddFridgeIngredientService addFridgeIngredientService)
+        public MyFridgeController(IGetMyFridgeService getMyFridgeService, ICreateFridgeService createFridgeService, IDeleteMyFridgeService deleteMyFridgeIngredientService, IGetIngredientService getIngredientService, IAddFridgeIngredientService addFridgeIngredientService)
         {
             _getMyFridgeService = getMyFridgeService;
             _createFridgeService = createFridgeService;
@@ -30,7 +31,16 @@ namespace AionCodeMVC.Controllers
         public async Task<IActionResult> Index()
         {
             var myFridges = await _getMyFridgeService.GetAllMyFridges();
-            return View(myFridges);
+            var myProposedRecipes = await _getMyFridgeService.GetProposedRecipes(myFridges);
+
+            var model = new MyFridgeViewModel
+            {
+                MyFridges = myFridges,
+                MyProposedRecipes = myProposedRecipes
+            };
+
+            return View(model);
+            //return View(myFridges);
         }
 
         // GET: MyFridge/Create
@@ -86,6 +96,10 @@ namespace AionCodeMVC.Controllers
             }
         }
 
+
+
+
+
         public async Task<JsonResult> SearchIngredients(string term)
         {
             var searchedIngredients = await _getIngredientService.GetIngredientsByTerm(term);
@@ -138,6 +152,26 @@ namespace AionCodeMVC.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             // Usuń lodówkę na podstawie ID i przekieruj użytkownika do akcji Index
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+        // Akcja usuwania lodówki
+        [HttpPost]
+        public async Task<IActionResult> DeleteFridge(int id)
+        {
+            // Wywołujemy serwis do usunięcia lodówki
+            try
+            {
+                await _deleteMyFridgeIngredientService.DeleteFridge(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("nie poszlo");
+            }
+
             return RedirectToAction(nameof(Index));
         }
     }
