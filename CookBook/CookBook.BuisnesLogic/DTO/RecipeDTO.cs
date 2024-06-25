@@ -1,7 +1,4 @@
-﻿using Database.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CookBook.BuisnesLogic.DTO
+﻿namespace CookBook.BuisnesLogic.DTO
 {
     public class RecipeDTO
     {
@@ -11,6 +8,6 @@ namespace CookBook.BuisnesLogic.DTO
         //public string Description { get; set; }
         public string ImagePath { get; set; }
         public string Descripton { get; set; }
-           
+
     }
 }

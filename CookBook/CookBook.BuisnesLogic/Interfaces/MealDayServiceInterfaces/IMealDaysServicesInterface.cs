@@ -13,7 +13,9 @@ namespace CookBook.BuisnesLogic.Interfaces.MealDayServiceInterfaces
         public Task Details(int? id);
         public Task<MealDay> Edit(int? id);
         public Task<MealDayDTO> CreateGet(int p, string UserIdentityName);
-       public  Task<MealDayDTO> CreatePost(MealDay mealDay, RecipeUsed recipeUsed, MealDayDTO mealDayDTO);
-      
+        public Task<MealDayDTO> CreatePost(MealDay mealDay, RecipeUsed recipeUsed, MealDayDTO mealDayDTO);
+        public Task<int> LongList();
+
+
     }
 }

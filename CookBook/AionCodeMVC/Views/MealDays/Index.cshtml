@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CookBook.BuisnesLogic.DTO.MealDayViewDTO>
 
 @{
-    var title = User.Identity.Name.ToString();
+    Layout = "~/Views/Shared/_LayoutMealDay.cshtml";
 
     var ativeDay = (int)(TempData["selectday"] ?? DateTime.Now.Day);
 
@@ -22,8 +22,7 @@
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     var Calories = 0;
 
-    ViewData["Title"] = @title;
-    Layout = "~/Views/Shared/_LayoutMealDay.cshtml";
+   
 
 }
 

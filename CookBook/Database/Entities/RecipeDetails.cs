@@ -10,11 +10,11 @@ namespace Database.Entities
         public string Description { get; set; }
         public string ImagePath { get; set; }
         public DateTime AddDate { get; set; }
-        
+
         [ForeignKey("UserCookBook")]
-        public string? UserCookBookId {  get; set; }
+        public string? UserCookBookId { get; set; }
         public UserCookBook UserCookBook { get; set; }
         public virtual ICollection<RecipeUsed> RecipesUsed { get; set; }
-        public virtual ICollection<IngredientUsed> IngredientsUsed { get; set;}
+        public virtual ICollection<IngredientUsed> IngredientsUsed { get; set; }
     }
 }

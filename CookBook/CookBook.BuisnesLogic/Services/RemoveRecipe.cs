@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using CookBook.BuisnesLogic.Exceptions;
-using CookBook.BuisnesLogic.Models;
+﻿using CookBook.BuisnesLogic.Exceptions;
 using Newtonsoft.Json;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CookBook.BuisnesLogic.Services
 {
@@ -28,7 +19,7 @@ namespace CookBook.BuisnesLogic.Services
                 recipes.Remove(recipeToDelete);
                 statusRecipe = true;
             }
-            else 
+            else
             {
                 throw new ExceptionRecipeNot();
             }

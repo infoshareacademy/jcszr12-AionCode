@@ -1,12 +1,8 @@
 ﻿using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.MealDayServiceInterfaces;
-using Database;
 using Database.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
-using System.IO.Hashing;
-using System.Linq;
 
 namespace AionCodeMVC.Controllers
 {
@@ -51,7 +47,7 @@ namespace AionCodeMVC.Controllers
                 return NotFound();
             }
 
-            var mealDay =  _mealday.Details(id);
+            var mealDay = _mealday.Details(id);
             if (mealDay == null)
             {
                 return NotFound();
@@ -63,10 +59,10 @@ namespace AionCodeMVC.Controllers
         [HttpGet]
         public IActionResult Create(int p)
         {
-           var mealDayDTO =  _mealday.CreateGet(p, User.Identity.Name);
+            var mealDayDTO = _mealday.CreateGet(p, User.Identity.Name);
             ViewData["UserCookBook"] = _mealday.GetUserId(User.Identity.Name);
             TempData["page"] = p;
-            TempData["longList"] = 5;
+            TempData["longList"] = 2;
 
             return View(mealDayDTO);
         }
@@ -77,12 +73,12 @@ namespace AionCodeMVC.Controllers
         {
 
             var mealDay = new MealDay();
-            var recipeUsed= new RecipeUsed();
-            
+            var recipeUsed = new RecipeUsed();
+
 
             if (ModelState.IsValid)
             {
-               _mealday.CreatePost(mealDay, recipeUsed, mealDayDTOin);
+                _mealday.CreatePost(mealDay, recipeUsed, mealDayDTOin);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -148,7 +144,7 @@ namespace AionCodeMVC.Controllers
                 return NotFound();
             }
 
-            var mealDay =  _mealday.Delete(id);
+            var mealDay = _mealday.Delete(id);
             if (mealDay == null)
             {
                 return NotFound();
@@ -165,6 +161,6 @@ namespace AionCodeMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
+
     }
 }

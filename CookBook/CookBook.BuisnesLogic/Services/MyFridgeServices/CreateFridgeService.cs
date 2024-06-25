@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
-using Database.Entities;
-using Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
+using Database;
+using Database.Entities;
 
 namespace CookBook.BuisnesLogic.Services.MyFridgeServices
 {

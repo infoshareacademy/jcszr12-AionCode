@@ -1,16 +1,8 @@
-﻿using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
-using Database.Entities;
-using Database;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
+﻿using AutoMapper;
 using CookBook.BuisnesLogic.DTO;
+using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+using Database;
+using Database.Entities;
 
 namespace CookBook.BuisnesLogic.Services.IngredientCommentServices
 {

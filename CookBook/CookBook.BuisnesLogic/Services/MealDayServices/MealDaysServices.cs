@@ -18,7 +18,7 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
             _context = context;
         }
 
-       
+
 
         public UserCookBook GetUserId(string UserIdentityName)
         {
@@ -59,7 +59,7 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
             }
             return result;
         }
-        
+
         public async Task<MealDayDTO> CreatePost(MealDay mealDay, RecipeUsed recipeUsed, MealDayDTO mealDayDTO)
         {
             mealDay.Day = mealDayDTO.Day;
@@ -139,9 +139,12 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
             var mealDayDTO = new MealDayDTO { AddDate = DateTime.Now, DetailsShort = resultRecipes };
 
 
-            var longList = _context.RecipeDetails.Count() / _pageSize;
-
             return Task.FromResult(mealDayDTO);
+        }
+        public Task<int> LongList()
+        {
+            var result = _context.RecipeDetails.Count() / _pageSize;
+            return Task.FromResult(result);
         }
     }
 }

@@ -1,14 +1,10 @@
-﻿using CookBook.BuisnesLogic.DTO;
+﻿using AutoMapper;
+using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
-using CookBook.BuisnesLogic.Models;
-using CookBook.BuisnesLogic.Services.UserServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
-using AutoMapper;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace AionCodeMVC.Controllers
@@ -110,7 +106,7 @@ namespace AionCodeMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterUser(RegisterDto user)
-         {
+        {
             var result = await _registerUserService.RegisterUser(user);
 
             if (!result.Succeeded)
@@ -232,7 +228,7 @@ namespace AionCodeMVC.Controllers
         // POST: UsersController/Delete/5
         [Authorize(Policy = "Admin")]
         [HttpPost]
-        public async Task <ActionResult> Delete(string id, UserCookBookDto user)
+        public async Task<ActionResult> Delete(string id, UserCookBookDto user)
         {
             var result = await _deleteUserService.DeleteUser(id);
             if (!result.Succeeded)
@@ -248,7 +244,7 @@ namespace AionCodeMVC.Controllers
         }
 
         [Authorize(Policy = "StdUser")]
-        public async Task <ActionResult> AboutMe()
+        public async Task<ActionResult> AboutMe()
         {
             var userId = _userManager.GetUserId(User);
 
@@ -265,7 +261,7 @@ namespace AionCodeMVC.Controllers
         // POST: UsersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task <ActionResult> AboutMe(UserCookBookDto user)
+        public async Task<ActionResult> AboutMe(UserCookBookDto user)
         {
             var userId = _userManager.GetUserId(User);
 

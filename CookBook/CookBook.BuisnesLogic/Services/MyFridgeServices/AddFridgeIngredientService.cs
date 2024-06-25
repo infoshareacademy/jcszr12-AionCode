@@ -4,12 +4,6 @@ using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
 using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using Database;
 using Database.Entities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CookBook.BuisnesLogic.Services.MyFridgeServices
 {
@@ -31,7 +25,7 @@ namespace CookBook.BuisnesLogic.Services.MyFridgeServices
         {
             var userId = await _getUserService.LoggedUserIdAsync();
 
-            if (userId != null && myFridgeIngredientDTO!=null)
+            if (userId != null && myFridgeIngredientDTO != null)
             {
                 var myFridgeIngredient = _mapper.Map<MyFridgeIngredient>(myFridgeIngredientDTO);
                 myFridgeIngredient.IngredientDetailsId = _dbContext.IngredientDetails.FirstOrDefault(i => i.Name == ingredientName).Id;

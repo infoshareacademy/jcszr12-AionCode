@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace Database
 {
@@ -28,7 +27,7 @@ namespace Database
         {
             base.OnModelCreating(modelBuilder);
             //IngridientDetails
-            modelBuilder.Entity<IngredientDetails>().HasKey(ingridient=>ingridient.Id);
+            modelBuilder.Entity<IngredientDetails>().HasKey(ingridient => ingridient.Id);
             modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.Type).HasConversion<string>();
             //modelBuilder.Entity<IngredientDetails>().Property(ingridient => ingridient.AddDate).HasColumnType("smalldatetime");
@@ -50,8 +49,8 @@ namespace Database
             //modelBuilder.Entity<IngredientUsed>().Property(ingridientUsed => ingridientUsed.AddDate).HasColumnType("smalldatetime");
 
             //MealDay
-            modelBuilder.Entity<MealDay>().HasKey(mealDay=>mealDay.Id);
-            modelBuilder.Entity<MealDay>().Property(mealDay=>mealDay.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<MealDay>().HasKey(mealDay => mealDay.Id);
+            modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.Id).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.Day).HasColumnType("smalldatetime");
             modelBuilder.Entity<MealDay>().Property(mealDay => mealDay.AddDate).HasColumnType("smalldatetime");
