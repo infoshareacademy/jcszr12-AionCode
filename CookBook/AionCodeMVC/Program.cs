@@ -20,6 +20,8 @@ using Microsoft.Extensions.DependencyInjection;
 using CookBook.BuisnesLogic.Services.IngredientCommentServices;
 using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
 using CookBook.BuisnesLogic.Services.MyFridgeServices;
+using CookBook.BuisnesLogic.Interfaces.MealDayServiceInterfaces;
+using CookBook.BuisnesLogic.Services.MealDayServices;
 
 namespace AionCodeMVC
 {
@@ -101,6 +103,8 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IDeleteRecipeService, DeleteRecipeService>();
             builder.Services.AddScoped<IEditRecipeService, EditRecipeService>();
             builder.Services.AddScoped<IUploadRecipePhotoService, UploadRecipePhotoService>();
+
+            builder.Services.AddScoped<IMealDaysServicesInterface, MealDaysServices>();
 
             var app = builder.Build();
 
