@@ -1,7 +1,9 @@
-﻿using CookBook.BuisnesLogic.DTO;
+﻿using AutoMapper;
+using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.MealDayServiceInterfaces;
 using Database;
 using Database.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CookBook.BuisnesLogic.Services.MealDayServices
@@ -9,23 +11,23 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
     public class MealDaysServices : IMealDaysServicesInterface
     {
         private readonly DatabaseContext _context;
-        private UserCookBook _resultUserId;
+        private readonly IMapper _mapper;
+        private UserCookBook _cookBookUserId;
         private int _pageSize = 9;
-        private List<MealDayViewDTO> result;
+      
 
-        MealDaysServices(DatabaseContext context)
+        public MealDaysServices(DatabaseContext context)
         {
             _context = context;
+          
         }
-
-
 
         public UserCookBook GetUserId(string UserIdentityName)
         {
-            var _resultUserId = _context.UserCookBook.Where(i => i.UserName == UserIdentityName).First();
-            return _resultUserId;
+            var resultUserId = _context.UserCookBook.Where(i => i.UserName == UserIdentityName).First();
+            return resultUserId;
         }
-        public async Task<List<MealDayViewDTO>> GetAll(int? selectday)
+        public async Task<IEnumerable<MealDayViewDTO>> GetAll(int? selectday, UserCookBook resultUserId)
         {
 
             var resultRecipeUsed = await _context.MealDay.Join(_context.RecipeUsed, t1 => t1.Id, t2 => t2.MealDayId,
@@ -48,16 +50,22 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
 
                }).ToListAsync();
 
+
+            IEnumerable<MealDayViewDTO> result;
+
             if (selectday != null)
             {
 
-                result = resultRecipeUsed.Where(u => u.UserId == _resultUserId.Id && u.DayMeal.Day == selectday).OrderBy(x => x.DayMeal).ToList();
-            }
+             var resultSelectday =  resultRecipeUsed.Where(u => u.UserId == resultUserId.Id && u.DayMeal.Day == selectday).OrderBy(x => x.DayMeal).ToList();
+                result = resultSelectday;
+    }
             else
             {
-                result = resultRecipeUsed.Where(u => u.UserId == _resultUserId.Id).OrderBy(x => x.DayMeal).ToList();
+            var resultNoSelectday =  resultRecipeUsed.Where(u => u.UserId == resultUserId.Id).OrderBy(x => x.DayMeal).ToList();
+            result = resultNoSelectday;
             }
             return result;
+
         }
 
         public async Task<MealDayDTO> CreatePost(MealDay mealDay, RecipeUsed recipeUsed, MealDayDTO mealDayDTO)
@@ -126,11 +134,11 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
             return _context.MealDay.Any(e => e.Id == id);
         }
 
-        public Task<MealDayDTO> CreateGet(int p, string UserIdentityName)
+        public Task<MealDayDTO> CreateGet(int p, UserCookBook cookBookUserId)
         {
             int page = (int)((p == null) ? 1 : p);
 
-            var result = _context.UserCookBook.Where(i => i.UserName == UserIdentityName)
+            var result = _context.UserCookBook.Where(i => i.UserName == cookBookUserId.UserName)
                                                 .Select(a => new { a.Id }).ToList();
 
             var resultRecipes = _context.RecipeDetails

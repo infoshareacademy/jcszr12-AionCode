@@ -14,6 +14,7 @@ namespace AionCodeMVC.Controllers
         public MealDaysController(IMealDaysServicesInterface mealDay)
         {
             _mealday = mealDay;
+           
         }
 
         // GET: MealDays
@@ -31,11 +32,13 @@ namespace AionCodeMVC.Controllers
             if (selectday != null)
             {
                 TempData["selectday"] = selectday;
-                return View(_mealday.GetAll(selectday));
+                IEnumerable<MealDayViewDTO> result = await _mealday.GetAll(selectday, _resultUserId);
+                return View(result);
             }
             else
             {
-                return View(_mealday.GetAll);
+                IEnumerable<MealDayViewDTO> result = await _mealday.GetAll(null,_resultUserId);
+                return View(result);
             }
         }
 
@@ -59,7 +62,7 @@ namespace AionCodeMVC.Controllers
         [HttpGet]
         public IActionResult Create(int p)
         {
-            var mealDayDTO = _mealday.CreateGet(p, User.Identity.Name);
+            var mealDayDTO = _mealday.CreateGet(p, _resultUserId);
             ViewData["UserCookBook"] = _mealday.GetUserId(User.Identity.Name);
             TempData["page"] = p;
             TempData["longList"] = 2;
