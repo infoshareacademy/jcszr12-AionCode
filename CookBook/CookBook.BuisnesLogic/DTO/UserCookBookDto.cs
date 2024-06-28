@@ -15,12 +15,14 @@ namespace CookBook.BuisnesLogic.DTO
         [Display(Name = "Id")]
         public string Id { get; set; }
 
-        [Required(ErrorMessage = "Podanie Imienia i nazwiska jest wymagane")]
-        [Display(Name = "Imię i Nazwisko")]
+        [Required(ErrorMessage = "Podanie nazwy użytkownika jest wymagane")]
+        [Display(Name = "Nazwa (nick) użytkownika")]
+        [RegularExpression(@"\S+", ErrorMessage = "Nazwa użytkownika nie może zawierać spacji")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Podanie Email jest wymagane")]
         [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage = "Błędny adres email")]
         public string Email { get; set; }
 
         [Display(Name = "Rola")]

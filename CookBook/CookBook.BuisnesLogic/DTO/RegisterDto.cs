@@ -13,12 +13,18 @@ namespace CookBook.BuisnesLogic.DTO
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
-        [Display(Name = "Imię i Nazwisko")]
+        [Required(ErrorMessage = "Podanie nazwy użytkownika jest wymagane")]
+        [Display(Name = "Nazwa (nick) użytkownika")]
+        [RegularExpression(@"\S+", ErrorMessage = "Nazwa użytkownika nie może zawierać spacji")]
         public string UserName { get; set; }
 
+        [Required(ErrorMessage = "Podanie adresu email jest wymagane")]
+        [EmailAddress(ErrorMessage = "Błędny adres email")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "Podanie hasła jest wymagane")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", ErrorMessage = "Hasło musi zawierać conajmniej jedną wielką literę, jedną małą, jedną cyfrę i jeden znak specjalny")]
         [Display(Name = "Hasło")]
         public string Password { get; set; }
 
