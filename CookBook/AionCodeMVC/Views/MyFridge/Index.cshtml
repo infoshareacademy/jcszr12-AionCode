@@ -205,12 +205,43 @@
                 var recipe = recipeTuple.Item1; // Item1 is the RecipeDTO
                 var ownedIngredients = recipeTuple.Item2; // Item2 is the list of owned ingredient IDs
                 var neededIngredients = recipeTuple.Item3; // Item3 is the list of needed ingredient IDs
+                var percentOfNeededIngredients = Math.Round(((double)ownedIngredients.Count() / ((double)neededIngredients.Count() + (double)ownedIngredients.Count()))*100, 2);
 
-                <div>
-                    @Html.ActionLink(recipe.Name, "Details", "Recipes", new { id = recipe.Id }, new { @class = "ingredient" })
-                    <p>Posiadane składniki (IDs): @string.Join(", ", ownedIngredients)</p>
-                    <p>Potrzebne składniki (IDs): @string.Join(", ", neededIngredients)</p>
-                </div>
+                <table style="border-collapse: collapse; margin: 0; padding: 0; table-layout: auto;">
+                    <colgroup>
+                        <col style="width: auto;">
+                        <col style="width: auto;">
+                        <col style="width: auto;">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 4px; border: none;">
+                                @Html.ActionLink(recipe.Name, "Details", "Recipes", new { id = recipe.Id }, new { @class = "ingredient" })
+                                <a>Posiadasz <b>@percentOfNeededIngredients%</b> składników.</a>
+                            </td>
+                            <td style="padding: 4px; border: none; text-align: center;">
+                                <a>Masz:</a>
+                                <select>
+                                    @foreach (var ingredient in ownedIngredients)
+                                    {
+                                        <option value="@ingredient">@ingredient</option>
+                                    }
+                                </select>
+                            </td>
+                            <td style="padding: 4px; border: none; text-align: center;">
+                                <a>Potrzebujesz:</a>
+                                <select>
+                                    @foreach (var ingredient in neededIngredients)
+                                    {
+                                        <option value="@ingredient">@ingredient</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
             }
         </div>
     </div>

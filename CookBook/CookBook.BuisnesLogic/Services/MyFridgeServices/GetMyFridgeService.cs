@@ -150,8 +150,10 @@ namespace CookBook.BuisnesLogic.Services.MyFridgeServices
                         }
                     }
 
+                    var neededIngredientsNames2 = neededIngredientNames.Except(ownedIngredientNames).ToList();
+
                     // Dodaj tuplę z nazwami składników do listy smth
-                    smth.Add(new Tuple<RecipeDTO, List<string>, List<string>>(recipeDTO, ownedIngredientNames, neededIngredientNames));
+                    smth.Add(new Tuple<RecipeDTO, List<string>, List<string>>(recipeDTO, ownedIngredientNames, neededIngredientsNames2));
                 }
             }
 
