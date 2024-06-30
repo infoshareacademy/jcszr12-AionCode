@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.MealDayServiceInterfaces;
+using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using Database;
 using Database.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -11,23 +12,25 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
     public class MealDaysServices : IMealDaysServicesInterface
     {
         private readonly DatabaseContext _context;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
+        //private readonly IGetUserService _getUserService;
+
         private UserCookBook _cookBookUserId;
         private int _pageSize = 9;
-      
+
 
         public MealDaysServices(DatabaseContext context)
         {
             _context = context;
-          
+
         }
 
         public UserCookBook GetUserId(string UserIdentityName)
         {
-            var resultUserId = _context.UserCookBook.Where(i => i.UserName == UserIdentityName).First();
-            return resultUserId;
+            var resultUser = _context.UserCookBook.Where(i => i.UserName.Contains(UserIdentityName)).First();
+            return resultUser;
         }
-        public async Task<IEnumerable<MealDayViewDTO>> GetAll(int? selectday, UserCookBook resultUserId)
+        public async Task<IEnumerable<MealDayViewDTO>> GetAll(int? selectday, UserCookBook actualUser)
         {
 
             var resultRecipeUsed = await _context.MealDay.Join(_context.RecipeUsed, t1 => t1.Id, t2 => t2.MealDayId,
@@ -56,13 +59,13 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
             if (selectday != null)
             {
 
-             var resultSelectday =  resultRecipeUsed.Where(u => u.UserId == resultUserId.Id && u.DayMeal.Day == selectday).OrderBy(x => x.DayMeal).ToList();
+                var resultSelectday = resultRecipeUsed.Where(u => u.UserId == actualUser.Id && u.DayMeal.Day == selectday).OrderBy(x => x.DayMeal).ToList();
                 result = resultSelectday;
-    }
+            }
             else
             {
-            var resultNoSelectday =  resultRecipeUsed.Where(u => u.UserId == resultUserId.Id).OrderBy(x => x.DayMeal).ToList();
-            result = resultNoSelectday;
+                var resultNoSelectday = resultRecipeUsed.Where(u => u.UserId == actualUser.Id).OrderBy(x => x.DayMeal).ToList();
+                result = resultNoSelectday;
             }
             return result;
 
@@ -72,7 +75,7 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
         {
             mealDay.Day = mealDayDTO.Day;
             mealDay.AddDate = DateTime.Now;
-            mealDay.UserCookBookId = mealDayDTO.UserCookBookId.ToString();
+            mealDay.UserCookBookId = mealDayDTO.UserCookBookId;
 
             _context.Add(mealDay);
             await _context.SaveChangesAsync();
@@ -87,13 +90,53 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
             return mealDayDTO;
 
         }
+        public async Task<MealDayDTO> CreateGet(int? p, string userCookBook)
+        {
+            int page = (int)((p == null) ? 1 : p);
 
-        public async Task<MealDay> Delete(int? id)
+            var result = _context.UserCookBook.Where(i => i.Id.Contains(userCookBook)).Select(a => new { a.Id }).ToList();
+
+            var resultRecipes = _context.RecipeDetails
+                                        .Select(i => new RecipesDetailsShortDTO
+                                        { Id = i.Id, Name = i.Name, ImagePath = i.ImagePath }).Skip((page - 1) * _pageSize).Take(_pageSize).ToList();
+            var mealDayDTO = new MealDayDTO { AddDate = DateTime.Now, DetailsShort = resultRecipes };
+            return mealDayDTO;
+        }
+        public async Task<MealDay> Delete(int id)
         {
             var mealDay = await _context.MealDay
                  .Include(m => m.UserCookBook)
                  .FirstOrDefaultAsync(m => m.Id == id);
             return mealDay;
+        }
+        public async Task DeleteConfirmed(int id)
+        {
+            MealDay mealDay = await _context.MealDay.FindAsync(id);
+            RecipeUsed recipeUsed = await _context.RecipeUsed.FirstOrDefaultAsync(m => m.MealDayId == id);
+
+            if (mealDay != null && recipeUsed != null)
+            {
+                _context.RecipeUsed.Remove(recipeUsed);
+                _context.MealDay.Remove(mealDay);
+            }
+            await _context.SaveChangesAsync();
+
+        }
+
+        public async Task<MealDay?> Edit(int? id)
+        {
+            var result = _context.MealDay.FindAsync(id);
+            return await result;
+        }
+        public async Task EditConfirmed(MealDay mealDay)
+        {
+            var updateMealDay = await _context.MealDay.FindAsync(mealDay.Id);
+
+            if (updateMealDay != null )
+            {
+              _context.MealDay.Entry(updateMealDay).CurrentValues.SetValues(mealDay);
+            }
+            await _context.SaveChangesAsync();
         }
         public Task Details(int? id)
         {
@@ -103,56 +146,18 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
             return result;
         }
 
-        public async Task<MealDay?> Edit(int? id)
-        {
-            var result = _context.MealDay.FindAsync(id);
-            return await result;
-        }
 
-        public Task Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public async Task DeleteConfirmed(int id)
-        {
-            var mealDay = await _context.MealDay.FindAsync(id);
-            var recipeUsed = await _context.RecipeUsed.FirstOrDefaultAsync(m => m.MealDayId == id);
-
-            if (mealDay != null && recipeUsed != null)
-            {
-                _context.RecipeUsed.Remove(recipeUsed);
-                _context.MealDay.Remove(mealDay);
-
-            }
-
-            await _context.SaveChangesAsync();
-
-        }
         private bool MealDayExists(int id)
         {
             return _context.MealDay.Any(e => e.Id == id);
         }
 
-        public Task<MealDayDTO> CreateGet(int p, UserCookBook cookBookUserId)
-        {
-            int page = (int)((p == null) ? 1 : p);
-
-            var result = _context.UserCookBook.Where(i => i.UserName == cookBookUserId.UserName)
-                                                .Select(a => new { a.Id }).ToList();
-
-            var resultRecipes = _context.RecipeDetails
-                                        .Select(i => new RecipesDetailsShortDTO
-                                        { Id = i.Id, Name = i.Name, ImagePath = i.ImagePath }).Skip((page - 1) * _pageSize).Take(_pageSize).ToList();
-            var mealDayDTO = new MealDayDTO { AddDate = DateTime.Now, DetailsShort = resultRecipes };
-
-
-            return Task.FromResult(mealDayDTO);
-        }
-        public Task<int> LongList()
+        
+        public int LongList()
         {
             var result = _context.RecipeDetails.Count() / _pageSize;
-            return Task.FromResult(result);
+            return result;
         }
     }
 }

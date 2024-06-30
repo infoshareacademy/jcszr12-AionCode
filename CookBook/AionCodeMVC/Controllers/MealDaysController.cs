@@ -9,12 +9,12 @@ namespace AionCodeMVC.Controllers
     public class MealDaysController : Controller
     {
         private readonly IMealDaysServicesInterface _mealday;
-        private UserCookBook _resultUserId;
+        private UserCookBook _actualUser;
 
         public MealDaysController(IMealDaysServicesInterface mealDay)
         {
             _mealday = mealDay;
-           
+            
         }
 
         // GET: MealDays
@@ -22,7 +22,7 @@ namespace AionCodeMVC.Controllers
         {
             try
             {
-                _resultUserId = _mealday.GetUserId(User.Identity.Name);
+                _actualUser = _mealday.GetUserId(User.Identity.Name);
             }
             catch
             {
@@ -32,12 +32,12 @@ namespace AionCodeMVC.Controllers
             if (selectday != null)
             {
                 TempData["selectday"] = selectday;
-                IEnumerable<MealDayViewDTO> result = await _mealday.GetAll(selectday, _resultUserId);
+                IEnumerable<MealDayViewDTO> result = await _mealday.GetAll(selectday, _actualUser);
                 return View(result);
             }
             else
             {
-                IEnumerable<MealDayViewDTO> result = await _mealday.GetAll(null,_resultUserId);
+                IEnumerable<MealDayViewDTO> result = await _mealday.GetAll(null,_actualUser);
                 return View(result);
             }
         }
@@ -59,84 +59,75 @@ namespace AionCodeMVC.Controllers
             return View(mealDay);
         }
 
+
         [HttpGet]
-        public IActionResult Create(int p)
+        public async Task<IActionResult> Create(int? p)
         {
-            var mealDayDTO = _mealday.CreateGet(p, _resultUserId);
-            ViewData["UserCookBook"] = _mealday.GetUserId(User.Identity.Name);
+            try
+            {
+                _actualUser = _mealday.GetUserId(User.Identity.Name);
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Login), "Users");
+            }
+            MealDayDTO mealDayDTO = await _mealday.CreateGet(p, _actualUser.Id);
+            ViewData["UserCookBook"] = _actualUser.Id;
             TempData["page"] = p;
-            TempData["longList"] = 2;
+            TempData["longList"] = _mealday.LongList();
 
             return View(mealDayDTO);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Day, UserCookBookId, PartOfDay, RecipeDetailsId, DetailsShort")] MealDayDTO mealDayDTOin)
+        public async Task<IActionResult> Create([Bind("Day, UserCookBookId, PartOfDay, RecipeDetailsId, DetailsShort")] MealDayDTO mealDayDTO)
         {
-
-            var mealDay = new MealDay();
-            var recipeUsed = new RecipeUsed();
-
-
             if (ModelState.IsValid)
             {
-                _mealday.CreatePost(mealDay, recipeUsed, mealDayDTOin);
+                var mealDay = new MealDay();
+                var recipeUsed = new RecipeUsed();
+                await _mealday.CreatePost(mealDay, recipeUsed, mealDayDTO);
 
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserCookBook"] = mealDay.UserCookBookId;
-            return View(mealDayDTOin);
+            ViewData["UserCookBook"] = _actualUser.Id;
+            return View(mealDayDTO);
         }
 
         // GET: MealDays/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var mealDay = _mealday.Edit(id);
-            if (mealDay == null)
-            {
-                return NotFound();
-            }
+            var mealDay = await _mealday.Edit(id);
             return View(mealDay);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Day,AddDate,UserCookBookId")] MealDay mealDay)
+        public async Task<IActionResult>Edit([Bind("Day,AddDate,UserCookBookId")] MealDay mealDay)
         {
-            //if (id != mealDay.Id)
-            //{
-            //    return NotFound();
-            //}
 
             //if (ModelState.IsValid)
             //{
+                try
+                {
+                    await _mealday.EditConfirmed(mealDay);
+               
+                }
+                catch 
+                {
+                        return NotFound();
+                }
+                
+           // }
+            ViewData["UserCookBookId"] = mealDay.UserCookBookId;
+            return RedirectToAction(nameof(Index));
+        }
 
-            //    try
-            //    {
-            //        _context.Update(mealDay);
-            //        await _context.SaveChangesAsync();
-            //    }
-            //    catch (DbUpdateConcurrencyException)
-            //    {
-            //        if (!MealDayExists(mealDay.Id))
-            //        {
-            //            return NotFound();
-            //        }
-            //        else
-            //        {
-            //            throw;
-            //        }
-            //    }
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["UserCookBookId"] = mealDay.UserCookBookId;
-            return View(mealDay);
+        private bool MealDayExists(int id)
+        {
+            throw new NotImplementedException();
         }
 
         // GET: MealDays/Delete/5
@@ -147,7 +138,7 @@ namespace AionCodeMVC.Controllers
                 return NotFound();
             }
 
-            var mealDay = _mealday.Delete(id);
+            var mealDay = await _mealday.Delete(id);
             if (mealDay == null)
             {
                 return NotFound();
@@ -160,7 +151,7 @@ namespace AionCodeMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _mealday.DeleteConfirmed(id);
+            await _mealday.DeleteConfirmed(id);
             return RedirectToAction(nameof(Index));
         }
 
