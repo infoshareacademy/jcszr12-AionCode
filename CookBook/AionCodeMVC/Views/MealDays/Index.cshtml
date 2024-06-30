@@ -111,8 +111,8 @@
                             <a href="@Url.Action("Details", "Recipes", new { @id = item.RecipeUsedId })">  @Html.DisplayFor(modelItem => item.RecipeName)</a>
                         </td>
                         <td>
-                         @*   <a asp-action="Edit" asp-route-id="@item.MealDayId">Edit</a> | *@
-                           <a asp-action="Delete" asp-route-id="@item.MealDayId">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@item.MealDayId">Edit</a> | 
+                            <a asp-action="Delete" asp-route-id="@item.MealDayId">Delete</a>
                         </td>
                     </tr>
 

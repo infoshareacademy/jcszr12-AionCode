@@ -134,7 +134,8 @@ namespace CookBook.BuisnesLogic.Services.MealDayServices
 
             if (updateMealDay != null )
             {
-              _context.MealDay.Entry(updateMealDay).CurrentValues.SetValues(mealDay);
+              updateMealDay.Day = mealDay.Day;
+              _context.MealDay.Update(updateMealDay);
             }
             await _context.SaveChangesAsync();
         }

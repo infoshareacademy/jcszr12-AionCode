@@ -105,7 +105,7 @@ namespace AionCodeMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult>Edit([Bind("Day,AddDate,UserCookBookId")] MealDay mealDay)
+        public async Task<IActionResult>Edit(MealDay mealDay)
         {
 
             //if (ModelState.IsValid)
