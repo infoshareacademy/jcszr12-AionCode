@@ -29,9 +29,10 @@ namespace CookBook.BuisnesLogic.DTO
 
         [Required(ErrorMessage = "Podanie nowego hasła jest wymagane")]
         [DataType(DataType.Password)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", ErrorMessage = "Hasło musi zawierać conajmniej jedną wielką literę, jedną małą, jedną cyfrę i jeden znak specjalny")]
         [Display(Name = "Nowe hasło")]
         public string NewPassword { get; set; } = string.Empty;
-
+         
         [Required(ErrorMessage = "Potwierdzenie nowego hasła jest wymagane")]
         [DataType(DataType.Password)]
         [Display(Name = "Potwierdź nowe hasło")]

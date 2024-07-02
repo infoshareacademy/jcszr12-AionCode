@@ -42,7 +42,7 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(userDb);
                 await _userManager.AddToRoleAsync(userDb, "StdUser");
 
-                var confirmationLink = $"https://localhost:7063/Users/ConfirmEmail?userId={userDb.Id}&token={token}";
+                var confirmationLink = $"Próbujesz założyć własne konto w serwisie CookBook AionCode.\nPotwierdź Twój adres e-mail klikając w poniższy link:\nhttps://localhost:7063/Users/ConfirmEmail?userId={userDb.Id}&token={token}";
                 await _emailService.SendEmailAsync(userDb.Email, "CookBook AC - Potwierdz swoj email", confirmationLink);
             }
             return result;
