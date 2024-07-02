@@ -77,8 +77,48 @@
             margin-bottom: 15px; /* Dodanie odstępu na dole paragrafu */
             font-size: 16px; /* Przykładowa większa wielkość czcionki */
         } 
+/*         --------------------------------------------------------------------------------------------------------- */
+        input {
+            display: none;
+        }
+
+        .labelAcc {
+            display: block;
+            padding: 4px 22px;
+            margin: 0 0 1px 0;
+            cursor: pointer;
+            background: #FFD700;
+            border-radius: 3px;
+            color: black;
+            transition: ease .5s;
+        }
+
+            .labelAcc::after {
+                content: "";
+                display: inline-block;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 8px 5px 0 5px; /* Ustawienia trójkąta: góra, prawo, dół, lewo */
+                border-color: black transparent transparent transparent; /* Kolor trójkąta */
+                margin-left: 5px; /* Odległość od tekstu */
+            }
 
 
+        .content {
+            padding: 10px 25px;
+            border: 1px solid #A7A7A7;
+            margin: 0 0 1px 0;
+            border-radius: 3px;
+        }
+
+        input + label + .content {
+            display: none;
+        }
+
+        input:checked + label + .content {
+            display: block;
+        }
 
 
 
@@ -127,7 +167,7 @@
                             <input type="text" id="ingredientName_@fridge.Id" name="ingredientName" class="form-control mr-2" placeholder="Nazwa składnika" required />
                         </div>
                         <div class="form-group mb-2 mr-2">
-                            <input type="number" name="weight" class="form-control mr-2" placeholder="Waga (g)" required />
+                            <input type="number" name="weight" class="form-control mr-2" placeholder="Waga (g/ml)" required />
                             <input type="hidden" name="MyFridgeId" value="@fridge.Id" />
                         </div>
                         <button type="submit" class="btn btn-primary mb-2">Dodaj składnik</button>
@@ -191,60 +231,59 @@
 
             </div>
 @*             <div style="border: 1px  groove black;" class="mt-1 mb-3"></div> *@
+
+            <div class="row mb-3">
+                <div class="col-12 bg-transparent rounded-2">
+                    <h4>Propozycje potraw uwzględniające składniki w lodówce</h4>
+                    @foreach (var recipeTuple in Model.MyProposedRecipes)
+                    {
+                        var recipe = recipeTuple.Item1;
+                        var ownedIngredients = recipeTuple.Item2; 
+                        var neededIngredients = recipeTuple.Item3;
+                        var percentOfNeededIngredients = Math.Round(((double)ownedIngredients.Count() / ((double)neededIngredients.Count() + (double)ownedIngredients.Count())) * 100, 2);
+                        var recipeId = $"recipe_{recipe.Id}";
+
+                        <input type="checkbox" id="@recipeId" />
+                        <label class="labelAcc" for="@recipeId">@recipe.Name - Posiadasz <b>@percentOfNeededIngredients%</b> składników</label>
+
+                        <div class="content">
+                            <table style="border-collapse: collapse; margin: 0; padding: 0; table-layout: auto;">
+                                <colgroup>
+                                    <col style="width: 100%;">
+                                </colgroup>
+                                <tbody>
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr style="padding: 2px; border: none;">
+                                            <td style="padding: 2px; border: none;">
+                                                @Html.ActionLink(recipe.Name, "Details", "Recipes", new { id = recipe.Id }, new { @class = "ingredient" })
+                                            </td>
+                                        </tr>
+                                        <tr style="padding: 2px; border: none;">
+                                            <td style="padding: 2px; border: none;">
+                                                <label style="display: block; margin-bottom: 2px;"><strong>Masz:</strong></label>
+                                                <span>@string.Join(", ", ownedIngredients)</span>
+                                            </td>
+                                        </tr>
+                                        <tr style="padding: 2px; border: none;">
+                                            <td style="padding: 2px; border: none;">
+                                                <label style="display: block; margin-bottom: 2px;"><strong>Potrzebujesz:</strong></label>
+                                                <span>@string.Join(", ", neededIngredients)</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
         }
     }
     else
     {
         <p class="text-center">Brak lodówek do wyświetlenia.</p>
     }
-    <div class="row mb-3">
-        <div class="col-12 bg-transparent rounded-2">
-            <h4>Propozycje potraw uwzgledniające składniki w lodówce</h4>
-            @foreach (var recipeTuple in Model.MyProposedRecipes)
-            {
-                var recipe = recipeTuple.Item1; // Item1 is the RecipeDTO
-                var ownedIngredients = recipeTuple.Item2; // Item2 is the list of owned ingredient IDs
-                var neededIngredients = recipeTuple.Item3; // Item3 is the list of needed ingredient IDs
-                var percentOfNeededIngredients = Math.Round(((double)ownedIngredients.Count() / ((double)neededIngredients.Count() + (double)ownedIngredients.Count()))*100, 2);
-
-                <table style="border-collapse: collapse; margin: 0; padding: 0; table-layout: auto;">
-                    <colgroup>
-                        <col style="width: auto;">
-                        <col style="width: auto;">
-                        <col style="width: auto;">
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <td style="padding: 4px; border: none;">
-                                @Html.ActionLink(recipe.Name, "Details", "Recipes", new { id = recipe.Id }, new { @class = "ingredient" })
-                                <a>Posiadasz <b>@percentOfNeededIngredients%</b> składników.</a>
-                            </td>
-                            <td style="padding: 4px; border: none; text-align: center;">
-                                <a>Masz:</a>
-                                <select>
-                                    @foreach (var ingredient in ownedIngredients)
-                                    {
-                                        <option value="@ingredient">@ingredient</option>
-                                    }
-                                </select>
-                            </td>
-                            <td style="padding: 4px; border: none; text-align: center;">
-                                <a>Potrzebujesz:</a>
-                                <select>
-                                    @foreach (var ingredient in neededIngredients)
-                                    {
-                                        <option value="@ingredient">@ingredient</option>
-                                    }
-                                </select>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-
-            }
-        </div>
-    </div>
+   
 </div>
 
 
