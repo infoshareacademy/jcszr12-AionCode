@@ -68,7 +68,7 @@ namespace CookBook.BuisnesLogic.Repositories
                 recipeToEdit.Name = recipe.Name;
                 recipeToEdit.Category = recipe.Category;
                 recipeToEdit.Description = recipe.Description;
-                
+
             }
 
             var json = JsonConvert.SerializeObject(recipes);

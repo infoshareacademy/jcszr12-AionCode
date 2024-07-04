@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CookBook.BuisnesLogic.DTO.MealDayViewDTO>
 
 @{
-    var title = User.Identity.Name.ToString();
+    Layout = "~/Views/Shared/_LayoutMealDay.cshtml";
 
     var ativeDay = (int)(TempData["selectday"] ?? DateTime.Now.Day);
 
@@ -22,12 +22,11 @@
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     var Calories = 0;
 
-    ViewData["Title"] = @title;
-    Layout = "~/Views/Shared/_LayoutMealDay.cshtml";
+   
 
 }
 
-<h1 class="text-center">@title: planowane posiłki</h1>
+<h1 class="text-center"><br /></h1>
 
 <p class="text-center">
     <a asp-action="Create">Create New</a>
@@ -112,8 +111,7 @@
                             <a href="@Url.Action("Details", "Recipes", new { @id = item.RecipeUsedId })">  @Html.DisplayFor(modelItem => item.RecipeName)</a>
                         </td>
                         <td>
-                            @* <a asp-action="Edit" asp-route-id="@item.MealDayId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.MealDayId">Details</a> | *@
+                            <a asp-action="Edit" asp-route-id="@item.MealDayId">Edit</a> | 
                             <a asp-action="Delete" asp-route-id="@item.MealDayId">Delete</a>
                         </td>
                     </tr>

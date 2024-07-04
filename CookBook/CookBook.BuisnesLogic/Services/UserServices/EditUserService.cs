@@ -1,11 +1,5 @@
-﻿using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
-using CookBook.BuisnesLogic.Models;
-using CookBook.BuisnesLogic.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CookBook.BuisnesLogic.DTO;
+using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace CookBook.BuisnesLogic.Services.UserServices
@@ -70,7 +64,7 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                         if (resultRemoveFromRoles.Succeeded)
                         {
                             var resultAddToRole = await _userManager.AddToRoleAsync(user, userDto.Role.ToString());
-                            
+
                             return resultAddToRole;
                         }
                         return resultRemoveFromRoles;
@@ -103,10 +97,10 @@ namespace CookBook.BuisnesLogic.Services.UserServices
 
             if ((user != null) && (id == user.Id))
             {
-               var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-               var resultChangePassword = await _userManager.ResetPasswordAsync(user, resetToken, userDto.NewPassword);
+                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var resultChangePassword = await _userManager.ResetPasswordAsync(user, resetToken, userDto.NewPassword);
 
-               return resultChangePassword;
+                return resultChangePassword;
             }
             return IdentityResult.Failed(new IdentityError { Description = "Użytkownik nie istnieje" });
         }

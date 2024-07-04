@@ -1,8 +1,7 @@
 using AionCodeMVC.Models;
+using Database;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Authorization;
-using Database;
 
 namespace AionCodeMVC.Controllers
 {
@@ -21,7 +20,7 @@ namespace AionCodeMVC.Controllers
         {
             var result = _context.RecipeDetails.Where(x => x.Id == 10).FirstOrDefault();
             ViewBag.UserName = User.Identity.Name;
-            
+
             return View(result);
         }
 

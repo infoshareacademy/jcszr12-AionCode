@@ -6,7 +6,7 @@ namespace CookBook.BuisnesLogic.Models
     {
         [Display(Name = "Lp.")]
         public int Id { get; set; }
-        [Display (Name = "Nazwa")]
+        [Display(Name = "Nazwa")]
         public string Name { get; set; }
         [Display(Name = "Opis")]
         public string Description { get; set; }
@@ -22,7 +22,7 @@ namespace CookBook.BuisnesLogic.Models
         public decimal Carbohydrates { get; set; }
         [Display(Name = "Zdjęcie")]
         public DateTime AddDate { get; set; }
-        public int GI {  get; set; }
+        public int GI { get; set; }
         public string? PhotoUrl { get; set; }
 
     }

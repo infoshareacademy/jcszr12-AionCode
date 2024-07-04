@@ -1,9 +1,8 @@
-﻿using Newtonsoft.Json;
-using System.IO;
+﻿using Azure.Storage.Blobs;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Models;
-using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace CookBook.BuisnesLogic.Repositories
 {
@@ -16,7 +15,7 @@ namespace CookBook.BuisnesLogic.Repositories
         }
         public Ingredient GetByID(int id)
         {
-            return ReadIngredientsFomJson().FirstOrDefault(x=> x.Id == id);
+            return ReadIngredientsFomJson().FirstOrDefault(x => x.Id == id);
         }
         private static List<Ingredient> ReadIngredientsFomJson()
         {
@@ -64,7 +63,7 @@ namespace CookBook.BuisnesLogic.Repositories
             var ingredients = GetAll().ToList();
             var ingredientToEdit = ingredients.FirstOrDefault(r => r.Id == ingredient.Id);
 
-            if (ingredientToEdit!=null)
+            if (ingredientToEdit != null)
             {
                 ingredientToEdit.Carbohydrates = ingredient.Carbohydrates;
                 ingredientToEdit.Proteins = ingredient.Proteins;
@@ -96,7 +95,7 @@ namespace CookBook.BuisnesLogic.Repositories
 
                 string photoUrl = $"{ingredientPhotosContainer.Uri}/{file.FileName}";
 
-                ingredientToEdit.PhotoUrl =photoUrl;
+                ingredientToEdit.PhotoUrl = photoUrl;
 
                 var json = JsonConvert.SerializeObject(ingredients);
                 File.WriteAllText(path, json);

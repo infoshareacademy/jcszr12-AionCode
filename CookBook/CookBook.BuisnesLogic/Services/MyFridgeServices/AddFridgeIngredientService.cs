@@ -6,6 +6,7 @@ using Database;
 using Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace CookBook.BuisnesLogic.Services.MyFridgeServices
 {
     public class AddFridgeIngredientService : IAddFridgeIngredientService

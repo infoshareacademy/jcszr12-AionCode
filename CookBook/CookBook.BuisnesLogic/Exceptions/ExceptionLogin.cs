@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CookBook.BuisnesLogic.Exceptions
+﻿namespace CookBook.BuisnesLogic.Exceptions
 {
     public class ExceptionLogin : Exception
     {
@@ -14,6 +8,6 @@ namespace CookBook.BuisnesLogic.Exceptions
         public ExceptionLogin(string message) : base(message + " Nieprawidłowy login lub hasło!")
         {
         }
-        
+
     }
 }

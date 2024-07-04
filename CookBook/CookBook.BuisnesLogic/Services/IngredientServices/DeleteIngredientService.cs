@@ -1,12 +1,8 @@
-﻿using CookBook.BuisnesLogic.DTO;
-using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
+﻿using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
-using CookBook.BuisnesLogic.Models;
 using Database;
 using Database.Entities;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System.IO;
 
 namespace CookBook.BuisnesLogic.Services.IngredientServices
 {

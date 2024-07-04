@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CookBook.BuisnesLogic.Exceptions
+﻿namespace CookBook.BuisnesLogic.Exceptions
 {
     internal class ExceptionDeleteUser : Exception
     {
@@ -16,6 +10,6 @@ namespace CookBook.BuisnesLogic.Exceptions
         {
 
         }
-       
+
     }
 }

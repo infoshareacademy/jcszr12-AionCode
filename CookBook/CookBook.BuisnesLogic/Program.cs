@@ -1,9 +1,4 @@
-﻿using CookBook.BuisnesLogic.Exceptions;
-using CookBook.BuisnesLogic.Models;
-using CookBook.BuisnesLogic.Services;
-using System.Xml.Linq;
-
-namespace CookBook.BuisnesLogic
+﻿namespace CookBook.BuisnesLogic
 {
     internal class Program
     {
