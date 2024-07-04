@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<CookBook.BuisnesLogic.DTO.IngredientDTO>
-
+@using System.Security.Claims;
 @{
     int Lp = 0;
     var firstItem = Model.FirstOrDefault();
+    var loggedUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
 <head>
@@ -49,13 +50,30 @@
             border: 1px solid black;
         }
 
+        .custom-alert {
+            background-color: #ffcc00;
+            border-color: #ffcc00; 
+            color : black;
+        }
+
 
     </style>
 </head>
 
+
+
 <div class="container">
     <div class="row mb-3 justify-content-center">
         <div class="col-12">
+            @if (ViewBag.SuccessMessage != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show row mb-3 justify-content-center custom-alert" role="alert">
+                    @ViewBag.SuccessMessage
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
             <div class="d-flex flex-wrap" role="group" aria-label="Ingredient types">
                 <form class="mb-2 mr-2" asp-action="Index" method="get">
                     <input type="hidden" />
@@ -122,7 +140,12 @@
                     <button type="submit" class="btn btn-primary btn-fixed">
                         <img src="~/ingredients/Other.png" alt="Inne" class="btn-img" />Inne
                     </button>
-
+                </form>
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Moje składniki"/>
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Other.png" alt="Inne" class="btn-img" />Dodane
+                    </button>
                 </form>
 
             </div>
@@ -141,7 +164,12 @@
                 </div>
                 <button type="submit" class="btn btn-primary mx-2 mb-2">Szukaj</button>
             </form>
-            <a class="btn btn-primary" asp-action="Create">Dodaj nowy składnik</a>
+
+            @if (this.User.IsInRole("StdUser")||this.User.IsInRole("Admin"))
+            {
+                <a class="btn btn-primary" asp-action="Create">Dodaj nowy składnik</a>
+            }
+
         </div>
     </div>
 
@@ -199,10 +227,17 @@
                                 <td>@Html.DisplayFor(modelItem => item.Fats)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Carbohydrates)</td>
                                 <td>
-                                        @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }, new { @class = "ingredient" }) |
-                                        @Html.ActionLink("Szczegóły", "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" }) |
-                                        @Html.ActionLink("Usuń", "Delete", new { id = item.Id }, new { @class = "ingredient" }) |
-                                        @Html.ActionLink("Załącz obraz", "Upload", new { id = item.Id }, new { @class = "ingredient" })
+
+                                        @Html.ActionLink("Szczegóły", "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" })
+
+                                        @if (User.IsInRole("Admin") || (User.IsInRole("StdUser") && item.UserCookBookId == loggedUserId))
+                                        {
+                                            <span> | </span>@Html.ActionLink("Edytuj", "Edit", new { id = item.Id }, new { @class = "ingredient" }) <span> | </span>
+                                            @Html.ActionLink("Załącz obraz", "Upload", new { id = item.Id }, new { @class = "ingredient" })<span> | </span>
+                                            @Html.ActionLink("Usuń", "Delete", new { id = item.Id }, new { @class = "ingredient" })
+                                        }
+
+                                        
                                 </td>
                             </tr>
                             }

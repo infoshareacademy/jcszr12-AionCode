@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Moja Lodówka";
     int Lp = 0;
-    //var firstFridge = Model.FirstOrDefault();
 }
 
 <head>
@@ -14,7 +13,6 @@
             color: black;
             background: #FFC107;
             border: 1px solid black;
-/*             font-family: 'Urbanist', sans-serif; /* Przykładowa czcionka z Google Fonts */ */
             font-weight: bold;
         }
 
@@ -69,10 +67,6 @@
         }
 
         p {
-/*             color: black;
-            font-family: 'Urbanist', sans-serif;
-            text-align: justify;
-            line-height: 1.6; /* Zwiększenie odstępów między wierszami dla lepszej czytelności */ */
             text-shadow: none; /* Usunięcie cienia tekstu */
             margin-bottom: 15px; /* Dodanie odstępu na dole paragrafu */
             font-size: 16px; /* Przykładowa większa wielkość czcionki */
@@ -148,7 +142,6 @@
         </div>
     </div>
 
-@*     <div style="border: 1px  groove black;" class="mt-1 mb-3"></div> *@
 
     <!-- Sprawdzenie, czy lista lodówek nie jest pusta -->
     @if (Model.MyFridges.Any())
@@ -230,7 +223,6 @@
                 </div>
 
             </div>
-@*             <div style="border: 1px  groove black;" class="mt-1 mb-3"></div> *@
 
             <div class="row mb-3">
                 <div class="col-12 bg-transparent rounded-2">

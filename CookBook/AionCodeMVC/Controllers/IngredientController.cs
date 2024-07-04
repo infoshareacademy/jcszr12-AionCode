@@ -32,6 +32,12 @@ namespace AionCodeMVC.Controllers
         // GET: IngredientController
         public async Task<ActionResult> Index(string searchString, string type)
         {
+            if (TempData["SuccessMessage"] != null)
+            {
+                ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
+            }
+
+
             if (!type.IsNullOrEmpty())
             {
                 ViewBag.Type = type;
@@ -134,6 +140,7 @@ namespace AionCodeMVC.Controllers
             try
             {
                 await _deleteIngredientService.DeleteIngredient(id);
+                TempData["SuccessMessage"] = "Usunięto składnik!.";
                 return RedirectToAction(nameof(Index));
             }
             catch
