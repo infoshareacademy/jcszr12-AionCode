@@ -73,17 +73,23 @@
                                                 <div class="comment-header">
                                                     <strong>@comment.Author</strong> - <span class="comment-date">@comment.Date.ToShortDateString() @comment.Date.ToShortTimeString()</span>
                                                 </div>
-                                                <div class="comment-text">
-                                                    @comment.Text
+                                                <div class="row align-items-center">
+                                                    <div class="col">
+                                                        <div class="comment-text">
+                                                            @comment.Text
+                                                        </div>
+                                                    </div>
+                                                    @if (User.Identity.Name == comment.Author)
+                                                    {
+                                                        <div class="col-auto">
+                                                            <form method="post" asp-controller="Ingredient" asp-action="DeleteComment">
+                                                                <input type="hidden" name="commentId" value="@comment.Id" />
+                                                                <input type="hidden" name="ingredientId" value="@Model.Id" />
+                                                                <button type="submit" class="btn btn-danger">Usuń</button>
+                                                            </form>
+                                                        </div>
+                                                    }
                                                 </div>
-                                                @if (User.Identity.Name == comment.Author)
-                                                {
-                                                    <form method="post" asp-controller="Ingredient" asp-action="DeleteComment">
-                                                        <input type="hidden" name="commentId" value="@comment.Id" />
-                                                        <input type="hidden" name="ingredientId" value="@Model.Id" />
-                                                        <button type="submit" class="btn btn-danger">Usuń</button>
-                                                    </form>
-                                                }
                                             </div>
                                         </li>
                                     }

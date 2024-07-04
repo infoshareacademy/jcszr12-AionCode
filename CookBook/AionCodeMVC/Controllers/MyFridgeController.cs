@@ -2,6 +2,7 @@
 using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AionCodeMVC.Controllers
@@ -10,7 +11,7 @@ namespace AionCodeMVC.Controllers
     {
         private readonly IGetMyFridgeService _getMyFridgeService;
         private readonly ICreateFridgeService _createFridgeService;
-        private readonly IDeleteMyFridgeService  _deleteMyFridgeIngredientService;
+        private readonly IDeleteMyFridgeService _deleteMyFridgeIngredientService;
         private readonly IGetIngredientService _getIngredientService;
         private readonly IAddFridgeIngredientService _addFridgeIngredientService;
 
@@ -24,6 +25,7 @@ namespace AionCodeMVC.Controllers
         }
 
         // GET: MyFridge
+        [Authorize(Policy = "StdUser")]
         public async Task<IActionResult> Index()
         {
             var myFridges = await _getMyFridgeService.GetAllMyFridges();
@@ -37,13 +39,6 @@ namespace AionCodeMVC.Controllers
 
             return View(model);
             //return View(myFridges);
-        }
-
-        // GET: MyFridge/Create
-        // GET: /MyFridge/Create
-        public IActionResult Create()
-        {
-            return View();
         }
 
         [HttpPost]
@@ -86,15 +81,9 @@ namespace AionCodeMVC.Controllers
             }
             catch (Exception ex)
             {
-                // Obsłuż błędy (np. wyświetl stronę błędu lub zaloguj)
-                // Tutaj przekierowujemy do akcji 'Error' z kontrolera domyślnego 'Home'
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
         }
-
-
-
-
 
         public async Task<JsonResult> SearchIngredients(string term)
         {
@@ -109,55 +98,22 @@ namespace AionCodeMVC.Controllers
         {
             if (myFridgeIngredientDTO != null)
             {
-                await _addFridgeIngredientService.AddFridgeIngredien(myFridgeIngredientDTO, ingredientName);
+                await _addFridgeIngredientService.AddFridgeIngredient(myFridgeIngredientDTO, ingredientName);
             }
             return RedirectToAction(nameof(Index));
         }
-
-
-
-
-        // GET: MyFridge/Details/5
-        public IActionResult Details(int id)
-        {
-            // Wyszukaj szczegóły lodówki na podstawie ID i wyświetl widok
-            return View();
-        }
-
-        // GET: MyFridge/Edit/5
-        public IActionResult Edit(int id)
-        {
-            // Wyszukaj lodówkę do edycji na podstawie ID i wyświetl formularz edycji
-            return View();
-        }
-
-        // POST: MyFridge/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, MyFridgeDTO fridgeDTO)
-        {
-            // Edytuj lodówkę na podstawie danych z formularza
-            return RedirectToAction(nameof(Index));
-        }
-
-
 
         // POST: MyFridge/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            // Usuń lodówkę na podstawie ID i przekieruj użytkownika do akcji Index
             return RedirectToAction(nameof(Index));
         }
 
-
-
-        // Akcja usuwania lodówki
         [HttpPost]
         public async Task<IActionResult> DeleteFridge(int id)
         {
-            // Wywołujemy serwis do usunięcia lodówki
             try
             {
                 await _deleteMyFridgeIngredientService.DeleteFridge(id);
@@ -165,10 +121,8 @@ namespace AionCodeMVC.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("nie poszlo");
+                throw new Exception("Cannot delete fridge.");
             }
-
-            return RedirectToAction(nameof(Index));
         }
     }
 }

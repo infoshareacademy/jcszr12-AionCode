@@ -20,15 +20,20 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
         public async Task DeleteIngredient(int id)
         {
             IngredientDetails? ingredient = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Id == id).FirstOrDefaultAsync();
-            if (ingredient != null)
+
+            if (ingredient != null) 
             {
-                _dbContext.IngredientDetails.Remove(ingredient);
-                if (ingredient.ImagePath != null)
+                var connectedRecipes = await _dbContext.IngredientUsed.AnyAsync(i => i.IngredientDetailsId == ingredient.Id);
+                if (connectedRecipes == false)
                 {
-                    await _azureStorage.BlobContainerClientIngredientFiles.DeleteBlobIfExistsAsync(ingredient.ImagePath, Azure.Storage.Blobs.Models.DeleteSnapshotsOption.IncludeSnapshots);
+                    _dbContext.IngredientDetails.Remove(ingredient);
+                    if (ingredient.ImagePath != null)
+                    {
+                        await _azureStorage.BlobContainerClientIngredientFiles.DeleteBlobIfExistsAsync(ingredient.ImagePath, Azure.Storage.Blobs.Models.DeleteSnapshotsOption.IncludeSnapshots);
+                    }
+                    await _dbContext.SaveChangesAsync();
                 }
             }
-            _dbContext.SaveChanges();
         }
     }
 }

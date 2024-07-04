@@ -18,5 +18,6 @@ namespace CookBook.BuisnesLogic.DTO
         public decimal Carbohydrates { get; set; }
         [DisplayName("Kalorie [100g]")]
         public decimal Calories { get; set; }
+        public string? UserCookBookId { get; set; }
     }
 }
