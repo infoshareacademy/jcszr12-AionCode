@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
-using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+﻿using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
 using CookBook.BuisnesLogic.Interfaces.RecipeInterfacces;
 using Database;
 using Microsoft.AspNetCore.Http;

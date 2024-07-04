@@ -1,6 +1,6 @@
-﻿using CookBook.BuisnesLogic.Models;
+﻿using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
+using CookBook.BuisnesLogic.Models;
 using Newtonsoft.Json;
-using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 
 namespace AionCodeMVC.Repositories
 {
@@ -68,8 +68,8 @@ namespace AionCodeMVC.Repositories
             {
                 userToEdit.UserName = user.UserName;
                 userToEdit.Email = user.Email;
-//                userToEdit.Password = user.Password;
-//                userToEdit.Role = user.Role;
+                //                userToEdit.Password = user.Password;
+                //                userToEdit.Role = user.Role;
             }
 
             var json = JsonConvert.SerializeObject(users);

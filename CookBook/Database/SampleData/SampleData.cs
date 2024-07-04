@@ -1,8 +1,7 @@
 ﻿using Database.Entities;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Database.SampleData
 {

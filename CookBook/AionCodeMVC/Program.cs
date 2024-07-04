@@ -1,12 +1,22 @@
-﻿using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
-using CookBook.BuisnesLogic.Services.IngredientServices;
-using CookBook.BuisnesLogic.Repositories;
-using AionCodeMVC.Repositories;
+﻿using AionCodeMVC.Repositories;
+using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
+using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+using CookBook.BuisnesLogic.Interfaces.MealDayServiceInterfaces;
+using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
+using CookBook.BuisnesLogic.Interfaces.RecipeInterfacces;
 using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
+using CookBook.BuisnesLogic.Repositories;
+using CookBook.BuisnesLogic.Services.AzureStorage;
+using CookBook.BuisnesLogic.Services.IngredientCommentServices;
+using CookBook.BuisnesLogic.Services.IngredientServices;
+using CookBook.BuisnesLogic.Services.MealDayServices;
+using CookBook.BuisnesLogic.Services.MyFridgeServices;
+using CookBook.BuisnesLogic.Services.RecipeServices;
 using CookBook.BuisnesLogic.Services.UserServices;
 using Database;
+using Database.SampleData;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
 using Microsoft.Extensions.Azure;
 using Azure.Storage.Blobs;
 using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
@@ -108,6 +118,8 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IDeleteRecipeService, DeleteRecipeService>();
             builder.Services.AddScoped<IEditRecipeService, EditRecipeService>();
             builder.Services.AddScoped<IUploadRecipePhotoService, UploadRecipePhotoService>();
+
+            builder.Services.AddScoped<IMealDaysServicesInterface, MealDaysServices>();
 
             var app = builder.Build();
 

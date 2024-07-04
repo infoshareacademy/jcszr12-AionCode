@@ -6,7 +6,6 @@ using Database;
 using Database.Entities;
 using Database.EnumTypes;
 using Microsoft.EntityFrameworkCore;
-using System.Web.Mvc;
 
 
 namespace CookBook.BuisnesLogic.Services.IngredientServices
@@ -72,7 +71,7 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
             }
             ingredientDetailedDTO.ImagePath = $"{_azureStorage.BlobContainerClientIngredientFiles.Uri}/{ingredientDetailedDTO.ImagePath}";
 
-            if (ingredient!=null)
+            if (ingredient != null)
             {
                 ingredientDetailedDTO.Comments = await GetCommentsForIngredient(ingredient.Id);
             }

@@ -3,10 +3,6 @@ using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
 using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AionCodeMVC.Controllers
 {
@@ -111,7 +107,7 @@ namespace AionCodeMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddIngredient(MyFridgeIngredientDTO myFridgeIngredientDTO, string ingredientName)
         {
-            if (myFridgeIngredientDTO!=null)
+            if (myFridgeIngredientDTO != null)
             {
                 await _addFridgeIngredientService.AddFridgeIngredien(myFridgeIngredientDTO, ingredientName);
             }

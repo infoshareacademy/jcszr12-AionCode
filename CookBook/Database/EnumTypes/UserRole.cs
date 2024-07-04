@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Database.EnumTypes
+﻿namespace Database.EnumTypes
 {
     public enum UserRole
     {

@@ -1,10 +1,5 @@
 ﻿using Database.EnumTypes;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Database.Entities
 {
@@ -26,6 +21,6 @@ namespace Database.Entities
         public string? UserCookBookId { get; set; }
         public virtual UserCookBook UserCookBook { get; set; }
         public virtual ICollection<IngredientUsed> IngredientsUsed { get; set; }
-        public virtual ICollection<IngredientComment> Comments { get; set; }  
+        public virtual ICollection<IngredientComment> Comments { get; set; }
     }
 }

@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
-using CookBook.BuisnesLogic.Models;
 using Database;
 using Database.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Newtonsoft.Json;
-using System.Diagnostics;
-using System.IO;
 
 
 namespace CookBook.BuisnesLogic.Services.IngredientServices
@@ -28,9 +23,9 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
         {
             var ingredientEditedMapped = _mapper.Map<IngredientDetails>(ingredientEdited);
 
-            var ingredientInDatabase = await _dbContext.IngredientDetails.Where(x=>x.Id == ingredientEdited.Id).FirstOrDefaultAsync();
+            var ingredientInDatabase = await _dbContext.IngredientDetails.Where(x => x.Id == ingredientEdited.Id).FirstOrDefaultAsync();
 
-            if (ingredientInDatabase !=null)
+            if (ingredientInDatabase != null)
             {
                 _dbContext.IngredientDetails.Entry(ingredientInDatabase).CurrentValues.SetValues(ingredientEditedMapped);
                 _dbContext.SaveChanges();

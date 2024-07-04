@@ -1,10 +1,8 @@
 ﻿using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
-using CookBook.BuisnesLogic.Services.IngredientCommentServices;
-using Database.Entities;
 
 namespace AionCodeMVC.Controllers
 {

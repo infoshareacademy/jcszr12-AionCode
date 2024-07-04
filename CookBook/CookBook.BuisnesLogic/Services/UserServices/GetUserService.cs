@@ -3,14 +3,10 @@ using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using CookBook.BuisnesLogic.Models;
 using Database;
-using Database.Entities;
-using Database.EnumTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Drawing;
 using System.Security.Claims;
-using System.Web.Mvc;
 
 namespace CookBook.BuisnesLogic.Services.UserServices
 {
@@ -51,7 +47,7 @@ namespace CookBook.BuisnesLogic.Services.UserServices
                 };
                 users.Add(userToAdd);
             }
-                return users;
+            return users;
         }
 
         public async Task<IEnumerable<UserCookBookDto>> GetUsersByText(string searchText)
@@ -81,18 +77,18 @@ namespace CookBook.BuisnesLogic.Services.UserServices
         {
             Database.Entities.UserCookBook userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-                var roles = await _userManager.GetRolesAsync(userDb);
-                var role = roles.FirstOrDefault();
+            var roles = await _userManager.GetRolesAsync(userDb);
+            var role = roles.FirstOrDefault();
 
-                var user = new UserCookBookDto
-                {
-                    Id = userDb.Id,
-                    UserName = userDb.UserName,
-                    Email = userDb.Email,
-                    Role = (Roles)Enum.Parse(typeof(Roles), role),
-                    AddDate = userDb.AddDate
-                };
-        return user;
+            var user = new UserCookBookDto
+            {
+                Id = userDb.Id,
+                UserName = userDb.UserName,
+                Email = userDb.Email,
+                Role = (Roles)Enum.Parse(typeof(Roles), role),
+                AddDate = userDb.AddDate
+            };
+            return user;
         }
 
         public async Task<string> LoggedUserIdAsync()

@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.IngredientInterfaces;
-using CookBook.BuisnesLogic.Models;
+using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 using Database;
 using Database.Entities;
-using Newtonsoft.Json;
-using System.IO;
-using CookBook.BuisnesLogic.Services.UserServices;
-using CookBook.BuisnesLogic.Interfaces.UserInterfaces;
 
 namespace CookBook.BuisnesLogic.Services.IngredientServices
 {
