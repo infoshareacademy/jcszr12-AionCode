@@ -13,6 +13,7 @@
             color: black;
             background: #FFC107;
             border: 1px solid black;
+            font-weight: bold;
         }
 
             .btn:hover {
@@ -32,7 +33,7 @@
         }
 
         .btn-fixed {
-            width: 130px; 
+            width: 135px; 
             height: 40px; 
         }
 
@@ -141,12 +142,18 @@
                         <img src="~/ingredients/Other.png" alt="Inne" class="btn-img" />Inne
                     </button>
                 </form>
-                <form class="mb-2 mr-2" asp-action="Index" method="get">
-                    <input type="hidden" name="Type" value="Moje składniki"/>
-                    <button type="submit" class="btn btn-primary btn-fixed">
-                        <img src="~/ingredients/Other.png" alt="Inne" class="btn-img" />Dodane
-                    </button>
-                </form>
+
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <form class="mb-2 mr-2" asp-action="Index" method="get">
+                        <input type="hidden" name="Type" value="Moje składniki" />
+                        <button type="submit" class="btn btn-primary btn-fixed">
+                            😎Dodane
+                        </button>
+                    </form>
+                }
+
+
 
             </div>
 

@@ -9,6 +9,6 @@ namespace CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces
 {
     public interface IAddFridgeIngredientService
     {
-        Task AddFridgeIngredien(MyFridgeIngredientDTO myFridgeIngredientDTO, string ingredientName);
+        Task AddFridgeIngredient(MyFridgeIngredientDTO myFridgeIngredientDTO, string ingredientName);
     }
 }

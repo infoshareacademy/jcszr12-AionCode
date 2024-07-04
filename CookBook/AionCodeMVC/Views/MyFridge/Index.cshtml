@@ -129,18 +129,24 @@
         Aby rozpocząć korzystanie z tej funkcjonalności należy "dodać lodówkę" za pomocą odpowiedniego przycisku a następnie uzupełnićjej zawartość używając przycisku "dodaj składnik". 
         Powodzenia!
     </p>    
+
+
+
+    @if (Model.MyFridges.Count()<1)
+    {
         <!-- Formularz dodawania nowej lodówki -->
-    <div class="row mb-3 justify-content-center">
-        <div class="col-12">
-            <form asp-action="Create" method="post" class="form-inline d-flex flex-wrap">
-                <div class="form-group mb-2">
-                    <label for="fridgeName" class="mr-2">Nazwa lodówki:</label>
-                    <input type="text" name="name" id="fridgeName" class="form-control mr-2" required />
-                </div>
-                <button type="submit" class="btn btn-primary mb-2">Dodaj lodówkę</button>
-            </form>
+        <div class="row mb-3 justify-content-center">
+            <div class="col-12">
+                <form asp-action="Create" method="post" class="form-inline d-flex flex-wrap">
+                    <div class="form-group mb-2">
+                        <label for="fridgeName" class="mr-2">Nazwa lodówki:</label>
+                        <input type="text" name="name" id="fridgeName" class="form-control mr-2" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Dodaj lodówkę</button>
+                </form>
+            </div>
         </div>
-    </div>
+    }
 
 
     <!-- Sprawdzenie, czy lista lodówek nie jest pusta -->

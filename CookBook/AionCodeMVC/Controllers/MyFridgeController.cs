@@ -115,7 +115,7 @@ namespace AionCodeMVC.Controllers
         {
             if (myFridgeIngredientDTO!=null)
             {
-                await _addFridgeIngredientService.AddFridgeIngredien(myFridgeIngredientDTO, ingredientName);
+                await _addFridgeIngredientService.AddFridgeIngredient(myFridgeIngredientDTO, ingredientName);
             }
             return RedirectToAction(nameof(Index));
         }

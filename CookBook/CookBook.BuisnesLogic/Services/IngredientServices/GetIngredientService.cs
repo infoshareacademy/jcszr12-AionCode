@@ -42,22 +42,37 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
 
         public async Task<IEnumerable<IngredientDTO>> GetIngredientDTOListType(string type)
         {
-            if (type == "Moje składniki")
+            if (type != null)
             {
-                var loggedUserId = await _userService.LoggedUserIdAsync();
-                List<IngredientDetails>? searchedIngredientsDetails = await _dbContext.IngredientDetails.Where(ingredient => ingredient.UserCookBookId==loggedUserId).OrderBy(ingredient => ingredient.Name).ToListAsync();
-            }
+                List<IngredientDetails>? searchedIngredientsDetails;
+                List<IngredientDTO>? searchedIngredientsDetailsDTO;
 
-
-
-
-            if (Enum.TryParse(type, out IngredientType typeEnum))
-            {
-                List<IngredientDetails>? searchedIngredientsDetails = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Type == typeEnum).OrderBy(ingredient => ingredient.Name).ToListAsync();
-                var searchedIngredientsDetailsDTO = _mapper.Map<List<IngredientDTO>>(searchedIngredientsDetails);
-                return searchedIngredientsDetailsDTO;
+                if (Enum.TryParse(type, out IngredientType typeEnum))
+                {
+                    searchedIngredientsDetails = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Type == typeEnum).OrderBy(ingredient => ingredient.Name).ToListAsync();
+                    searchedIngredientsDetailsDTO = _mapper.Map<List<IngredientDTO>>(searchedIngredientsDetails);
+                    return searchedIngredientsDetailsDTO;
+                }
+                if (type == "Moje składniki")
+                {
+                    var loggedUserId = await _userService.LoggedUserIdAsync();
+                    searchedIngredientsDetails = await _dbContext.IngredientDetails.Where(ingredient => ingredient.UserCookBookId == loggedUserId).OrderBy(ingredient => ingredient.Name).ToListAsync();
+                    searchedIngredientsDetailsDTO = _mapper.Map<List<IngredientDTO>>(searchedIngredientsDetails);
+                    return searchedIngredientsDetailsDTO;
+                }
             }
             return await GetIngredientDTOListAll();
+
+
+
+
+            //if (Enum.TryParse(type, out IngredientType typeEnum))
+            //{
+            //    List<IngredientDetails>? searchedIngredientsDetails = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Type == typeEnum).OrderBy(ingredient => ingredient.Name).ToListAsync();
+            //    var searchedIngredientsDetailsDTO = _mapper.Map<List<IngredientDTO>>(searchedIngredientsDetails);
+            //    return searchedIngredientsDetailsDTO;
+            //}
+
         }
         public async Task<IngredientDetailedDTO> GetByNameIngredientDetailedDTO(string name)
         {
