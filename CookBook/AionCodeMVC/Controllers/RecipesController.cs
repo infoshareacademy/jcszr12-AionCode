@@ -13,9 +13,10 @@ namespace AionCodeMVC.Controllers
         private IEditRecipeService _editRecipeService;
         private IUploadRecipePhotoService _uploadRecipePhotoService;
         private IAddRecipeCommentService _addRecipeCommentService;
+        private IDeleteRecipeCommentService _deleteRecipeCommentService;
 
         public RecipesController(IGetRecipeService getRecipeService, ICreateRecipeService createRecipeService, IDeleteRecipeService deleteRecipeService, IEditRecipeService editRecipeService,
-            IUploadRecipePhotoService uploadRecipePhotoService, IAddRecipeCommentService addRecipeCommentService)
+            IUploadRecipePhotoService uploadRecipePhotoService, IAddRecipeCommentService addRecipeCommentService, IDeleteRecipeCommentService deleteRecipeCommentService)
         {
             _getRecipeService = getRecipeService;
             _creaRecipeService = createRecipeService;
@@ -23,6 +24,7 @@ namespace AionCodeMVC.Controllers
             _editRecipeService = editRecipeService;
             _uploadRecipePhotoService = uploadRecipePhotoService;
             _addRecipeCommentService = addRecipeCommentService;
+            _deleteRecipeCommentService = deleteRecipeCommentService;
         }
 
         public async Task<ActionResult> Index(string serch, string type)
@@ -116,10 +118,40 @@ namespace AionCodeMVC.Controllers
             }
         }
 
+        [Authorize(Policy = "StdUser")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteComment(int commentId, int recipeId)
+        {
+            try
+            {
+                var userName = User.Identity.Name;
 
+                // Pobierz komentarz na podstawie jego identyfikatora
+                var comment = await _deleteRecipeCommentService.GetCommentById(commentId);
 
+                if (comment == null)
+                {
+                    return RedirectToAction(nameof(Details), new { id = recipeId });
+                }
 
+                // Sprawdź, czy zalogowany użytkownik jest autorem komentarza
+                if (comment.Author != userName)
+                {
+                    return RedirectToAction(nameof(Details), new { id = recipeId });
+                }
 
+                // Usuń komentarz
+                await _deleteRecipeCommentService.DeleteComment(commentId);
+
+                return RedirectToAction(nameof(Details), new { id = recipeId });
+            }
+            catch
+            {
+                // Obsługa błędu
+                return RedirectToAction(nameof(Details), new { id = recipeId});
+            }
+        }
 
     }
 }

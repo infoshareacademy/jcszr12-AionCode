@@ -123,6 +123,7 @@ namespace AionCodeMVC
             builder.Services.AddScoped<IMealDaysServicesInterface, MealDaysServices>();
 
             builder.Services.AddScoped<IAddRecipeCommentService, AddRecipeCommentService>();
+            builder.Services.AddScoped<IDeleteRecipeCommentService, DeleteRecipeCommentService>();
 
             var app = builder.Build();
 
