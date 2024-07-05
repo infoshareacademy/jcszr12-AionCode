@@ -21,8 +21,6 @@ namespace CookBook.BuisnesLogic.Services.IngredientCommentServices
         {
             var comment = _mapper.Map<IngredientComment>(commentDTO);
 
-            // Możesz tutaj również wykonać inne operacje na komentarzu przed dodaniem do bazy danych, jeśli jest to konieczne
-
             _dbContext.IngredientComment.Add(comment);
             await _dbContext.SaveChangesAsync();
         }

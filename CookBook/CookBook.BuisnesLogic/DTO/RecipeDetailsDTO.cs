@@ -8,5 +8,8 @@
         public string Description { get; set; }
         public string ImagePath { get; set; }
 
+        public IEnumerable<RecipeCommentDTO>? Comments { get; set; }
+        public IEnumerable<RecipeRatingDTO> Ratings { get; set; }
+
     }
 }

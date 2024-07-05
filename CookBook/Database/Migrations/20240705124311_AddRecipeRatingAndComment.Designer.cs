@@ -4,6 +4,7 @@ using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240705124311_AddRecipeRatingAndComment")]
+    partial class AddRecipeRatingAndComment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -275,34 +278,6 @@ namespace Database.Migrations
                     b.HasIndex("UserCookBookId");
 
                     b.ToTable("RecipeDetails");
-                });
-
-            modelBuilder.Entity("Database.Entities.RecipeRating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecipeDetailsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeDetailsId");
-
-                    b.ToTable("RecipeRatings");
                 });
 
             modelBuilder.Entity("Database.Entities.RecipeUsed", b =>
@@ -625,17 +600,6 @@ namespace Database.Migrations
                         .HasForeignKey("UserCookBookId");
 
                     b.Navigation("UserCookBook");
-                });
-
-            modelBuilder.Entity("Database.Entities.RecipeRating", b =>
-                {
-                    b.HasOne("Database.Entities.RecipeDetails", "RecipeDetails")
-                        .WithMany()
-                        .HasForeignKey("RecipeDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RecipeDetails");
                 });
 
             modelBuilder.Entity("Database.Entities.RecipeUsed", b =>

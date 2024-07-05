@@ -19,6 +19,9 @@ namespace Database
 
         public DbSet<IngredientComment> IngredientComment { get; set; }
 
+        public DbSet<RecipeComment> RecipeComments { get; set; }
+        public DbSet<RecipeRating> RecipeRatings { get; set; }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
