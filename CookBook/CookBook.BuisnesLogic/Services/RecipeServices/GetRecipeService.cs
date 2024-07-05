@@ -42,6 +42,7 @@ namespace CookBook.BuisnesLogic.Services.RecipeServices
             if (recipe != null)
             {
                 recipeDetailsDTO.Comments = await GetCommentsForRecipe(recipe.Id);
+                recipeDetailsDTO.Ratings = await GetRatingsForRecipe(recipe.Id);
             }
 
             return recipeDetailsDTO;
@@ -55,6 +56,17 @@ namespace CookBook.BuisnesLogic.Services.RecipeServices
                                             .ToListAsync();
 
             var recipeCommentsDTO = _mapper.Map<List<RecipeCommentDTO>>(recipeComments);
+
+            return recipeCommentsDTO;
+        }
+
+        public async Task<IEnumerable<RecipeRatingDTO>> GetRatingsForRecipe(int recipeId)
+        {
+            var recipeRatings = await _dbContext.RecipeRatings
+                                            .Where(comment => comment.RecipeDetailsId == recipeId)
+                                            .ToListAsync();
+
+            var recipeCommentsDTO = _mapper.Map<List<RecipeRatingDTO>>(recipeRatings);
 
             return recipeCommentsDTO;
         }

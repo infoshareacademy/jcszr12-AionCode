@@ -32,6 +32,7 @@ using NuGet.Common;
 using CookBook.BuisnesLogic.Interfaces.MyFridgeInterfaces;
 using CookBook.BuisnesLogic.Services.MyFridgeServices;
 using CookBook.BuisnesLogic.Services.RecipeCommentServices;
+using CookBook.BuisnesLogic.Services.RecipeRatingServices;
 
 namespace AionCodeMVC
 {
@@ -124,6 +125,7 @@ namespace AionCodeMVC
 
             builder.Services.AddScoped<IAddRecipeCommentService, AddRecipeCommentService>();
             builder.Services.AddScoped<IDeleteRecipeCommentService, DeleteRecipeCommentService>();
+            builder.Services.AddScoped<IRateRecipeService, RateRecipeService>();
 
             var app = builder.Build();
 

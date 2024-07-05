@@ -14,9 +14,10 @@ namespace AionCodeMVC.Controllers
         private IUploadRecipePhotoService _uploadRecipePhotoService;
         private IAddRecipeCommentService _addRecipeCommentService;
         private IDeleteRecipeCommentService _deleteRecipeCommentService;
+        private IRateRecipeService _rateRecipeService;
 
         public RecipesController(IGetRecipeService getRecipeService, ICreateRecipeService createRecipeService, IDeleteRecipeService deleteRecipeService, IEditRecipeService editRecipeService,
-            IUploadRecipePhotoService uploadRecipePhotoService, IAddRecipeCommentService addRecipeCommentService, IDeleteRecipeCommentService deleteRecipeCommentService)
+            IUploadRecipePhotoService uploadRecipePhotoService, IAddRecipeCommentService addRecipeCommentService, IDeleteRecipeCommentService deleteRecipeCommentService, IRateRecipeService rateRecipeService)
         {
             _getRecipeService = getRecipeService;
             _creaRecipeService = createRecipeService;
@@ -25,6 +26,7 @@ namespace AionCodeMVC.Controllers
             _uploadRecipePhotoService = uploadRecipePhotoService;
             _addRecipeCommentService = addRecipeCommentService;
             _deleteRecipeCommentService = deleteRecipeCommentService;
+            _rateRecipeService = rateRecipeService;
         }
 
         public async Task<ActionResult> Index(string serch, string type)
@@ -150,6 +152,34 @@ namespace AionCodeMVC.Controllers
             {
                 // Obsługa błędu
                 return RedirectToAction(nameof(Details), new { id = recipeId});
+            }
+        }
+
+        // POST: IngredientController/AddComment
+        [Authorize(Policy = "StdUser")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Rate(int recipeId, int rating)
+        {
+            try
+            {
+                var userName = User.Identity.Name;
+
+                var ratingDTO = new RecipeRatingDTO
+                {
+                    Author = userName,
+                    Rating = rating,
+                    Date = DateTime.Now,
+                    RecipeDetailsId = recipeId
+                };
+
+                await _rateRecipeService.RateRecipe(ratingDTO);
+
+                return RedirectToAction(nameof(Details), new { id = recipeId });
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Details), new { id = recipeId, error = "Failed to add rating" });
             }
         }
 
