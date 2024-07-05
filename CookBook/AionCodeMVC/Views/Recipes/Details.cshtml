@@ -40,3 +40,61 @@
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-12">
+        <div class="card p-3 shadow">
+            @if (Model.Comments != null && Model.Comments.Any())
+            {
+                <h3 class="text-center mb-3">Komentarze</h3>
+                <ul class="list-group">
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <li class="list-group-item">
+                            <div class="comment-item">
+                                <div class="comment-header">
+                                    <strong>@comment.Author</strong> - <span class="comment-date">@comment.Date.ToShortDateString() @comment.Date.ToShortTimeString()</span>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <div class="comment-text">
+                                            @comment.Text
+                                        </div>
+                                    </div>
+                                    @if (User.Identity.Name == comment.Author)
+                                    {
+                                        <div class="col-auto">
+                                            <form method="post" asp-controller="Ingredient" asp-action="DeleteComment">
+                                                <input type="hidden" name="commentId" value="@comment.Id" />
+                                                <input type="hidden" name="recipeId" value="@Model.Id" />
+                                                <button type="submit" class="btn btn-danger">Usuń</button>
+                                            </form>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="comment-form">
+                    <h3 class="text-center mb-3">Dodaj komentarz</h3>
+                    <form method="post" asp-controller="Recipes" asp-action="AddComment">
+                        <input type="hidden" name="recipeId" value="@Model.Id" />
+                        <div class="form-group">
+                            <label for="author">Autor:</label>
+                            <input type="text" class="form-control" id="author" name="author" value="@User.Identity.Name" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="text">Treść:</label>
+                            <textarea class="form-control" id="text" name="text" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -23,6 +23,8 @@ namespace CookBook.BuisnesLogic.Mapper
 
             CreateMap<UserCookBook, UserCookBookDto>();
             CreateMap<UserCookBookDto, ChangePasswordDto>();
+
+            CreateMap<RecipeComment,RecipeCommentDTO>().ReverseMap();
         }
     }
 }

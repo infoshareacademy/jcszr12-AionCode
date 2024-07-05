@@ -2,6 +2,7 @@
 using CookBook.BuisnesLogic.DTO;
 using CookBook.BuisnesLogic.Interfaces.AzureInterfaces;
 using CookBook.BuisnesLogic.Interfaces.RecipeInterfacces;
+using CookBook.BuisnesLogic.Models;
 using Database;
 using Database.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +39,26 @@ namespace CookBook.BuisnesLogic.Services.RecipeServices
             }
             recipeDetailsDTO.ImagePath = $"{_azureStorage.BlobContainerClientIngredientFiles.Uri}/{recipeDetailsDTO.ImagePath}";
 
+            if (recipe != null)
+            {
+                recipeDetailsDTO.Comments = await GetCommentsForRecipe(recipe.Id);
+            }
+
             return recipeDetailsDTO;
         }
+
+
+        public async Task<IEnumerable<RecipeCommentDTO>> GetCommentsForRecipe(int recipeId)
+        {
+            var recipeComments = await _dbContext.RecipeComments
+                                            .Where(comment => comment.RecipeDetailsId == recipeId)
+                                            .ToListAsync();
+
+            var recipeCommentsDTO = _mapper.Map<List<RecipeCommentDTO>>(recipeComments);
+
+            return recipeCommentsDTO;
+        }
+
+
     }
 }

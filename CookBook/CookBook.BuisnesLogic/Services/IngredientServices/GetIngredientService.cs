@@ -62,16 +62,6 @@ namespace CookBook.BuisnesLogic.Services.IngredientServices
             }
             return await GetIngredientDTOListAll();
 
-
-
-
-            //if (Enum.TryParse(type, out IngredientType typeEnum))
-            //{
-            //    List<IngredientDetails>? searchedIngredientsDetails = await _dbContext.IngredientDetails.Where(ingredient => ingredient.Type == typeEnum).OrderBy(ingredient => ingredient.Name).ToListAsync();
-            //    var searchedIngredientsDetailsDTO = _mapper.Map<List<IngredientDTO>>(searchedIngredientsDetails);
-            //    return searchedIngredientsDetailsDTO;
-            //}
-
         }
         public async Task<IngredientDetailedDTO> GetByNameIngredientDetailedDTO(string name)
         {
