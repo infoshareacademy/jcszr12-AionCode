@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Details";
+}
+
+<head>
+    <style>
+        .btn {
+            color: black;
+            background: #FFC107;
+        }
+            .btn:hover {
+                color: black;
+                background: orange;
+            }
+    </style>
+</head>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h1>Załącz obraz</h1>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Upload", "Ingredient", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <!-- Styled file input -->
+                        <input type="file" id="fileInput" name="file" accept=".png" style="display: none;" onchange="document.getElementById('fileName').textContent = this.files[0].name" />
+                        <!-- Custom button to trigger file input -->
+                        <label for="fileInput" class="btn btn-primary">Wybierz plik</label>
+                        <!-- Display file name -->
+                        <span id="fileName" style="margin-left: 10px;"></span>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                        </div>
+                }
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+</div>

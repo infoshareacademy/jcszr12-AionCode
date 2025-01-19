@@ -1,0 +1,90 @@
+﻿@model IEnumerable<CookBook.BuisnesLogic.DTO.UserCookBookDto>
+
+@{
+    ViewData["Title"] = "Users";
+}
+<h1 class="mb-4">Lista użytkowników</h1>
+<hr/>
+
+@if (TempData["ErrorMessages"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessages"];
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"];
+    </div>
+}
+
+<div class="container mt-5">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <a asp-action="RegisterUser" class="btn btn-primary">Nowy uzytkownik</a>
+            </div>
+            <div class="col-md-6">
+                <form asp-action="Index" method="get">
+                    <div class="form-inline d-flex justify-content-end">
+                    <div class="form-group">
+                        <label for="SearchText">Wyszukaj</label>
+                        <input type="text" name="SearchText" value="@ViewData["SearchText"]" class="form-control" style="width: 200px; height: 30px;" />
+                        <button type="submit" class="btn btn-primary mt-2">Szukaj</button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark"
+        <tr>
+            <th>
+                    @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                    @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                    @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edycja", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Zmiana hasła", "ChangePassword", new { id = item.Id }) |
+                        @Html.ActionLink("Usunięcie", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+}

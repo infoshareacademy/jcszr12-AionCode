@@ -1,0 +1,85 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Database.Entities.UserCookBook> SignInManager
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-warning ">
+
+    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/AIONcode_logo.png" height="50" alt="" /></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#minemenu" aria-controls="mainmenu" aria-expanded="false" aria-label="navigation switch">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse bg-black" id="minemenu">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Home" asp-action="Privacy" class="nav-link">Privacy</a>
+            </li>
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Home" asp-action="Contact" class="nav-link">Kontakt</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a asp-area="" asp-controller="Recipes" asp-action="Index" class="nav-link dropdown-toggle"
+                   data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true">Przepisy</a>
+
+                <div class="dropdown-menu" aria-labelledby="submenu">
+                    <a class="dropdown-item" asp-area="" asp-controller="Recipes" asp-action="Index">Wszystkie </a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-area="" asp-controller="MealDays" asp-action="Index">Planowane dania</a>
+                        <div class="dropdown-divider"></div>
+                    }
+                    
+                    
+                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Obiady </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Kolacje </a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Ingredient" asp-action="Index" class="nav-link">Składniki</a>
+            </li>
+            <li class="nav-item">
+                <a asp-area="" asp-controller="MyFridge" asp-action="Index" class="nav-link">Moja lodówka</a>
+            </li>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <li class="nav-item">
+                    <a asp-area="" asp-controller="Users" asp-action="Login" class="nav-link">Logowanie</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-area="" asp-controller="Users" asp-action="RegisterUser" class="nav-link">Rejestracja</a>
+            </li>
+            }
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <li class="nav-item dropdown">
+                    <a asp-area="" asp-controller="Users" asp-action="Index" class="nav-link dropdown-toggle"
+                   data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true">@User.Identity.Name</a>
+                <div class="dropdown-menu" aria-labelledby="submenu">
+                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="AboutMe">Moje dane</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="ChangeMyPassword">Zmień hasło</a>
+                    @if (User.Identity.Name == "admin")
+                    {
+                        
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index">Użytkownicy - admin</a>
+                    }
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Logout">Wyloguj</a>
+                </div>
+            </li>
+            }
+        </ul>
+        <form class="form-inline">
+            <input class="form-control mr-1" type="search" placeholder="Wyszukaj" aria-label="Wyszukaj" />
+            <button class="btn btn-light" type="submit">Znajdź</button>
+        </form>
+
+    </div>
+
+</nav>

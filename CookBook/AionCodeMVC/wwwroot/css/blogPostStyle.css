@@ -1,0 +1,116 @@
+@charset "UTF-8";
+body {
+	background-image: url("../img/background_cookBock.jpg");
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: top;
+	margin-top: 30px;
+	font-size: 17px;
+}
+h1, h2, h3, h4,h5{
+	color:dimgrey
+}
+.logo img{
+	width: 100%;
+	height:auto;
+}
+.navbar
+{
+	min-height: 75px;
+}
+.cookbook {
+	text-align: center;
+}
+
+	.cookbook img {
+		width: 100%;
+		height: auto;
+	}
+
+	.cookbook p {
+		margin-bottom: 30px;
+	}
+
+	.cookbook figcaption {
+		margin-top: 10px;
+	}
+	.cookbook div{
+		border-radius: 6px;
+	}
+.wpis {
+	text-align: justify;
+	font-size: 16px;
+	padding: 30px;
+}
+* {
+	box-sizing: border-box;
+}
+
+ul {
+	list-style-type: none;
+}
+
+
+/* Nagłówek miesiąca */
+.month {
+	padding: 25px 25px;
+	width: 100%;
+	background: orange;
+	text-align: center;
+}
+	/* Lista miesięcy */
+	.month ul {
+		margin: 0;
+		padding: 0;
+	}
+
+		.month ul li {
+			color: white;
+			text-transform: uppercase;
+			letter-spacing: 3px;
+		}
+	/* Przycisk "Poprzedni" w nagłówku miesiąca */
+	.month .prev {
+		float: left;
+		padding-top: 5px;
+	}
+	/* Przycisk "Następny" */
+	.month .next {
+		float: right;
+		padding-top: 10px;
+	}
+/* Dni tygodnia (Pon-Nd) */
+.weekdays {
+	margin: 0;
+	padding: 2px 0;
+	background-color: #ddd;
+}
+
+	.weekdays li {
+		display: inline-block;
+		width: 12%;
+		color: #666;
+		text-align: center;
+	}
+/* Dni (1-31) */
+.days {
+	padding: 10px 0;
+	background: #eee;
+	margin: 0;
+}
+
+	.days li {
+		list-style-type: none;
+		display: inline-block;
+		width: 12%;
+		text-align: center;
+		margin-bottom: 5px;
+		color: #777;
+	}
+		/* Podświetlenie "aktualnego" dnia */
+		.days li .active {
+			padding: 5px;
+			background: orange;
+			color: white !important;
+		}

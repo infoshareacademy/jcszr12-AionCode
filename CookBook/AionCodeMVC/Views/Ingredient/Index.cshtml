@@ -1,0 +1,261 @@
+﻿@model IEnumerable<CookBook.BuisnesLogic.DTO.IngredientDTO>
+@using System.Security.Claims;
+@{
+    int Lp = 0;
+    var firstItem = Model.FirstOrDefault();
+    var loggedUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .btn {
+            color: black;
+            background: #FFC107;
+            border: 1px solid black;
+            font-weight: bold;
+        }
+
+            .btn:hover {
+                color: black;
+                background: orange;
+                border: 1px solid black;
+            }
+
+        .ingredient {
+            color:firebrick;
+        }
+
+        .btn-img {
+            width: 40px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+        .btn-fixed {
+            width: 135px; 
+            height: 40px; 
+        }
+
+        th, td {
+            font-size: 0.85em; /* Smaller font size for table cells */
+            border: 1px solid black;
+        }
+
+        .header-border {
+            border: 2px solid black;
+        }
+
+        input.form-control:focus {
+            box-shadow: none;
+            border: 1px solid black;
+        }
+
+        .custom-alert {
+            background-color: #ffcc00;
+            border-color: #ffcc00; 
+            color : black;
+        }
+
+
+    </style>
+</head>
+
+
+
+<div class="container">
+    <div class="row mb-3 justify-content-center">
+        <div class="col-12">
+            @if (ViewBag.SuccessMessage != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show row mb-3 justify-content-center custom-alert" role="alert">
+                    @ViewBag.SuccessMessage
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            <div class="d-flex flex-wrap" role="group" aria-label="Ingredient types">
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/All.png" alt="Wszystko" class="btn-img" />Wszystko
+                    </button>
+                </form>
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Warzywa" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Vegetables.png" alt="Warzywa" class="btn-img" />Warzywa
+                    </button>
+                </form>
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Owoce" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/fruit.png" alt="Owoce" class="btn-img" />Owoce
+                    </button>
+                </form>
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Pieczywo" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/bread.png" alt="Pieczywo" class="btn-img" />Pieczywo
+                    </button>
+                </form>
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Ryby" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/fish.png" alt="Ryby" class="btn-img" />Ryby
+                    </button>
+                </form>
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Mięsa" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Meat.png" alt="Mięso" class="btn-img" />Mięsa
+                    </button>
+                </form>
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Grzyby" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Mushroom.png" alt="Grzyby" class="btn-img" />Grzyby
+                    </button>
+                </form>
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Napoje" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Drinks.png" alt="Napoje" class="btn-img" />Napoje
+                    </button>
+                </form>
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Nabiał" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Dairy.png" alt="Nabiał" class="btn-img" />Nabiał
+                    </button>
+                </form>
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Przyprawy" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Spices.png" alt="Przyprawy" class="btn-img" />Przyprawy
+                    </button>
+                </form>
+                <form class="mb-2 mr-2" asp-action="Index" method="get">
+                    <input type="hidden" name="Type" value="Inne" />
+                    <button type="submit" class="btn btn-primary btn-fixed">
+                        <img src="~/ingredients/Other.png" alt="Inne" class="btn-img" />Inne
+                    </button>
+                </form>
+
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <form class="mb-2 mr-2" asp-action="Index" method="get">
+                        <input type="hidden" name="Type" value="Moje składniki" />
+                        <button type="submit" class="btn btn-primary btn-fixed">
+                            😎Dodane
+                        </button>
+                    </form>
+                }
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div style="border: 1px  groove black;" class="mt-1 mb-3"></div>
+
+
+    <div class="row">
+        <div class="col-12 text-left">
+            <form class="form-inline d-flex flex-wrap" asp-action="Index" method="get">
+                <div class="form-group sm-3 mb-2">
+                    <input type="text" name="SearchString" value="@ViewData["IngredientFilter"]" class="form-control" placeholder="Wyszukaj"/>
+                </div>
+                <button type="submit" class="btn btn-primary mx-2 mb-2">Szukaj</button>
+            </form>
+
+            @if (this.User.IsInRole("StdUser")||this.User.IsInRole("Admin"))
+            {
+                <a class="btn btn-primary" asp-action="Create">Dodaj nowy składnik</a>
+            }
+
+        </div>
+    </div>
+
+    <div style="border: 1px  groove black;" class="mt-1 mt-3 mb-3"></div>
+
+    @if (@ViewData["IngredientFilter"] != null && Model.Count() == 0)
+    {
+        ViewData["IngredientFilter"] = $"Nie znaleziono: \"{ViewData["IngredientFilter"]}\"";
+    }
+
+
+    @if (@ViewData["IngredientFilter"]==null)
+    {
+        if (firstItem != null)
+        {
+            ViewData["IngredientFilter"] = firstItem.Type.ToString();
+        }
+        else
+        {
+            ViewData["IngredientFilter"] = "Brak składników.";
+        }
+
+    }
+
+    <h2 class="text-center">@ViewData["IngredientFilter"]</h2>
+
+
+
+    @if (firstItem!=null)
+    {
+        <div class="row mt-3">
+            <div class="col-12 bg-transparent rounded-2">
+                <table class="table" style="border: 2px solid black;">
+                    <thead>
+                        <tr style="line-height: 0.5">
+                            <th class="header-border">Lp.</th>
+                            <th class="header-border">@Html.DisplayNameFor(model => model.Name)</th>
+                            <th class="header-border">@Html.DisplayNameFor(model => model.Carbohydrates)</th>
+                            <th class="header-border">@Html.DisplayNameFor(model => model.Proteins)</th>
+                            <th class="header-border">@Html.DisplayNameFor(model => model.Fats)</th>
+                            <th class="header-border">@Html.DisplayNameFor(model => model.Calories)</th>
+                            <th class="header-border">Zarządzaj</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="header-border">
+                            @foreach (var item in Model)
+                            {
+                                Lp++;
+                            <tr style="line-height: 0.5">
+                                <td style="border: 1px solid black;">@Lp.</td>
+                                <td>@Html.ActionLink(item.Name, "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" })</td>
+                                <td>@Html.DisplayFor(modelItem => item.Calories)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Proteins)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Fats)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Carbohydrates)</td>
+                                <td>
+
+                                        @Html.ActionLink("Szczegóły", "Details", new { id = item.Id, type = @ViewBag.Type }, new { @class = "ingredient" })
+
+                                        @if (User.IsInRole("Admin") || (User.IsInRole("StdUser") && item.UserCookBookId == loggedUserId))
+                                        {
+                                            <span> | </span>@Html.ActionLink("Edytuj", "Edit", new { id = item.Id }, new { @class = "ingredient" }) <span> | </span>
+                                            @Html.ActionLink("Załącz obraz", "Upload", new { id = item.Id }, new { @class = "ingredient" })<span> | </span>
+                                            @Html.ActionLink("Usuń", "Delete", new { id = item.Id }, new { @class = "ingredient" })
+                                        }
+
+                                        
+                                </td>
+                            </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

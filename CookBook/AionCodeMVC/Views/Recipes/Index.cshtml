@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers;
+@using CookBook.BuisnesLogic.Models;
+@model IEnumerable<CookBook.BuisnesLogic.DTO.RecipeDTO>
+
+@{
+    Layout = "_Layout";
+    int quantity = ViewBag.Quantity != null ? (int)ViewBag.Quantity : 0;
+}
+
+<section class="cookbook">
+
+    <div class="container-fluid">
+
+        <header>
+
+            <h1>Lista przepisów</h1>
+            <p>Przedstawiamy listę przepisów z naszej biblioteki</p>
+
+        </header>
+        <div class="row g-0">
+
+            @foreach (var recipe in Model)
+            {
+                <div class="col-sm-6 col-md-4 col-xl-3 bg-gradient">
+                    <recipesCss>
+                        <a href="@Url.Action("Details", "Recipes", new { id = recipe.Id })">
+                            <div class="img-container">
+                                @if (recipe.ImagePath == "http://127.0.0.1:10000/devstoreaccount1/book-files/null.jpg")
+                                {
+                                    <img class="recipe-img" src="~/img/recipes/null.png" alt="@recipe.Category">
+                                }
+                                else
+                                {
+                                    <img class="recipe-img" src="@recipe.ImagePath" alt="@recipe.Category">
+                                }
+                            </div>
+                            <figcaption>@recipe.Name</figcaption>
+                        </a>
+                    </recipesCss>
+                </div>
+            }
+
+
+
+        </div>
+    </div>
+
+
+</section> 

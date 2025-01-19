@@ -1,0 +1,151 @@
+﻿@model CookBook.BuisnesLogic.DTO.RecipeDetailsDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Recipe</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-12">
+        <div class="card p-3 shadow">
+            @if (Model.Comments != null && Model.Comments.Any())
+            {
+                <h3 class="text-center mb-3">Komentarze</h3>
+                <ul class="list-group">
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <li class="list-group-item">
+                            <div class="comment-item">
+                                <div class="comment-header">
+                                    <strong>@comment.Author</strong> - <span class="comment-date">@comment.Date.ToShortDateString() @comment.Date.ToShortTimeString()</span>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <div class="comment-text">
+                                            @comment.Text
+                                        </div>
+                                    </div>
+                                    @if (User.Identity.Name == comment.Author)
+                                    {
+                                        <div class="col-auto">
+                                            <form method="post" asp-controller="Recipes" asp-action="DeleteComment">
+                                                <input type="hidden" name="commentId" value="@comment.Id" />
+                                                <input type="hidden" name="recipeId" value="@Model.Id" />
+                                                <button type="submit" class="btn btn-danger">Usuń</button>
+                                            </form>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="comment-form">
+                    <h3 class="text-center mb-3">Dodaj komentarz</h3>
+                    <form method="post" asp-controller="Recipes" asp-action="AddComment">
+                        <input type="hidden" name="recipeId" value="@Model.Id" />
+                        <div class="form-group">
+                            <label for="author">Autor:</label>
+                            <input type="text" class="form-control" id="author" name="author" value="@User.Identity.Name" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="text">Treść:</label>
+                            <textarea class="form-control" id="text" name="text" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                    </form>
+                </div>
+
+                var userHasRated = Model.Ratings.Any(r => r.Author == User.Identity.Name);
+
+                @if (!userHasRated)
+                {
+                    <div class="rating-form mt-4">
+                        <h3 class="text-center mb-3">Oceń przepis</h3>
+                        <form method="post" asp-controller="Recipes" asp-action="Rate">
+                            <input type="hidden" name="recipeId" value="@Model.Id" />
+                            <div class="form-group">
+                                <label for="rating">Ocena:</label>
+                                <div id="rating" class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rating" id="rating1" value="1" required>
+                                    <label class="form-check-label" for="rating1">1</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rating" id="rating2" value="2" required>
+                                    <label class="form-check-label" for="rating2">2</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rating" id="rating3" value="3" required>
+                                    <label class="form-check-label" for="rating3">3</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rating" id="rating4" value="4" required>
+                                    <label class="form-check-label" for="rating4">4</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rating" id="rating5" value="5" required>
+                                    <label class="form-check-label" for="rating5">5</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Oceń</button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info mt-4">
+                        <p class="text-center">Dziękujemy za ocenę! Już oceniłeś/aś ten przepis.</p>
+                    </div>
+                }
+
+            }
+            <div class="average-rating mt-4">
+                <h3 class="text-center mb-3">Średnia ocena</h3>
+                @{
+                    var averageRating = Model.Ratings.Any() ? Model.Ratings.Average(r => r.Rating) : 0;
+                }
+                <p class="text-center">@averageRating.ToString("0.0") / 5</p>
+            </div>
+        </div>
+    </div>
+</div>

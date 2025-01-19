@@ -1,0 +1,73 @@
+﻿@model CookBook.BuisnesLogic.DTO.UserCookBookDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<head>
+    <style>
+        .dl-horizontal {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+            .dl-horizontal dt,
+            .dl-horizontal dd {
+                flex: 0 0 auto;
+                margin-right: 10px;
+            }
+
+            .dl-horizontal dt {
+                width: 20%; /* Width of the term */
+                margin-bottom: 10px; /* Space between rows */
+            }
+
+            .dl-horizontal dd {
+                width: 75%; /* Width of the description */
+                margin-bottom: 10px; /* Space between rows */
+            }
+    </style>
+</head>
+<h1>O użytkowniku</h1>
+
+<hr />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <dl class="dl-horizontal">
+            <dt class = "col-sm-4">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class = "col-sm-14">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt class = "col-sm-4">
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
+            <dd class = "col-sm-14">
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+            <dt class = "col-sm-4">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class = "col-sm-14">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class = "col-sm-4">
+                @Html.DisplayNameFor(model => model.Role)
+            </dt>
+            <dd class = "col-sm-14">
+                @Html.DisplayFor(model => model.Role)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+}
